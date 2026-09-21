@@ -1,11 +1,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+
+/* ToDo
+ *  Add Timers
+ *  Clean Up code
+ *  Split Up into different files
+ */
+
+[Serializable]
+class Ability 
+{
+    public virtual void Use() { Debug.Log("Played Default Ability"); }
+}
+
+class TestAbility : Ability
+{
+    public override void Use() { Debug.Log("Played Test"); }
+
+}
 
 enum Note { Error, One, Two, Three }
 
 public class Instrument : MonoBehaviour
 {
     [SerializeField] Note[] combination = new Note[3];
+    [SerializeField] Dictionary<string, Note[]> combinationToString = new Dictionary<string, Note[]>();
+    [SerializeField] Dictionary<string, Ability> stringToAbility = new Dictionary<string, Ability>();
+
     int CombinationLength { get { return combination.Length; } }
     int CombinationIndex = 0;
 
@@ -16,6 +40,12 @@ public class Instrument : MonoBehaviour
     int frameCounter = 0;
     int framesNeeded = 20;
     bool canPress = true;
+
+    private void Start()
+    {
+        combinationToString.Add("Test", new Note[]{ Note.One, Note.Two, Note.Three });
+        stringToAbility.Add("Test", new TestAbility());
+    }
 
     private void OnEnable()
     {
@@ -57,7 +87,7 @@ public class Instrument : MonoBehaviour
 
     void PlayedNote(Note n)
     {
-        Debug.Log("Played: " + n);
+        //Debug.Log("Played: " + n);
 
         combination[CombinationIndex] = n;
         CombinationIndex++;
@@ -65,10 +95,23 @@ public class Instrument : MonoBehaviour
         //If completed combination
         if (CombinationIndex == combination.Length)
         {
-            Debug.Log("Combination:\n" +
+            foreach (string abilityName in combinationToString.Keys)
+            {
+                /*Debug.Log("Combination:\n" +
                 combination[0] + "\n" +
                 combination[1] + "\n" +
                 combination[2]);
+
+                Debug.Log("Dictionary Combination:\n" +
+                combinationToString[abilityName][0] + "\n" +
+                combinationToString[abilityName][1] + "\n" +
+                combinationToString[abilityName][2]); */
+                if (combinationToString[abilityName].SequenceEqual(combination))
+                {
+                    //Debug.Log("Found Combination");
+                    stringToAbility[abilityName].Use();
+                }
+            }
 
             ClearCombination();
         }
