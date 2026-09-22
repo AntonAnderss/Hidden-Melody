@@ -1,8 +1,12 @@
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Values")]
+    [SerializeField] protected int hp = 20;
+    [SerializeField] protected int damage = 1;
+
     void Start()
     {
         
@@ -13,4 +17,10 @@ public class Enemy : MonoBehaviour
     {
         
     }
+
+    public void TakeDamage(int hurt)
+    {
+        hp -= hurt;
+    }
+    
 }

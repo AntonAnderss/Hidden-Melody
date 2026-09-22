@@ -2,23 +2,23 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
+/*
+ * Author: Clara Lönnkrans
+ * Script for controlling the health system for the player. Add script to player.
+*/
 public class HealthSystem : MonoBehaviour
 {
+    [Header("Health values")]
     [SerializeField] private bool alwaysTickingDown = true;
     [SerializeField] private float maxHealth = 100;
     public float currentHealth;
     [SerializeField] private float loosePerSecond = 1f;
     private healthLevel currentHealthLevel;
 
-    //Healthbar
+    [Header ("HealthBar")]
     [SerializeField] private Slider healthBar;
     private ColorBlock color1, color2, color3;
-    [SerializeField] private Image vignette;
-    private Color vignetteColor;
 
-    //Siren
-    private bool sirenSpawned;
-    [SerializeField] GameObject sirenPrefab;
     enum healthLevel
     {
         high, 
@@ -41,9 +41,6 @@ public class HealthSystem : MonoBehaviour
         color2.disabledColor = Color.red;
         color3.disabledColor = Color.darkRed;
         healthBar.colors = color1;
-
-        vignetteColor = vignette.color;
-        vignetteColor.a = 0;
     }
 
     void Update()
@@ -53,22 +50,20 @@ public class HealthSystem : MonoBehaviour
             LooseHealth(loosePerSecond * Time.deltaTime);
             if(currentHealth > maxHealth / 2 && currentHealthLevel != healthLevel.high)
             {
-                AboveHalfHealth();
+                HighHealth();
             }
             else if (currentHealth <= maxHealth/2 && currentHealth > maxHealth/5 && currentHealthLevel != healthLevel.medium)
             {
-                UnderHalfHealth();
+                MediumHealth();
             }
             else if (currentHealth <= maxHealth/5 && currentHealthLevel != healthLevel.low)
             {
-                ZeroHealth();
+                LowHealth();
             }
         }
         healthBar.value = currentHealth;
-        vignetteColor.a = 1f - (currentHealth/maxHealth);
-        vignette.color = vignetteColor;
     }
-    void LooseHealth (float damage)
+    public void LooseHealth (float damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0)
@@ -80,29 +75,20 @@ public class HealthSystem : MonoBehaviour
         if(currentHealth > maxHealth) 
         { currentHealth = maxHealth; }
     }
-    void UnderHalfHealth()
+    void MediumHealth()
     {
         healthBar.colors = color2;
         currentHealthLevel = healthLevel.medium;
     }
-    void AboveHalfHealth()
+    void HighHealth()
     {
         healthBar.colors = color1;
         currentHealthLevel = healthLevel.high;
     }
-    void ZeroHealth()
+    void LowHealth()
     {
         healthBar.colors = color3;
         currentHealthLevel = healthLevel.low;
-        SpawnSiren();
-    }
-    void SpawnSiren()
-    {
-        Debug.Log("Siren spawned");
-        if (!sirenSpawned)
-        {
-            sirenSpawned = true;
-            Instantiate(sirenPrefab);
-        }
+        EnemyManager.instance.SpawnSiren();
     }
 }
