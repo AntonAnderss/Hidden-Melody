@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 422681011}
   - component: {fileID: 422681012}
-  - component: {fileID: 422681010}
+  - component: {fileID: 422681013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -137,22 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &422681010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422681009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d297315319a48524f930ebdcdea7fa83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Instrument
-  combination: 000000000000000000000000i
-  noteOne: {fileID: -8193904124002307463, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  noteTwo: {fileID: 6518409269372768019, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  noteThree: {fileID: -1960475855157317034, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
 --- !u!4 &422681011
 Transform:
   m_ObjectHideFlags: 0
@@ -198,6 +182,23 @@ MonoBehaviour:
   m_DefaultActionMap: GamePlay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &422681013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422681009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb57aed510992154b91117492cc355a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InstrumentManager
+  noteOne: {fileID: -8193904124002307463, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  noteTwo: {fileID: 6518409269372768019, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  noteThree: {fileID: -1960475855157317034, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  inCombination: 0
+  combinationTime: 1.5
 --- !u!1 &468015387
 GameObject:
   m_ObjectHideFlags: 0
