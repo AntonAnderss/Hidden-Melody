@@ -1,63 +1,39 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
-enum Note { Error, One, Two, Three }
+/* ToDo
+ *  Add Timers
+ *  Clean Up code
+ */
 
-public class Instrument : MonoBehaviour
+[Serializable]
+public class Ability 
 {
-    [SerializeField] Note[] combination = new Note[3];
-    int CombinationLength { get { return combination.Length; } }
-    int CombinationIndex = 0;
+    public virtual void Use() { Debug.Log("Played Default Ability"); }
+}
 
-    public InputActionReference noteOne;
-    public InputActionReference noteTwo;
-    public InputActionReference noteThree;
+public enum Note { Error, One, Two, Three }
 
-    int frameCounter = 0;
-    int framesNeeded = 20;
-    bool canPress = true;
+public class Instrument
+{
+    protected Note[] combination = new Note[3];
+    protected Dictionary<string, Note[]> combinationToString = new Dictionary<string, Note[]>();
+    protected Dictionary<string, Ability> stringToAbility = new Dictionary<string, Ability>();
 
-    private void OnEnable()
+    protected int CombinationLength { get { return combination.Length; } }
+    protected int CombinationIndex = 0;
+
+    public virtual void InitInstrument() 
     {
-        noteOne.action.started += NoteOne;
-        noteTwo.action.started += NoteTwo;
-        noteThree.action.started += NoteThree;
-
+        Debug.Log("Has not overriden InitInstrument");
     }
 
-    private void OnDisable()
+    public bool PlayedNote(Note n)
     {
-        noteOne.action.started -= NoteOne;
-        noteTwo.action.started -= NoteTwo;
-        noteThree.action.started -= NoteThree;
-    }
-    private void FixedUpdate() //FixedTimeStep = 0.02 / 50FPS
-    {
-        if (canPress == true)
-            return;
-
-        if (++frameCounter >= framesNeeded)
-            return;
-
-        canPress = true;
-    }
-
-    void NoteOne(InputAction.CallbackContext obj)
-    {
-        PlayedNote(Note.One);
-    }
-    void NoteTwo(InputAction.CallbackContext obj)
-    {
-        PlayedNote(Note.Two);
-    }
-    void NoteThree(InputAction.CallbackContext obj)
-    {
-        PlayedNote(Note.Three);
-    }
-
-    void PlayedNote(Note n)
-    {
-        Debug.Log("Played: " + n);
+        //Debug.Log("Played: " + n);
 
         combination[CombinationIndex] = n;
         CombinationIndex++;
@@ -65,17 +41,30 @@ public class Instrument : MonoBehaviour
         //If completed combination
         if (CombinationIndex == combination.Length)
         {
-            Debug.Log("Combination:\n" +
+            /* Debug.Log("Combination:\n" +
                 combination[0] + "\n" +
                 combination[1] + "\n" +
-                combination[2]);
+                combination[2]); */
+
+            foreach (string abilityName in combinationToString.Keys)
+            {
+                /* Debug.Log("Dictionary Combination:\n" +
+                combinationToString[abilityName][0] + "\n" +
+                combinationToString[abilityName][1] + "\n" +
+                combinationToString[abilityName][2]); */
+                if (combinationToString[abilityName].SequenceEqual(combination))
+                {
+                    //Debug.Log("Found Combination");
+                    stringToAbility[abilityName].Use();
+                }
+            }
 
             ClearCombination();
+            return true;
         }
 
-        canPress = false;
-        frameCounter = 0;
+        return false;
     }
 
-    void ClearCombination() { combination = new Note[CombinationLength]; CombinationIndex = 0; }
+    public void ClearCombination() { combination = new Note[CombinationLength]; CombinationIndex = 0; }
 }
