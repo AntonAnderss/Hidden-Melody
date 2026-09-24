@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
+using NUnit.Framework.Constraints;
 
 
 public class MiniGame : MonoBehaviour
@@ -14,12 +16,22 @@ public class MiniGame : MonoBehaviour
     private bool goingUp = true;
     [SerializeField] private InputActionReference interactKey;
     [SerializeField] private Volume greenCorrect;
-    [SerializeField] private List<HitCombination> combinations;
     [SerializeField] private List<Image> images;
     [SerializeField] private RectTransform sliderRect;
+    [SerializeField] private Canvas miniGameCanvas;
+    public bool minigameCompleted { get; private set; }
+    private HitCombination currentCombination;
 
 
-    private int currentCombination = 0;
+    public void StartMiniGame(HitCombination combination)
+    {
+        miniGameCanvas.gameObject.SetActive(true);
+
+        currentCombination = combination;
+        minigameCompleted = false;
+
+        ResetCombination();
+    }
     void OnEnable()
     {
         interactKey.action.Enable();
@@ -30,8 +42,19 @@ public class MiniGame : MonoBehaviour
         interactKey.action.Disable();
     }
 
+    private void Start()
+    {
+
+        StartMiniGame(CreateCombinations.DashCombo());
+     
+    }
+
     void Update()
     {
+        if(minigameCompleted)
+        {
+            return;
+        }
         SliderMovement();
 
 
@@ -47,7 +70,7 @@ public class MiniGame : MonoBehaviour
 
         if(goingUp)
         {
-            slider.value += 000.6f * Time.deltaTime;
+            slider.value += 000.6f * Time.deltaTime; // Makes slider go right
             if(slider.value>=1)
             {
                 goingUp = false;
@@ -55,8 +78,8 @@ public class MiniGame : MonoBehaviour
         }
         else if (!goingUp)
         {
-            slider.value -= 000.6f * Time.deltaTime;
-            if(slider.value<=0)
+            slider.value -= 000.6f * Time.deltaTime; // Makes slider go Left
+            if (slider.value<=0)
             {
                 goingUp = true;
             }
@@ -65,14 +88,15 @@ public class MiniGame : MonoBehaviour
     public void CheckHit()
     {
         Debug.Log("E pressed");
-        HitCombination combination  = combinations[currentCombination];
+        HitCombination combination  = currentCombination;
 
-        for (int i = 0; i < combination.zones.Count; i++)
+        // Loops through all zones checking if interact key is pressed inside HitZone
+        for (int i = 0; i < combination.zones.Count; i++) 
         {
             HitZone zone = combination.zones[i];
 
-            // Hoppa över zones som redan är träffade
-            if (zone.completed)
+            // Skips zones that are already hit
+            if (zone.completed) 
                 continue;
 
             if (slider.value >= zone.minValue &&
@@ -82,8 +106,8 @@ public class MiniGame : MonoBehaviour
 
                 zone.completed = true;
 
-                // Ta bort motsvarande svarta stapel
-                images[i].gameObject.SetActive(false);
+                // Removes black staple when interct key is pressed inside HitZone
+                images[i].gameObject.SetActive(false);  
                 
                 StartCoroutine(GreenVignette());
 
@@ -95,30 +119,33 @@ public class MiniGame : MonoBehaviour
 
         Debug.Log("Miss");
         StartCoroutine(CameraShake());
-
-        //0.73 - 0.83 
-        //0.44 - 0.54
-        //0.18 - 0.28
     }
 
     public IEnumerator CameraShake()
     {
+
+        // Saves camera's original rotation so it can be restored
         Quaternion originalRotation = cameraShake.transform.localRotation;
 
+        // How long the shake lasts, and how strong rotation is
         float duration = 0.15f;
         float strength = 3f;
         float timer = 0f;
 
+        // Keeps shaking until duration runs out
         while (timer < duration)
         {
+            // Generate a random rotation
             float zRotation = Random.Range(-strength, strength);
 
+            // Apply the random rotation 
             cameraShake.transform.localRotation = originalRotation * Quaternion.Euler(0, 0, zRotation);
 
             timer += Time.deltaTime;
             yield return null;
         }
 
+        // restore the camera to original rotation
         cameraShake.transform.localRotation = originalRotation;
     }
     public IEnumerator GreenVignette()
@@ -128,34 +155,20 @@ public class MiniGame : MonoBehaviour
         greenCorrect.weight = 0f;
     }
 
-    [System.Serializable]
-    public class HitZone
-    {
-        public float minValue;
-        public float maxValue;
-
-        public bool completed;
-    }
-
-    [System.Serializable]
-    public class HitCombination
-    {
-        public List<HitZone> zones;
-    }
 
     private void UpdateImages()
     {
-        HitCombination combination = combinations[currentCombination];
+        HitCombination combination = currentCombination;
 
         for (int i = 0; i < images.Count; i++)
         {
             HitZone zone = combination.zones[i];
 
-            // Mitten av träffområdet
-            float center = (zone.minValue + zone.maxValue) / 2f;
+            // Center of the hitarea
+            float center = (zone.minValue + zone.maxValue) / 2f; 
 
-            // Gör om 0-1 till en position längs slidern
-            float xPosition = Mathf.Lerp(
+            // Makes 0-1 a position on the slider
+            float xPosition = Mathf.Lerp( 
                 sliderRect.rect.xMin,
                 sliderRect.rect.xMax,
                 center
@@ -163,7 +176,8 @@ public class MiniGame : MonoBehaviour
 
             RectTransform imageRect = images[i].rectTransform;
 
-            imageRect.anchoredPosition = new Vector2(
+            // Moves the hit marker to correct position while keeping Y value the same
+            imageRect.anchoredPosition = new Vector2( 
                 xPosition,
                 imageRect.anchoredPosition.y
             );
@@ -171,9 +185,8 @@ public class MiniGame : MonoBehaviour
     }
     private void CheckIfCombinationComplete()
     {
-        HitCombination combination = combinations[currentCombination];
-
-        foreach (HitZone zone in combination.zones)
+        // Loops through the zones, if not completed returns.
+        foreach (HitZone zone in currentCombination.zones)
         {
             if (!zone.completed)
             {
@@ -181,32 +194,29 @@ public class MiniGame : MonoBehaviour
             }
         }
 
-        Debug.Log("Alla 3 träffade");
+        Debug.Log("Combo Complete: " + currentCombination.combinationName);
+        FinishMiniGame();
 
-        NextCombination();
+
     }
-    private void NextCombination()
+
+    private void FinishMiniGame()
     {
-        currentCombination++;
+        minigameCompleted = true;
+        miniGameCanvas.gameObject.SetActive(false);
+        greenCorrect.weight = 0f;
 
-        if (currentCombination >= combinations.Count)
-        {
-            currentCombination = 0;
-        }
-
-        ResetCombination();
+        Debug.Log("Minigame Complete");
     }
-
 
     private void ResetCombination()
     {
 
         Debug.Log("Reset");
-        HitCombination combination = combinations[currentCombination];
 
-        for (int i = 0; i < combination.zones.Count; i++)
+        for (int i = 0; i < currentCombination.zones.Count; i++)
         {
-            combination.zones[i].completed = false;
+            currentCombination.zones[i].completed = false;
 
             images[i].gameObject.SetActive(true);
         }
