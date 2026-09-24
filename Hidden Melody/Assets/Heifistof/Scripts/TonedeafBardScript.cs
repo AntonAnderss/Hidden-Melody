@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/*
+ * Author: Clara Lönnkrans
+ * 
+*/
 public class TonedeafBardScript : Enemy
 {
     [Header("Projectile")]

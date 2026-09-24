@@ -1,6 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
+/*
+ * Author: Clara Lönnkrans
+ * 
+*/
 public class SirenScript : MonoBehaviour
 {
 

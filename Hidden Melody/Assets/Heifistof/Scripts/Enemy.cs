@@ -1,6 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
+/*
+ * Author: Clara Lönnkrans
+ * 
+*/
 public class Enemy : MonoBehaviour
 {
     [Header("Values")]
@@ -11,7 +15,6 @@ public class Enemy : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -22,5 +25,4 @@ public class Enemy : MonoBehaviour
     {
         hp -= hurt;
     }
-    
 }
