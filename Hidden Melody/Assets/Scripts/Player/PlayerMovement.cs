@@ -1,40 +1,71 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 5f;
 
     private Rigidbody rb;
-    private float direction;
+    private Collider body;
+    private Vector3 normalSize;
+    private bool grounded;
 
-    void Awake()
+
+
+
+
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
+        body = GetComponent<Collider>();
+        normalSize = transform.localScale;
         rb.freezeRotation = true;
     }
 
+
+
     void Update()
     {
-        direction = 0;
+        float movement = 0;
 
-        if (Input.GetKey(KeyCode.A))
-            direction -= 1;
+        if (Input.GetKey(KeyCode.A)) movement = -speed;
+        if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        if (Input.GetKey(KeyCode.D))
-            direction += 1;
+        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            grounded = false;
+        }
+
+        // Crouch keep feet same place
+        float feet = body.bounds.min.y;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+            transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
+        else
+            transform.localScale = normalSize;
+
+        transform.position += Vector3.up * (feet - body.bounds.min.y);
     }
 
-    void FixedUpdate()
+
+
+    void OnCollisionStay(Collision collision)
     {
-        rb.linearVelocity = new Vector3(
-            direction * speed,
-            rb.linearVelocity.y,
-            0
-        );
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+                grounded = true;
+        }
+    }
+
+
+
+
+    void OnCollisionExit(Collision collision)
+    {
+        grounded = false;
     }
 }
