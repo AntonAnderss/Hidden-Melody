@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
@@ -17,6 +18,10 @@ public class HealthSystem : MonoBehaviour
 
     [Header ("HealthBar")]
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Volume globalVolume;
+    private Vignette vignette;
+    private FilmGrain filmgrain;
+    private ColorAdjustments colorAdjustments;
     private ColorBlock color1, color2, color3;
 
     enum healthLevel
@@ -25,6 +30,10 @@ public class HealthSystem : MonoBehaviour
         medium, 
         low
     };
+    public bool AlwaysTickingDown
+    {
+        set { alwaysTickingDown = value; }
+    }
  
 
     void Start()
@@ -41,6 +50,13 @@ public class HealthSystem : MonoBehaviour
         color2.disabledColor = Color.red;
         color3.disabledColor = Color.darkRed;
         healthBar.colors = color1;
+
+        globalVolume.profile.TryGet(out vignette);
+        vignette.intensity.value = 0;
+        globalVolume.profile.TryGet(out filmgrain);
+        globalVolume.profile.TryGet(out colorAdjustments);
+        colorAdjustments.saturation.value = 0; 
+
     }
 
     void Update()
@@ -48,18 +64,29 @@ public class HealthSystem : MonoBehaviour
         if (alwaysTickingDown)
         {
             LooseHealth(loosePerSecond * Time.deltaTime);
-            if(currentHealth > maxHealth / 2 && currentHealthLevel != healthLevel.high)
+            
+        }
+        if (currentHealthLevel != healthLevel.high)
+        {
+            UpdateVignette();
+            if (currentHealthLevel == healthLevel.low)
             {
-                HighHealth();
+                UpdateColor();
             }
-            else if (currentHealth <= maxHealth/2 && currentHealth > maxHealth/5 && currentHealthLevel != healthLevel.medium)
-            {
-                MediumHealth();
-            }
-            else if (currentHealth <= maxHealth/5 && currentHealthLevel != healthLevel.low)
-            {
-                LowHealth();
-            }
+        }
+
+        if (currentHealth > maxHealth / 2 && currentHealthLevel != healthLevel.high)
+        {
+            HighHealth();
+
+        }
+        else if (currentHealth <= maxHealth / 2 && currentHealth > maxHealth / 5 && currentHealthLevel != healthLevel.medium)
+        {
+            MediumHealth();
+        }
+        else if (currentHealth <= maxHealth / 5 && currentHealthLevel != healthLevel.low)
+        {
+            LowHealth();
         }
         healthBar.value = currentHealth;
     }
@@ -69,7 +96,11 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth < 0)
         {  currentHealth = 0; }
     }
-    void RegainHealth(float healing)
+    public void RegainAllHealth()
+    {
+        currentHealth = maxHealth;
+    }
+    public void RegainHealth(float healing)
     {
         currentHealth += healing;
         if(currentHealth > maxHealth) 
@@ -84,11 +115,25 @@ public class HealthSystem : MonoBehaviour
     {
         healthBar.colors = color1;
         currentHealthLevel = healthLevel.high;
+        vignette.intensity.value = 0;
     }
     void LowHealth()
     {
         healthBar.colors = color3;
         currentHealthLevel = healthLevel.low;
         EnemyManager.instance.SpawnSiren();
+        alwaysTickingDown = false;
+    }
+    void UpdateVignette()
+    {
+        vignette.intensity.value = (0.5f - (currentHealth/ maxHealth) + 0.1f);
+    }
+    void UpdateColor()
+    {
+        colorAdjustments.saturation.value = -100 + (currentHealth * 5);
+    }
+    void KillPlayer()
+    {
+
     }
 }

@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e52d28fd9e5afc141b04907c7617f357, type: 3}
       propertyPath: m_Name
-      value: SingleNote
+      value: HorisontalSingleNote
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74,30 +74,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e52d28fd9e5afc141b04907c7617f357, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2611396392547476320}
+      addedObject: {fileID: 2755713082277610165}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e52d28fd9e5afc141b04907c7617f357, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2755713082277610165}
+      addedObject: {fileID: -6297138124621736009}
   m_SourcePrefab: {fileID: 100100000, guid: e52d28fd9e5afc141b04907c7617f357, type: 3}
 --- !u!1 &8284907346030010620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e52d28fd9e5afc141b04907c7617f357, type: 3}
   m_PrefabInstance: {fileID: 9095176145483701677}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2611396392547476320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284907346030010620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72122a5188007449b6aeadea22d784f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  speed: 0.1
-  damageMultiplier: 1
 --- !u!136 &2755713082277610165
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -121,3 +107,21 @@ CapsuleCollider:
   m_Height: 0.065284
   m_Direction: 1
   m_Center: {x: -0.003576633, y: -0.029424377, z: 0}
+--- !u!114 &-6297138124621736009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8284907346030010620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855e2142f8170474287230c37927ea69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LinearProjectile
+  speed: 0.5
+  damageMultiplier: 1
+  damage: 2
+  totalDamage: 2
+  timeExisting: 5
+  xAxis: 1

@@ -7,7 +7,8 @@ using UnityEngine;
 public class LinearProjectile : Projectile
 {
     private float timer;
-    [SerializeField] private float timeExisting = 5f;
+    [SerializeField] private float timeExisting = 7f;
+    [SerializeField] bool xAxis = true;
     void Start()
     {
         timer = 0;
@@ -16,12 +17,23 @@ public class LinearProjectile : Projectile
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(
-        transform.position.x + (speed * Time.deltaTime),
-        transform.position.y,
-        transform.position.z);
+        if(xAxis)
+        {
+            transform.position = new Vector3(
+            transform.position.x + (speed * Time.deltaTime),
+            transform.position.y,
+            transform.position.z);
+        }
+        else
+        {
+            transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y - (speed * Time.deltaTime),
+            transform.position.z);
+        }
 
-        timer += Time.deltaTime;
+
+            timer += Time.deltaTime;
 
         if (timer > timeExisting)
         {

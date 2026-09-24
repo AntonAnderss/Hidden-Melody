@@ -8,15 +8,12 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] protected float speed = 0.5f;
     [SerializeField] protected int damageMultiplier = 1;
-    private int damage = 2;
-    private float totalDamage;
-
-
-
+    [SerializeField] protected int damage = 2;
+    [SerializeField] protected float totalDamage = 2;
 
     void Start()
     {
-        totalDamage = damage * damageMultiplier;
+
     }
 
     void Update()
@@ -27,8 +24,11 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            totalDamage = damage * damageMultiplier;
+
             HealthSystem playerHealth = collision.gameObject.GetComponent<HealthSystem>();
             playerHealth.LooseHealth(totalDamage);
+            //Debug.Log(totalDamage);
             Destroy(gameObject);
         }
     }

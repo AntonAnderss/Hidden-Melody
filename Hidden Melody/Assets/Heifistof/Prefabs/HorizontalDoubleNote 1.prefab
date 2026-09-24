@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.27
+      value: 10.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.27
+      value: 10.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.27
+      value: 10.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,10 +66,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
       propertyPath: m_Name
-      value: DoubleNote
+      value: HorizontalDoubleNote 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3441407697420239524}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1484470765327991708}
   m_SourcePrefab: {fileID: 100100000, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
+--- !u!1 &1547906426964489315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 179b6c7f579578444bb2236dee1c5845, type: 3}
+  m_PrefabInstance: {fileID: 1853844088312170802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3441407697420239524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547906426964489315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855e2142f8170474287230c37927ea69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LinearProjectile
+  speed: 0.5
+  damageMultiplier: 2
+  damage: 2
+  totalDamage: 0
+  timeExisting: 7
+  xAxis: 1
+--- !u!65 &1484470765327991708
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547906426964489315}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.07261913, y: 0.067439936, z: 0.01}
+  m_Center: {x: 0.0043769362, y: -0.026027065, z: 0}
