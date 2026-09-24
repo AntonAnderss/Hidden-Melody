@@ -694,32 +694,12 @@ MonoBehaviour:
   slider: {fileID: 1118986974}
   interactKey: {fileID: 6357659176336762815, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   greenCorrect: {fileID: 343150692}
-  combinations:
-  - zones:
-    - minValue: 0.18
-      maxValue: 0.28
-      completed: 0
-    - minValue: 0.44
-      maxValue: 0.54
-      completed: 0
-    - minValue: 0.73
-      maxValue: 0.83
-      completed: 0
-  - zones:
-    - minValue: 0.35
-      maxValue: 0.45
-      completed: 0
-    - minValue: 0.45
-      maxValue: 0.55
-      completed: 0
-    - minValue: 0.55
-      maxValue: 0.65
-      completed: 0
   images:
   - {fileID: 2113913451}
   - {fileID: 1366825923}
   - {fileID: 64546385}
   sliderRect: {fileID: 1118986973}
+  miniGameCanvas: {fileID: 329003972}
 --- !u!1 &1366825921
 GameObject:
   m_ObjectHideFlags: 0
