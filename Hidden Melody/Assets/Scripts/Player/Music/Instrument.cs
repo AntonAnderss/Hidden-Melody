@@ -56,27 +56,24 @@ public class Instrument
             //  }
             //}
 
-            if(combinationToAbility.ContainsKey(combination))
-            {
-                foreach (Note[] c in combinationToAbility.Keys)
-                {
-                    if(c.SequenceEqual(combination))
-                    {
-                        combinationToAbility[combination].Use();
-                    }
-                }
-            }
-
             foreach (Note[] c in combinationToAbility.Keys)
             {
                 if (c.SequenceEqual(combination))
                 {
                     combinationToAbility[c].Use();
-
-                    Debug.Log("Found Combination : " + abilityName);
-                    stringToAbility[abilityName].Use();
                 }
             }
+
+            //foreach (Note[] c in combinationToAbility.Keys)
+            //{
+            //    if (c.SequenceEqual(combination))
+            //    {
+            //        combinationToAbility[c].Use();
+
+            //        Debug.Log("Found Combination : " + abilityName);
+            //        combinationToAbility[abilityName].Use();
+            //    }
+            //}
 
             ClearCombination();
             return true;

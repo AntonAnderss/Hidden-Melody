@@ -41,10 +41,12 @@ public class TestInstrument : Instrument
         //stringToAbility.Add("Test2", new TestTwoAbility());
 
 
-        combinationToString.Add("Dash", new[] { Note.One, Note.Two, Note.Three });
-        combinationToString.Add("DoubleJump", new[] { Note.Three, Note.Two, Note.One });
+        //combinationToString.Add("Dash", new[] { Note.One, Note.Two, Note.Three });
+        //combinationToString.Add("DoubleJump", new[] { Note.Three, Note.Two, Note.One });
+        combinationToAbility.Add(new[] { Note.One, Note.Two, Note.Three }, new DashAbility());
+        combinationToAbility.Add(new[] { Note.Three, Note.Two, Note.One }, new DoubleJumpAbility());
 
-        stringToAbility.Add("Dash", new DashAbility());
-        stringToAbility.Add("DoubleJump", new DoubleJumpAbility());
+        //stringToAbility.Add("Dash", new DashAbility());
+        //stringToAbility.Add("DoubleJump", new DoubleJumpAbility());
     }
 }

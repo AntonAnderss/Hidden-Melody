@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        left.action.started += WalkLeft;
-        right.action.started += WalkRight;
+        //left.action.started += WalkLeft;
+        //right.action.started += WalkRight;
         jump.action.started += Jump;
         crouch.action.started += Crouch;
     }
@@ -48,12 +48,12 @@ public class PlayerMovement : MonoBehaviour
     {
         float movement = 0;
 
-        //if (Input.GetKey(KeyCode.A)) movement = -speed;
-        //if (Input.GetKey(KeyCode.D)) movement = speed;
+        if (Input.GetKey(KeyCode.A)) movement = -speed;
+        if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
-        if(!isDashing)
+        if (!isDashing)
         {
             rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }

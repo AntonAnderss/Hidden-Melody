@@ -88,9 +88,10 @@ public class InstrumentManager : MonoBehaviour
 
     void PlayNote(Note n)
     {
-        if (playMode == PlayMode.Combination)
-            Debug.Log("PlayeNote check");
-        if(!inCombination)
+        //if (playMode == PlayMode.Combination)
+            //Debug.Log("PlayeNote check");
+
+        if(playMode == PlayMode.Combination)
         {
             if (!inCombination)
             {
