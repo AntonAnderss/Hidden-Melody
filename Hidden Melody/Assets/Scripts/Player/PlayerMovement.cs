@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 normalSize;
     private bool grounded;
 
+    public InputActionReference left, right, jump, crouch;
+    public float Feet { get { return body.bounds.min.y; } }
+    public bool isCrouching = false;
 
+    private void OnEnable()
+    {
+        left.action.started += WalkLeft;
+        right.action.started += WalkRight;
+        jump.action.started += Jump;
+        crouch.action.started += Crouch;
+    }
 
 
 
@@ -28,26 +39,23 @@ public class PlayerMovement : MonoBehaviour
     {
         float movement = 0;
 
-        if (Input.GetKey(KeyCode.A)) movement = -speed;
-        if (Input.GetKey(KeyCode.D)) movement = speed;
+        //if (Input.GetKey(KeyCode.A)) movement = -speed;
+        //if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        /*if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
-        }
+        } */
 
-        // Crouch keep feet same place
-        float feet = body.bounds.min.y;
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (isCrouching)
             transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
         else
             transform.localScale = normalSize;
 
-        transform.position += Vector3.up * (feet - body.bounds.min.y);
+        transform.position += Vector3.up * (Feet - body.bounds.min.y);
     }
 
 
@@ -61,11 +69,33 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-
-
     void OnCollisionExit(Collision collision)
     {
         grounded = false;
+    }
+
+    /* Movement */
+    void WalkLeft(InputAction.CallbackContext obj)
+    {
+        rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
+    }
+
+    void WalkRight(InputAction.CallbackContext obj)
+    {
+        rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
+    }
+
+    void Jump(InputAction.CallbackContext obj)
+    {
+        if(grounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            grounded = false;
+        }
+    }
+
+    void Crouch(InputAction.CallbackContext obj)
+    {
+        isCrouching = !isCrouching;
     }
 }
