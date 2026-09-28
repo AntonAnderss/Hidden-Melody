@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,8 +10,14 @@ public class PlayerMovement : MonoBehaviour
     private Collider body;
     private Vector3 normalSize;
     private bool grounded;
+    private int lastMoveDirection = 1;
+    private bool isDashing = false;
+    private bool doubleJumpUsed = false;
 
+    [SerializeField] private float dashSpeed = 15f;
+    [SerializeField] private float dashDuration = 0.15f;
 
+    
 
 
 
@@ -28,10 +35,22 @@ public class PlayerMovement : MonoBehaviour
     {
         float movement = 0;
 
-        if (Input.GetKey(KeyCode.A)) movement = -speed;
-        if (Input.GetKey(KeyCode.D)) movement = speed;
+        if (Input.GetKey(KeyCode.A))
+        {
+            movement = -speed;
+            lastMoveDirection = -1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            movement = speed;
+            lastMoveDirection = 1;
+        } 
+        if(!isDashing)
+        {
+            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
+        }
 
-        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
@@ -57,7 +76,11 @@ public class PlayerMovement : MonoBehaviour
         foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
+            {
+
                 grounded = true;
+                doubleJumpUsed = false;
+            }
         }
     }
 
@@ -67,5 +90,34 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         grounded = false;
+    }
+
+    public void Dash()
+    {
+        StartCoroutine(DashActivate());
+     
+    }
+    private IEnumerator DashActivate()
+    {
+        isDashing = true;
+
+        rb.linearVelocity = new Vector3( dashSpeed * lastMoveDirection, rb.linearVelocity.y, 0);
+
+        yield return new WaitForSeconds(dashDuration);
+
+        isDashing = false;
+    }
+
+    public void DoubleJump()
+    {
+        if(!grounded & !doubleJumpUsed)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+            doubleJumpUsed = true;
+        }
+
     }
 }

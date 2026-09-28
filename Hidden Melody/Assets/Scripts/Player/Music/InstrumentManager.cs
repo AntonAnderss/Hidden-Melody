@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class InstrumentManager : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class InstrumentManager : MonoBehaviour
     void NoteOne(InputAction.CallbackContext obj)
     {
         PlayNote(Note.One);
+        
     }
     void NoteTwo(InputAction.CallbackContext obj)
     {
@@ -70,13 +72,14 @@ public class InstrumentManager : MonoBehaviour
 
     void PlayNote(Note n)
     {
+        Debug.Log("PlayeNote check");
         if(!inCombination)
         {
             inCombination = true;
             combinationTimer.Reset();
         }
 
-        if(currInstrument.PlayedNote(n)) //If reached a combination
+        if (currInstrument.PlayedNote(n)) //If reached a combination
             inCombination = false;
     }
 }
