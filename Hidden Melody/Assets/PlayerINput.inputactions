@@ -115,6 +115,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ModeChange",
+                    "type": "Button",
+                    "id": "be6ce02a-8ddb-4ef5-bd2e-7959752e6a64",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -236,6 +246,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "546153bb-4db8-479b-9f1d-92b06f9c0c75",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "ModeChange",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
