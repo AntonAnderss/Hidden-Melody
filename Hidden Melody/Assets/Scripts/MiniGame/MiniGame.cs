@@ -29,6 +29,7 @@ public class MiniGame : MonoBehaviour
 
     public void StartMiniGame(HitCombination combination)
     {
+        Debug.Log("Minigame active");
         miniGameCanvas.gameObject.SetActive(true);
 
         currentCombination = combination;
@@ -227,6 +228,7 @@ public class MiniGame : MonoBehaviour
             currentCombination.zones[i].completed = false;
 
             images[i].gameObject.SetActive(true);
+            //Debug.Log("Image : " + i);
         }
 
         UpdateImages();
