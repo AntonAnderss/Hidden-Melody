@@ -58,6 +58,16 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }
 
+        if (Input.GetKey(KeyCode.A))
+        {
+            movement = -speed;
+            lastMoveDirection = -1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            movement = speed;
+            lastMoveDirection = 1;
+        }
 
         /*if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
