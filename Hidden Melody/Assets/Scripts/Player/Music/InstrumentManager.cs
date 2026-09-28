@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 /* ToDo
  *  Add GUI
@@ -74,6 +75,7 @@ public class InstrumentManager : MonoBehaviour
     void NoteOne(InputAction.CallbackContext obj)
     {
         PlayNote(Note.One);
+        
     }
     void NoteTwo(InputAction.CallbackContext obj)
     {
@@ -87,6 +89,8 @@ public class InstrumentManager : MonoBehaviour
     void PlayNote(Note n)
     {
         if (playMode == PlayMode.Combination)
+            Debug.Log("PlayeNote check");
+        if(!inCombination)
         {
             if (!inCombination)
             {

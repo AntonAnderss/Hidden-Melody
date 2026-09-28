@@ -5,10 +5,10 @@ using System;
 using System.Linq;
 
 [Serializable]
-public class Ability 
-{
-    public virtual void Use() { Debug.Log("Played Default Ability"); }
-}
+//public class Ability 
+//{
+//    public virtual void Use() { Debug.Log("Played Default Ability"); }
+//}
 
 public enum Note { Error, One, Two, Three }
 
@@ -72,6 +72,9 @@ public class Instrument
                 if (c.SequenceEqual(combination))
                 {
                     combinationToAbility[c].Use();
+
+                    Debug.Log("Found Combination : " + abilityName);
+                    stringToAbility[abilityName].Use();
                 }
             }
 

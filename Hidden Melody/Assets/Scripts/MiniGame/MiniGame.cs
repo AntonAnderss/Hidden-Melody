@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using NUnit.Framework.Constraints;
+using Unity.VisualScripting;
 
 
 public class MiniGame : MonoBehaviour
@@ -19,18 +20,23 @@ public class MiniGame : MonoBehaviour
     [SerializeField] private List<Image> images;
     [SerializeField] private RectTransform sliderRect;
     [SerializeField] private Canvas miniGameCanvas;
+    [SerializeField] private HealthSystem healthSystem;
+    //[SerializeField] private GameObject cameraActive;
     public bool minigameCompleted { get; private set; }
     private HitCombination currentCombination;
+    private bool minigameActive = false;
 
 
     public void StartMiniGame(HitCombination combination)
     {
+        Debug.Log("Minigame active");
         miniGameCanvas.gameObject.SetActive(true);
 
         currentCombination = combination;
         minigameCompleted = false;
-
+        minigameActive = true;
         ResetCombination();
+        //cameraActive.GameObject().SetActive(false);
     }
     void OnEnable()
     {
@@ -42,19 +48,13 @@ public class MiniGame : MonoBehaviour
         interactKey.action.Disable();
     }
 
-    private void Start()
-    {
-
-        StartMiniGame(CreateCombinations.DashCombo());
-     
-    }
-
     void Update()
     {
-        if(minigameCompleted)
+        if(!minigameActive)
         {
             return;
         }
+
         SliderMovement();
 
 
@@ -87,6 +87,12 @@ public class MiniGame : MonoBehaviour
     }
     public void CheckHit()
     {
+
+        if(currentCombination == null)
+        {
+            Debug.Log("no Minigmae Combination is active");
+            return;
+        }
         Debug.Log("E pressed");
         HitCombination combination  = currentCombination;
 
@@ -116,7 +122,7 @@ public class MiniGame : MonoBehaviour
                 return;
             }
         }
-
+        healthSystem.LooseHealth(5);
         Debug.Log("Miss");
         StartCoroutine(CameraShake());
     }
@@ -203,8 +209,11 @@ public class MiniGame : MonoBehaviour
     private void FinishMiniGame()
     {
         minigameCompleted = true;
+        minigameActive = false;
         miniGameCanvas.gameObject.SetActive(false);
         greenCorrect.weight = 0f;
+        currentCombination = null;
+        //cameraActive.GameObject().SetActive(true);
 
         Debug.Log("Minigame Complete");
     }
@@ -219,6 +228,7 @@ public class MiniGame : MonoBehaviour
             currentCombination.zones[i].completed = false;
 
             images[i].gameObject.SetActive(true);
+            //Debug.Log("Image : " + i);
         }
 
         UpdateImages();

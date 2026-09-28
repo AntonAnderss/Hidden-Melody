@@ -3,8 +3,21 @@ using UnityEngine;
 
 public static class CreateCombinations
 {
+    public static HitCombination GetCombination(AbilityType ability)
+    {
+        switch (ability)
+        {
+            case AbilityType.Dash:
+                return DashCombo();
 
-        
+            case AbilityType.DoubleJump:
+                return DoubleJumpCombo();
+
+            default:
+                return null;
+        }
+    }
+
     public static HitCombination DashCombo()
     {
         return new HitCombination(
