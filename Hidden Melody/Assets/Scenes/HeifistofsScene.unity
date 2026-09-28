@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce05d59f6c8cc6e4a91f9878738a057d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  sirenPrefab: {fileID: 1303568948490763230, guid: 921ad174c118b7645856345aa91b8abb, type: 3}
+  sirenPrefab: {fileID: 7394550692721758434, guid: 1ea168bc34531e04f930b225143065e1, type: 3}
   player: {fileID: 2114934785}
   enemies: []
 --- !u!1 &1944675914
@@ -1312,7 +1312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5857625015775999034, guid: b72d9a5dd5267cd479a3e644f903e770, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.24404
+      value: 1.54
       objectReference: {fileID: 0}
     - target: {fileID: 5857625015775999034, guid: b72d9a5dd5267cd479a3e644f903e770, type: 3}
       propertyPath: m_LocalPosition.y
