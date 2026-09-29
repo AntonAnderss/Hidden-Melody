@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DashAbility : Ability
+public class DashAbility : OldAbility
 {
     
     public override AbilityType Type => AbilityType.Dash;

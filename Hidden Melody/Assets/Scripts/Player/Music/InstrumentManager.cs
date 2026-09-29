@@ -6,7 +6,8 @@ using UnityEngine.Rendering;
 /* ToDo
  *  Add GUI
  *  Add instrument management
- *  Add unlockable abilities
+ *  Make instruments to Scriptable Objects
+ *  Add unlockable abilities (In abilities)
  *  Add Timer for Note Abilities
  *  Refactor
  */
@@ -16,7 +17,7 @@ public class InstrumentManager : MonoBehaviour
     public enum PlayMode { Combination, Single }
     public PlayMode playMode;
 
-    [SerializeField] Instrument currInstrument;
+    [SerializeField] OldInstrument currInstrument;
     //public Note[] combination = new Note[3];
 
     public InputActionReference modeChange;
@@ -30,7 +31,7 @@ public class InstrumentManager : MonoBehaviour
 
     private void Start()
     {
-        currInstrument = new TestInstrument();
+        currInstrument = new DebugInstrument();
         currInstrument.InitInstrument();
 
         combinationTimer = new Timer(combinationTime);

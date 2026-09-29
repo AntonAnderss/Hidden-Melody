@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public abstract class Ability
+public abstract class OldAbility
 {
     public abstract AbilityType Type { get; }
 

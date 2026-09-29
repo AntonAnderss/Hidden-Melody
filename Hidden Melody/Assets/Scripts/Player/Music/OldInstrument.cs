@@ -4,21 +4,13 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-[Serializable]
-//public class Ability 
-//{
-//    public virtual void Use() { Debug.Log("Played Default Ability"); }
-//}
-
-public enum Note { Error, One, Two, Three }
-
-public class Instrument
+public class OldInstrument
 {
     protected Note[] combination = new Note[3];
     //protected Dictionary<string, Note[]> combinationToString = new Dictionary<string, Note[]>();
     //protected Dictionary<string, Ability> stringToAbility = new Dictionary<string, Ability>();
-    protected Dictionary<Note[], Ability> combinationToAbility = new Dictionary<Note[], Ability>();
-    protected Dictionary<Note, Ability> noteToAbility = new Dictionary<Note, Ability>();
+    protected Dictionary<Note[], OldAbility> combinationToAbility = new Dictionary<Note[], OldAbility>();
+    protected Dictionary<Note, OldAbility> noteToAbility = new Dictionary<Note, OldAbility>();
 
     protected int CombinationLength { get { return combination.Length; } }
     protected int CombinationIndex = 0;
