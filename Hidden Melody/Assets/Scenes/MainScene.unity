@@ -173,6 +173,7 @@ MonoBehaviour:
   - {fileID: 1389801207}
   sliderRect: {fileID: 379118671}
   miniGameCanvas: {fileID: 1607204329}
+  healthSystem: {fileID: 0}
 --- !u!4 &93473464
 Transform:
   m_ObjectHideFlags: 0
@@ -341,7 +342,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1617,7 +1618,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 5
   jumpForce: 5
-  grounded: 0
+  left: {fileID: -3060771130678641088, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  right: {fileID: -5471297292594734992, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  jump: {fileID: 8317493720988511252, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  crouch: {fileID: 6468948682339298941, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  isCrouching: 0
   dashSpeed: 15
   dashDuration: 0.15
 --- !u!114 &1610369815
@@ -1633,8 +1638,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PLayerRespawn
   deathHeight: -10
-  checkpoint: {x: 0, y: 0, z: 0}
-  rb: {fileID: 0}
 --- !u!114 &1610369816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,6 +1650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb57aed510992154b91117492cc355a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstrumentManager
+  playMode: 0
+  modeChange: {fileID: 1834212627469565697, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteOne: {fileID: -8193904124002307463, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteTwo: {fileID: 6518409269372768019, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteThree: {fileID: -1960475855157317034, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}

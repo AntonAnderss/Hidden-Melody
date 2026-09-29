@@ -13,12 +13,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]private bool grounded;
     private int lastMoveDirection = 1;
     private bool isDashing = false;
-    private bool doubleJumpReady = false;
+    private bool doubleJumpUsed = false;
+
+
+    public InputActionReference left, right, jump, crouch;
+    public float Feet { get { return body.bounds.min.y; } }
+    public bool isCrouching = false;
+
+    private void OnEnable()
+    {
+        //left.action.started += WalkLeft;
+        //right.action.started += WalkRight;
+        jump.action.started += Jump;
+        crouch.action.started += Crouch;
+    }
 
     [SerializeField] private float dashSpeed = 15f;
     [SerializeField] private float dashDuration = 0.15f;
 
-    
 
 
 
@@ -46,6 +58,16 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }
 
+        if (Input.GetKey(KeyCode.A)) movement = -speed;
+        if (Input.GetKey(KeyCode.D)) movement = speed;
+
+        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+
+        if (!isDashing)
+        {
+            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             movement = -speed;
@@ -55,28 +77,20 @@ public class PlayerMovement : MonoBehaviour
         {
             movement = speed;
             lastMoveDirection = 1;
-        } 
-        if(!isDashing)
-        {
-            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }
 
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        /*if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            Jump();
-        }
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            grounded = false;
+        } */
 
-        // Crouch keep feet same place
-        float feet = body.bounds.min.y;
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (isCrouching)
             transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
         else
             transform.localScale = normalSize;
 
-        transform.position += Vector3.up * (feet - body.bounds.min.y);
+        transform.position += Vector3.up * (Feet - body.bounds.min.y);
     }
 
 
@@ -88,31 +102,41 @@ public class PlayerMovement : MonoBehaviour
             if (contact.normal.y > 0.5f)
             {
                 grounded = true;
+                doubleJumpUsed = false;
             }
         }
     }
 
-
-
-
-    void Jump()
+    void OnCollisionExit(Collision collision)
     {
+        grounded = false;
+    }
 
-        if (grounded)
+    /* Movement */
+    void WalkLeft(InputAction.CallbackContext obj)
+    {
+        rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
+    }
+
+    void WalkRight(InputAction.CallbackContext obj)
+    {
+        rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
+    }
+
+    void Jump(InputAction.CallbackContext obj)
+    {
+        if(grounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
         }
-
-        else if (doubleJumpReady)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            doubleJumpReady= false;
-        }
     }
 
+    void Crouch(InputAction.CallbackContext obj)
+    {
+        isCrouching = !isCrouching;
+    
+    }
     public void Dash()
     {
         StartCoroutine(DashActivate());

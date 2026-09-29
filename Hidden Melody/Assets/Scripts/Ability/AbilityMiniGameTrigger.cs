@@ -11,6 +11,7 @@ public class AbilityMiniGameTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !hasTriggered)
         {
+            Debug.Log("Trigger activated");
             hasTriggered = true;
 
             abilityUnlockEvent.StartAbilityMiniGame(abilityToUnlock);
