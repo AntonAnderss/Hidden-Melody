@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Collider body;
     private Vector3 normalSize;
-    private bool grounded;
+    [SerializeField]private bool grounded;
     private int lastMoveDirection = 1;
     private bool isDashing = false;
-    private bool doubleJumpUsed = false;
+    private bool doubleJumpReady = false;
 
     [SerializeField] private float dashSpeed = 15f;
     [SerializeField] private float dashDuration = 0.15f;
@@ -35,6 +36,16 @@ public class PlayerMovement : MonoBehaviour
     {
         float movement = 0;
 
+        if (Input.GetKey(KeyCode.A)) movement = -speed;
+        if (Input.GetKey(KeyCode.D)) movement = speed;
+
+        //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+
+        if (!isDashing)
+        {
+            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             movement = -speed;
@@ -50,12 +61,11 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }
 
-        
+
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            grounded = false;
+            Jump();
         }
 
         // Crouch keep feet same place
@@ -77,9 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (contact.normal.y > 0.5f)
             {
-
                 grounded = true;
-                doubleJumpUsed = false;
             }
         }
     }
@@ -87,9 +95,22 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    void OnCollisionExit(Collision collision)
+    void Jump()
     {
-        grounded = false;
+
+        if (grounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            grounded = false;
+        }
+
+        else if (doubleJumpReady)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+            doubleJumpReady= false;
+        }
     }
 
     public void Dash()
@@ -108,16 +129,20 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
-    public void DoubleJump()
+    //public void DoubleJump()
+    //{
+    //    if(!grounded & !doubleJumpUsed)
+    //    {
+    //        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+    //        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+    //        doubleJumpUsed = true;
+    //    }
+
+    //}
+    public void ActivateDoubleJump()
     {
-        if(!grounded & !doubleJumpUsed)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            doubleJumpUsed = true;
-        }
-
+        doubleJumpReady = true;
     }
 }
