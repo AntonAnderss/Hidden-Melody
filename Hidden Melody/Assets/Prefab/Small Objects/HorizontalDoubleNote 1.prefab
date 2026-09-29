@@ -96,11 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855e2142f8170474287230c37927ea69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LinearProjectile
-  speed: 0.5
+  speed: 2
   damageMultiplier: 2
   damage: 2
   totalDamage: 0
-  timeExisting: 7
+  timeExisting: 4
   xAxis: 1
 --- !u!65 &1484470765327991708
 BoxCollider:

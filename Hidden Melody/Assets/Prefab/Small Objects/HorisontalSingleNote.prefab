@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855e2142f8170474287230c37927ea69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LinearProjectile
-  speed: 0.5
+  speed: 2
   damageMultiplier: 1
   damage: 2
   totalDamage: 2
-  timeExisting: 5
+  timeExisting: 4
   xAxis: 1

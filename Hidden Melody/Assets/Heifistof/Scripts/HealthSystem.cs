@@ -55,7 +55,7 @@ public class HealthSystem : MonoBehaviour
         vignette.intensity.value = 0;
         globalVolume.profile.TryGet(out filmgrain);
         globalVolume.profile.TryGet(out colorAdjustments);
-        colorAdjustments.saturation.value = 0; 
+        colorAdjustments.saturation.value = 100; 
 
     }
 
