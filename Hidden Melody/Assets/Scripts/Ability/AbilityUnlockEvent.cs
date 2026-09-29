@@ -11,14 +11,14 @@ public class AbilityUnlockEvent : MonoBehaviour
     public void StartAbilityMiniGame(AbilityType ability)
     {
         currentAbility = ability;
-        Debug.Log("Starting minigame for: " + abilityToUnlock);
 
-        HitCombination combination = CreateCombinations.GetCombination(abilityToUnlock);
+        HitCombination combination = CreateCombinations.GetCombination(ability);
         if(combination == null)
         {
             Debug.Log("No combination found");
             return;
         }
+
         miniGame.StartMiniGame(combination);
 
         waitingForMiniGame = true;
