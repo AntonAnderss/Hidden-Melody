@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
+    private YMovingPlatform platform;
 
     void Start()
     {
@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
+            platform = null;
         }
 
         // Crouch keep feet same place
@@ -54,10 +55,20 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
+        YMovingPlatform touched = collision.gameObject.GetComponent<YMovingPlatform>();
+
+        float lift = touched != null ? touched.verticalSpeed : 0f;
+
+        if (rb.linearVelocity.y > lift + 0.5f)
+            return;
+
         foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
+            {
                 grounded = true;
+                platform = touched;
+            }
         }
     }
 
@@ -67,5 +78,23 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         grounded = false;
+        platform = null;
+
     }
+
+
+
+    // Code to handle Y platform
+    void FixedUpdate()
+    {
+        if (grounded && platform != null)
+        {
+            rb.linearVelocity = new Vector3(
+                rb.linearVelocity.x,
+                platform.verticalSpeed,
+                0
+            );
+        }
+    }
+
 }
