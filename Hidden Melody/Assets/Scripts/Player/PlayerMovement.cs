@@ -10,10 +10,11 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Collider body;
     private Vector3 normalSize;
-    private bool grounded;
+    [SerializeField]private bool grounded;
     private int lastMoveDirection = 1;
     private bool isDashing = false;
     private bool doubleJumpUsed = false;
+    private bool doubleJumpReady = false;
 
 
     public InputActionReference left, right, jump, crouch;
@@ -51,7 +52,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+
+        if (!isDashing)
+        {
+            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
+        }
+
+        if (Input.GetKey(KeyCode.A)) movement = -speed;
+        if (Input.GetKey(KeyCode.D)) movement = speed;
+
+
 
         if (!isDashing)
         {
@@ -91,7 +102,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (contact.normal.y > 0.5f)
             {
-
                 grounded = true;
                 doubleJumpUsed = false;
             }
@@ -104,15 +114,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /* Movement */
-    void WalkLeft(InputAction.CallbackContext obj)
-    {
-        rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
-    }
+    //void WalkLeft(InputAction.CallbackContext obj)
+    //{
+    //    rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
+    //}
 
-    void WalkRight(InputAction.CallbackContext obj)
-    {
-        rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
-    }
+    //void WalkRight(InputAction.CallbackContext obj)
+    //{
+    //    rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
+    //}
 
     void Jump(InputAction.CallbackContext obj)
     {
@@ -120,6 +130,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
+        }
+        else if(doubleJumpReady)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x,0f,rb.linearVelocity.z);
+
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+            doubleJumpReady = false;
         }
     }
 
@@ -144,16 +162,20 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
     }
 
-    public void DoubleJump()
+    //public void DoubleJump()
+    //{
+    //    if(!grounded & !doubleJumpUsed)
+    //    {
+    //        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+    //        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+    //        doubleJumpUsed = true;
+    //    }
+
+    //}
+    public void ActivateDoubleJump()
     {
-        if(!grounded & !doubleJumpUsed)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            doubleJumpUsed = true;
-        }
-
+        doubleJumpReady = true;
     }
 }

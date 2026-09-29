@@ -25,6 +25,6 @@ public class DoubleJumpAbility : Ability
             return;
         }
 
-        playerMovement.DoubleJump();
+        playerMovement.ActivateDoubleJump();
     }
 }

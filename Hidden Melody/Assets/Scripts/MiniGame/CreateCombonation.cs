@@ -24,9 +24,9 @@ public static class CreateCombinations
         "DashAbility",
         new List<HitZone>
         {
-            new HitZone(0.25f,0.45f),
-            new HitZone(0.45f,0.65f),
-            new HitZone(0.65f,0.85f)
+            new HitZone(0.35f,0.45f),
+            new HitZone(0.45f,0.55f),
+            new HitZone(0.55f,0.65f)
         }
         );
 
