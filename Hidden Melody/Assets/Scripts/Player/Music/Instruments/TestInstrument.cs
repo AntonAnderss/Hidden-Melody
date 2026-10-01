@@ -45,6 +45,8 @@ public class TestInstrument : Instrument
         //combinationToString.Add("DoubleJump", new[] { Note.Three, Note.Two, Note.One });
         combinationToAbility.Add(new[] { Note.One, Note.Two, Note.Three }, new DashAbility());
         combinationToAbility.Add(new[] { Note.Three, Note.Two, Note.One }, new DoubleJumpAbility());
+        //AbilityUnlockState.Unlock(AbilityType.DoubleJump);
+        //AbilityUnlockState.Unlock(AbilityType.Dash);
 
         //stringToAbility.Add("Dash", new DashAbility());
         //stringToAbility.Add("DoubleJump", new DoubleJumpAbility());

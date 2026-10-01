@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 /*
  * Author: Clara Lönnkrans
- * Script for controlling the health system for the player. Add script to player.
+ * Script for the health system. Controlls the healthbar and spawns healtsystem boss. 
+ * 
+ * Use: Add script to player.
+ * Add canvas containing healthbar to healthbar
+ * Add the healthbarfill image to fillImage
+ * Add global volume to global volume
 */
 public class HealthSystem : MonoBehaviour
 {
@@ -15,14 +20,17 @@ public class HealthSystem : MonoBehaviour
     public float currentHealth;
     [SerializeField] private float loosePerSecond = 1f;
     private healthLevel currentHealthLevel;
+    [SerializeField] private PLayerRespawn checkpoints;
 
-    [Header ("HealthBar")]
-    [SerializeField] private Slider healthBar;
+    [Header("HealthBar")]
+    [SerializeField] public GameObject healthBar;
+    [SerializeField] public Image fillImage;
+
     [SerializeField] private Volume globalVolume;
     private Vignette vignette;
     private FilmGrain filmgrain;
     private ColorAdjustments colorAdjustments;
-    private ColorBlock color1, color2, color3;
+    private Color colorHPHigh, colorHPMedium, colorHPLow;
 
     enum healthLevel
     {
@@ -39,17 +47,12 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        healthBar.maxValue = maxHealth;
         currentHealthLevel = healthLevel.high;
-        healthBar.value = currentHealth;
 
-        color1 = healthBar.colors;
-        color2 = healthBar.colors;
-        color3 = healthBar.colors;
-        color1.disabledColor = Color.green;
-        color2.disabledColor = Color.red;
-        color3.disabledColor = Color.darkRed;
-        healthBar.colors = color1;
+        colorHPHigh = Color.yellowGreen;
+        colorHPMedium = Color.orange;
+        colorHPLow = Color.darkRed;
+        fillImage.color = colorHPHigh;
 
         globalVolume.profile.TryGet(out vignette);
         vignette.intensity.value = 0;
@@ -88,7 +91,11 @@ public class HealthSystem : MonoBehaviour
         {
             LowHealth();
         }
-        healthBar.value = currentHealth;
+        fillImage.fillAmount = currentHealth / maxHealth;
+        if(currentHealth <=0)
+        {
+            KillPlayer();
+        }
     }
     public void LooseHealth (float damage)
     {
@@ -108,18 +115,18 @@ public class HealthSystem : MonoBehaviour
     }
     void MediumHealth()
     {
-        healthBar.colors = color2;
+        fillImage.color = colorHPMedium;
         currentHealthLevel = healthLevel.medium;
     }
     void HighHealth()
     {
-        healthBar.colors = color1;
+        fillImage.color = colorHPHigh;
         currentHealthLevel = healthLevel.high;
         vignette.intensity.value = 0;
     }
     void LowHealth()
     {
-        healthBar.colors = color3;
+        fillImage.color = colorHPLow;
         currentHealthLevel = healthLevel.low;
         EnemyManager.instance.SpawnSiren();
         alwaysTickingDown = false;
@@ -130,10 +137,13 @@ public class HealthSystem : MonoBehaviour
     }
     void UpdateColor()
     {
+        //Need to fix so its correct if max is changed
         colorAdjustments.saturation.value = -100 + (currentHealth * 5);
     }
     void KillPlayer()
     {
-
+        checkpoints.Respawn();
+        RegainAllHealth();
+        EnemyManager.instance.SpawnSiren();
     }
 }

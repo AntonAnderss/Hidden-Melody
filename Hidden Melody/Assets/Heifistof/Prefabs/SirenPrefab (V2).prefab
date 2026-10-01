@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SirenScript
   sirenTimer: 18
-  projectile: {fileID: 1547906426964489315, guid: ea272fb335671c649b7575cbcf61dd5a, type: 3}
+  projectile: {fileID: 1547906426964489315, guid: 64343024e9193f94c956cbf048820f65, type: 3}
   projectileTime: 0.5
 --- !u!1001 &4072932499378628276
 PrefabInstance:
