@@ -9,25 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782740d9a0d17e249a9c9a624bd3e15a, type: 3}
+  m_Script: {fileID: 0}
   m_Name: DebugAbility
-  m_EditorClassIdentifier: Assembly-CSharp::Ability
+  m_EditorClassIdentifier: Assembly-CSharp::DebugAbility
   Name: Debug
-  Unlocked: 0
-  combination: 010000000200000003000000i
-  script: {fileID: 0}
-  Logic:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  Unlocked: 1
+  Combination: 010000000200000003000000i

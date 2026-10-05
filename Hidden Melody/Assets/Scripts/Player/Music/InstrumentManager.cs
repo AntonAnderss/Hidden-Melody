@@ -17,7 +17,7 @@ public class InstrumentManager : MonoBehaviour
     public enum PlayMode { Combination, Single }
     public PlayMode playMode;
 
-    [SerializeField] OldInstrument currInstrument;
+    [SerializeField] Instrument currInstrument;
     //public Note[] combination = new Note[3];
 
     public InputActionReference modeChange;
@@ -31,9 +31,6 @@ public class InstrumentManager : MonoBehaviour
 
     private void Start()
     {
-        currInstrument = new DebugInstrument();
-        currInstrument.InitInstrument();
-
         combinationTimer = new Timer(combinationTime);
     }
 
