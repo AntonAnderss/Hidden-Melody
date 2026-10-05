@@ -37,6 +37,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void SirenDead()
     {
+
         isSirenSpawned = false;
     }
 }

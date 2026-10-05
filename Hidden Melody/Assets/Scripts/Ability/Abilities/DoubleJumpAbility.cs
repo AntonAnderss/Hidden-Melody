@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DoubleJumpAbility : Ability
+public class DoubleJumpAbility : OldAbility
 {
     public override AbilityType Type => AbilityType.DoubleJump;
 

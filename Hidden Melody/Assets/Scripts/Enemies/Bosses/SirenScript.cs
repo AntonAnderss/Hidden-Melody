@@ -52,7 +52,6 @@ public class SirenScript : MonoBehaviour
     void KillSiren()
     {
         EnemyManager.instance.SirenDead();
-        Destroy(gameObject);
     }
     private IEnumerator MoveUp()
     {
