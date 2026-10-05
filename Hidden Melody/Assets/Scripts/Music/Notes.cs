@@ -1,0 +1,1 @@
+public enum Note { Error, One, Two, Three }

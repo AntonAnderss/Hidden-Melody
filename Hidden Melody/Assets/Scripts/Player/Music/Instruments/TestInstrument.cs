@@ -25,7 +25,7 @@ using UnityEngine;
 //}
 
 
-public class TestInstrument : Instrument
+public class TestInstrument : OldInstrument
 {
     public override void InitInstrument()
     {
