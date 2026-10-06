@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 /*
@@ -16,6 +18,7 @@ public class SirenScript : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileTime = 0;
     private float projectileTimer = 0.3f;
+    private List<GameObject> projectileList;
 
     private HealthSystem playerHealthsystem;
 
@@ -25,7 +28,7 @@ public class SirenScript : MonoBehaviour
         isRisingDone = false;
         StartCoroutine(MoveUp());
         playerHealthsystem = transform.parent.GetComponent<HealthSystem>();
-
+        projectileList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -49,9 +52,18 @@ public class SirenScript : MonoBehaviour
             }
         }
     }
-    void KillSiren()
+    public void KillSiren()
     {
-        EnemyManager.instance.SirenDead();
+        foreach(GameObject projectile in projectileList)
+        {
+            if(projectile != null)
+            {
+                Destroy(projectile.gameObject);
+            }
+        }
+        playerHealthsystem.AlwaysTickingDown = true;
+        projectileList.Clear();
+        Destroy(gameObject);
     }
     private IEnumerator MoveUp()
     {
@@ -72,13 +84,14 @@ public class SirenScript : MonoBehaviour
             transform.localPosition += new Vector3(0, -0.7f * Time.deltaTime, 0);
             yield return null;
         }
-        KillSiren();
+        EnemyManager.instance.SirenDead();
     }
     private void SpawnProjectiles()
     {
-            float xPos = Random.Range(-9, 9);
-            Vector3 spawnPos = new Vector3(transform.position.x + xPos, transform.position.y + 1.5f, 0);
-            Instantiate(projectile, spawnPos, Quaternion.identity);
+        float xPos = Random.Range(-9, 9);
+        Vector3 spawnPos = new Vector3(transform.position.x + xPos, transform.position.y + 1.5f, 0);
+        GameObject spawnedProjectile = Instantiate(projectile, spawnPos, Quaternion.identity);
+        projectileList.Add(spawnedProjectile);
     }
     private void BeginMinigame()
     {

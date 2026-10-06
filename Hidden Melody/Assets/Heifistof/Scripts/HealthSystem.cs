@@ -21,6 +21,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float loosePerSecond = 1f;
     private healthLevel currentHealthLevel;
     [SerializeField] private PLayerRespawn checkpoints;
+    private bool isPlayerDead;
 
     [Header("HealthBar")]
     [SerializeField] public GameObject healthBar;
@@ -32,6 +33,9 @@ public class HealthSystem : MonoBehaviour
     private ColorAdjustments colorAdjustments;
     private Color colorHPHigh, colorHPMedium, colorHPLow;
 
+    [Header("Canvas")]
+    [SerializeField] LostLifeUI lostLifeCanvas;
+
     enum healthLevel
     {
         high, 
@@ -42,8 +46,6 @@ public class HealthSystem : MonoBehaviour
     {
         set { alwaysTickingDown = value; }
     }
- 
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -58,43 +60,48 @@ public class HealthSystem : MonoBehaviour
         vignette.intensity.value = 0;
         globalVolume.profile.TryGet(out filmgrain);
         globalVolume.profile.TryGet(out colorAdjustments);
-        colorAdjustments.saturation.value = 100; 
+        colorAdjustments.saturation.value = 100;
+
+        isPlayerDead = false;
 
     }
 
     void Update()
     {
-        if (alwaysTickingDown)
+        if(isPlayerDead == false)
         {
-            LooseHealth(loosePerSecond * Time.deltaTime);
-            
-        }
-        if (currentHealthLevel != healthLevel.high)
-        {
-            UpdateVignette();
-            if (currentHealthLevel == healthLevel.low)
+            if (alwaysTickingDown)
             {
-                UpdateColor();
+                LooseHealth(loosePerSecond * Time.deltaTime);
+
             }
-        }
+            if (currentHealthLevel != healthLevel.high)
+            {
+                UpdateVignette();
+                if (currentHealthLevel == healthLevel.low)
+                {
+                    UpdateColor();
+                }
+            }
 
-        if (currentHealth > maxHealth / 2 && currentHealthLevel != healthLevel.high)
-        {
-            HighHealth();
+            if (currentHealth > maxHealth / 2 && currentHealthLevel != healthLevel.high)
+            {
+                HighHealth();
 
-        }
-        else if (currentHealth <= maxHealth / 2 && currentHealth > maxHealth / 5 && currentHealthLevel != healthLevel.medium)
-        {
-            MediumHealth();
-        }
-        else if (currentHealth <= maxHealth / 5 && currentHealthLevel != healthLevel.low)
-        {
-            LowHealth();
-        }
-        fillImage.fillAmount = currentHealth / maxHealth;
-        if(currentHealth <=0)
-        {
-            KillPlayer();
+            }
+            else if (currentHealth <= maxHealth / 2 && currentHealth > maxHealth / 5 && currentHealthLevel != healthLevel.medium)
+            {
+                MediumHealth();
+            }
+            else if (currentHealth <= maxHealth / 5 && currentHealthLevel != healthLevel.low)
+            {
+                LowHealth();
+            }
+            fillImage.fillAmount = currentHealth / maxHealth;
+            if (currentHealth <= 0)
+            {
+                KillPlayer();
+            }
         }
     }
     public void LooseHealth (float damage)
@@ -142,8 +149,14 @@ public class HealthSystem : MonoBehaviour
     }
     void KillPlayer()
     {
+        isPlayerDead = true;
+        lostLifeCanvas.OnLostLife();
+        EnemyManager.instance.SirenDead();
+    }
+    public void RecoverPlayer()
+    {
+        isPlayerDead = false;
         checkpoints.Respawn();
         RegainAllHealth();
-        EnemyManager.instance.SpawnSiren();
     }
 }
