@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a206833329b230e42a0e52ae845358f2, type: 3}
-  m_Name: Dash
-  m_EditorClassIdentifier: Assembly-CSharp::Dash
-  Name: DashAbility
+  m_Script: {fileID: 11500000, guid: 64a6853cb1bbec74e94c2231d3f8f1ea, type: 3}
+  m_Name: MegaJump
+  m_EditorClassIdentifier: Assembly-CSharp::MegaJump
+  Name: MegaJumpAbility
   Unlocked: 1
-  Combination: 010000000200000003000000i
+  Combination: 030000000200000001000000i

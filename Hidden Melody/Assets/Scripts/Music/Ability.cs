@@ -16,6 +16,11 @@ public class Ability : ScriptableObject
     [Header("Logic")]
     public Note[] Combination;
     public virtual void Perform() { Debug.LogError("Hasn't overriden Ability"); }
+    public void Unlock()
+    {
+        Unlocked = true;
+        Debug.Log(Name + " Unlocked");
+    }
 }
 
 [CreateAssetMenu(fileName = "Debug Ability", menuName = "Music Objects/Debug Ability", order = 1)]

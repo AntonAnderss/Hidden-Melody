@@ -1,28 +1,30 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Dash", menuName = "Music Objects/Flute Abilities/Dash", order = 0)]
-public class Dash : Ability
+[CreateAssetMenu(fileName = "MegaJump", menuName = "Music Objects/Flute Abilities/MegaJump", order = 1)]
+public class MegaJump : Ability
 {
+
     public override void Perform()
     {
+
+        Debug.Log("DoubleJump");
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log("Dash");
+
         if (player == null)
         {
-            Debug.Log("No player");
+            Debug.Log(" Player not found");
             return;
         }
-
 
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
 
         if (playerMovement == null)
         {
-            Debug.Log("PlayerMovemnet not found");
+            Debug.Log("PlayerMovement not found");
             return;
         }
 
-        playerMovement.Dash();
+        playerMovement.ActivateDoubleJump();
     }
-
 }

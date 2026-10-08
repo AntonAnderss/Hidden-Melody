@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         crouch.action.started += Crouch;
     }
 
-    [SerializeField] private float dashSpeed = 15f;
+    [SerializeField] private float dashSpeed = 25f;
     [SerializeField] private float dashDuration = 0.15f;
 
 
@@ -131,14 +131,6 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
         }
-        else if(doubleJumpReady)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x,0f,rb.linearVelocity.z);
-
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-            doubleJumpReady = false;
-        }
     }
 
     void Crouch(InputAction.CallbackContext obj)
@@ -177,5 +169,8 @@ public class PlayerMovement : MonoBehaviour
     public void ActivateDoubleJump()
     {
         doubleJumpReady = true;
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        rb.AddForce(Vector3.up * jumpForce * 1.75f, ForceMode.Impulse);
     }
 }

@@ -58,11 +58,9 @@ public class MiniGame : MonoBehaviour
         SliderMovement();
 
 
-        if (interactKey.action.WasPressedThisFrame())
-        {
-            Debug.Log("Interact Funkar");
-            CheckHit();
-        }
+
+        CheckHit();
+        
     }
 
     public void SliderMovement()
@@ -87,43 +85,70 @@ public class MiniGame : MonoBehaviour
     }
     public void CheckHit()
     {
-
-        if(currentCombination == null)
+        if (currentCombination == null)
         {
-            Debug.Log("no Minigmae Combination is active");
             return;
         }
-        Debug.Log("E pressed");
-        HitCombination combination  = currentCombination;
 
-        // Loops through all zones checking if interact key is pressed inside HitZone
-        for (int i = 0; i < combination.zones.Count; i++) 
+        KeyCode pressedKey = KeyCode.None;
+
+        if (Input.GetKeyDown(KeyCode.J))
+            pressedKey = KeyCode.J;
+        else if (Input.GetKeyDown(KeyCode.K))
+            pressedKey = KeyCode.K;
+        else if (Input.GetKeyDown(KeyCode.L))
+            pressedKey = KeyCode.L;
+
+        // Ingen av minigame-knapparna trycktes
+        if (pressedKey == KeyCode.None)
+            return;
+
+
+        // Leta efter zonen som bollen befinner sig i
+        for (int i = 0; i < currentCombination.zones.Count; i++)
         {
-            HitZone zone = combination.zones[i];
+            HitZone zone = currentCombination.zones[i];
 
-            // Skips zones that are already hit
-            if (zone.completed) 
+            if (zone.completed)
                 continue;
 
-            if (slider.value >= zone.minValue &&
-                slider.value <= zone.maxValue)
+            bool insideZone =
+                slider.value >= zone.minValue &&
+                slider.value <= zone.maxValue;
+
+            if (!insideZone)
+                continue;
+
+
+            // Vi har hittat zonen som bollen är i
+            if (pressedKey == zone.requiredKey)
             {
-                Debug.Log("Correct");
+                Debug.Log("Correct: " + pressedKey);
 
                 zone.completed = true;
 
-                // Removes black staple when interct key is pressed inside HitZone
-                images[i].gameObject.SetActive(false);  
-                
+                images[i].gameObject.SetActive(false);
+
                 StartCoroutine(GreenVignette());
 
                 CheckIfCombinationComplete();
-
-                return;
             }
+            else
+            {
+                Debug.Log(
+                    "Wrong key. Pressed: " + pressedKey +
+                    " | Needed: " + zone.requiredKey
+                );
+
+                StartCoroutine(CameraShake());
+            }
+
+            return;
         }
-        //healthSystem.LooseHealth(5);
-        Debug.Log("Miss");
+
+
+        // Knapp trycktes men bollen var inte i någon HitZone
+        Debug.Log("Miss - not inside a HitZone");
         StartCoroutine(CameraShake());
     }
 

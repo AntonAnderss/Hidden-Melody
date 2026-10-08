@@ -17,4 +17,5 @@ MonoBehaviour:
   CombinationIndex: 0
   abilities:
   - {fileID: 11400000, guid: 7512f736316dfe84ca7c1c21ae3aabf8, type: 2}
+  - {fileID: 11400000, guid: 9dffc6672febef549b37c867aaa20aec, type: 2}
   noteAbilities: []

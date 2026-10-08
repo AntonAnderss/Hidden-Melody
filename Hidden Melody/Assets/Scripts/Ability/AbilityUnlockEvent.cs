@@ -3,16 +3,16 @@ using UnityEngine;
 public class AbilityUnlockEvent : MonoBehaviour
 {
     [SerializeField] private MiniGame miniGame;
-    [SerializeField] private AbilityType abilityToUnlock;
+    private Ability currentAbility;
 
     private bool waitingForMiniGame = false;
-    private AbilityType currentAbility;
+    //private string currentAbility;
 
-    public void StartAbilityMiniGame(AbilityType ability)
+    public void StartAbilityMiniGame(Ability ability)
     {
         currentAbility = ability;
 
-        HitCombination combination = CreateCombinations.GetCombination(ability);
+        HitCombination combination = CreateCombinations.GetCombination(ability.Name);
         if(combination == null)
         {
             Debug.Log("No combination found");
@@ -28,7 +28,10 @@ public class AbilityUnlockEvent : MonoBehaviour
     {
         if(waitingForMiniGame && miniGame.minigameCompleted)
         {
-            AbilityUnlockState.Unlock(currentAbility);
+
+
+            //AbilityUnlockState.Unlock(currentAbility);
+            currentAbility.Unlock();
             Debug.Log(currentAbility + " Unlocked");
 
             waitingForMiniGame = false;
