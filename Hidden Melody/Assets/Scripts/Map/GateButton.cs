@@ -7,7 +7,7 @@ public class GateButton : MonoBehaviour
     public Rigidbody player;
     public Rigidbody gate;
 
-    public float openHeight = 4f;
+    public float openHeight = 20f;
     public float gateSpeed = 3f;
 
     private Vector3 closedPosition;
