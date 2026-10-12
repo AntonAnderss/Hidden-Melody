@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashDuration = 0.15f;
 
 
-
+    private YMovingPlatform platform;
 
     void Start()
     {
@@ -84,7 +84,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
-        } */
+            platform = null;
+        }
 
         if (isCrouching)
             transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
@@ -98,12 +99,20 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
+        YMovingPlatform touched = collision.gameObject.GetComponent<YMovingPlatform>();
+
+        float lift = touched != null ? touched.verticalSpeed : 0f;
+
+        if (rb.linearVelocity.y > lift + 0.5f)
+            return;
+
         foreach (ContactPoint contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
             {
                 grounded = true;
                 doubleJumpUsed = false;
+                platform = touched;
             }
         }
     }
@@ -111,66 +120,20 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         grounded = false;
+        platform = null;
+
     }
 
-    /* Movement */
-    //void WalkLeft(InputAction.CallbackContext obj)
-    //{
-    //    rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
-    //}
-
-    //void WalkRight(InputAction.CallbackContext obj)
-    //{
-    //    rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
-    //}
-
-    void Jump(InputAction.CallbackContext obj)
+    // Code to handle Y platform
+    void FixedUpdate()
     {
-        if(grounded)
+        if (grounded && platform != null)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            grounded = false;
+            rb.linearVelocity = new Vector3(
+                rb.linearVelocity.x,
+                platform.verticalSpeed,
+                0
+            );
         }
-    }
-
-    void Crouch(InputAction.CallbackContext obj)
-    {
-        isCrouching = !isCrouching;
-    
-    }
-    public void Dash()
-    {
-        StartCoroutine(DashActivate());
-     
-    }
-    private IEnumerator DashActivate()
-    {
-        isDashing = true;
-
-        rb.linearVelocity = new Vector3( dashSpeed * lastMoveDirection, rb.linearVelocity.y, 0);
-
-        yield return new WaitForSeconds(dashDuration);
-
-        isDashing = false;
-    }
-
-    //public void DoubleJump()
-    //{
-    //    if(!grounded & !doubleJumpUsed)
-    //    {
-    //        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-    //        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-    //        doubleJumpUsed = true;
-    //    }
-
-    //}
-    public void ActivateDoubleJump()
-    {
-        doubleJumpReady = true;
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        rb.AddForce(Vector3.up * jumpForce * 1.75f, ForceMode.Impulse);
     }
 }
