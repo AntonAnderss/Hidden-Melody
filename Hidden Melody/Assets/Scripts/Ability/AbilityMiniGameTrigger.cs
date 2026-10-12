@@ -3,7 +3,7 @@ using UnityEngine;
 public class AbilityMiniGameTrigger : MonoBehaviour
 {
     [SerializeField] private AbilityUnlockEvent abilityUnlockEvent;
-    [SerializeField] private AbilityType abilityToUnlock;
+    [SerializeField] private Ability abilityToUnlock;
 
     private bool hasTriggered = false;
 

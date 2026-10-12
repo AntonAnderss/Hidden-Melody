@@ -3,15 +3,15 @@ using UnityEngine;
 
 public static class CreateCombinations
 {
-    public static HitCombination GetCombination(AbilityType ability)
+    public static HitCombination GetCombination(string ability)
     {
         switch (ability)
         {
-            case AbilityType.Dash:
+            case "DashAbility":
                 return DashCombo();
 
-            case AbilityType.DoubleJump:
-                return DoubleJumpCombo();
+            case "MegaJumpAbility":
+                return MegaJumpAbility();
 
             default:
                 return null;
@@ -24,23 +24,23 @@ public static class CreateCombinations
         "DashAbility",
         new List<HitZone>
         {
-            new HitZone(0.35f,0.45f),
-            new HitZone(0.45f,0.55f),
-            new HitZone(0.55f,0.65f)
+            new HitZone(0.35f,0.45f, KeyCode.J),
+            new HitZone(0.45f,0.55f, KeyCode.K),
+            new HitZone(0.55f,0.65f, KeyCode.L)
         }
         );
 
     }
 
-    public static HitCombination DoubleJumpCombo()
+    public static HitCombination MegaJumpAbility()
     {
         return new HitCombination(
-        "DoubleJumpAbility",
+        "MegaJumpAbility",
         new List<HitZone>
         {
-            new HitZone(0.05f,0.25f),
-            new HitZone(0.45f,0.65f),
-            new HitZone(0.75f,0.95f)
+            new HitZone(0.05f,0.25f, KeyCode.J),
+            new HitZone(0.45f,0.65f, KeyCode.K),
+            new HitZone(0.75f,0.95f, KeyCode.L)
         }
         );
 

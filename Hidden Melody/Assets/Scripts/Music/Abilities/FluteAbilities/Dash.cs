@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Dash", menuName = "Music Objects/Flute Abilities/ Dash", order = 0)]
+[CreateAssetMenu(fileName = "Dash", menuName = "Music Objects/Flute Abilities/Dash", order = 0)]
 public class Dash : Ability
 {
     public override void Perform()
