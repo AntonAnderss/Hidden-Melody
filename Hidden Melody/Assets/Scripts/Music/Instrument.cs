@@ -8,6 +8,7 @@ public class Instrument : ScriptableObject
 {
     [Header("Instrument Info")]
     public string instrumentName;
+    public bool Collected = false;
 
     [Header("Combination")]
     public Note[] Combination;

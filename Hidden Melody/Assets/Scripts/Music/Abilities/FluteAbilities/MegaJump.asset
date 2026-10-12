@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MegaJump
   m_EditorClassIdentifier: Assembly-CSharp::MegaJump
   Name: MegaJumpAbility
-  Unlocked: 1
+  Unlocked: 0
   Combination: 030000000200000001000000i

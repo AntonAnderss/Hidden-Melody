@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
+    Saver saver = new Saver();
+    Loader loader = new Loader();
+
     [Header("Dependencies")]
     [SerializeField] GameObject player;
     [SerializeField] InstrumentManager instrumentManager;
@@ -20,7 +23,6 @@ public class SaveSystem : MonoBehaviour
 
     [Header("Object ID")]
     [SerializeField] string InstrumentID = "IST";
-    [SerializeField] string AbilityID = "ABI";
     [SerializeField] string CheckpointID = "POI";
     [SerializeField] string BossID = "BOS";
 
@@ -34,7 +36,16 @@ public class SaveSystem : MonoBehaviour
         if(!File.Exists(Path))
             CreateSaveFile();
 
-        SaveInstruments();
+        LoadInfo();
+        
+        using (FileStream fileStream = File.OpenWrite(Path)) 
+        {
+            byte[] saveData = new UTF8Encoding(true).GetBytes(saver.GetSave(instruments, InstrumentID));
+
+            fileStream.Write(saveData, 0, saveData.Length);
+
+            Debug.Log("Saved");
+        }
     }
 
     public void CreateSaveFile()
@@ -49,26 +60,5 @@ public class SaveSystem : MonoBehaviour
             byte[] info = new UTF8Encoding(true).GetBytes("New File");
             fileStream.Write(info, 0, info.Length);
         }
-    }
-
-    private void SaveInstruments()
-    {
-        LoadInfo();
-
-        int id = 1;
-        foreach(Instrument instrument in instruments)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(InstrumentID);
-            stringBuilder.Append(id);
-
-            using (FileStream fileStream = File.Create(Path))
-            {
-                byte[] instrumentInfo = new UTF8Encoding(true).GetBytes(stringBuilder.ToString());
-                fileStream.Write(instrumentInfo, 0, instrumentInfo.Length);
-            }
-        }
-        
-
     }
 }
