@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64a6853cb1bbec74e94c2231d3f8f1ea, type: 3}
-  m_Name: MegaJump
+  m_Name: Leap
   m_EditorClassIdentifier: Assembly-CSharp::MegaJump
-  Name: MegaJumpAbility
+  Name: Leap
   Unlocked: 1
   Combination: 030000000200000001000000i

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerAbility
   - Checkpoint
+  - Projectile
+  - Shield
   layers:
   - Default
   - TransparentFX

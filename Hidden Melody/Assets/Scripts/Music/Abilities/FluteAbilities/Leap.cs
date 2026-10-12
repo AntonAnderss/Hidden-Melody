@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MegaJump", menuName = "Music Objects/Flute Abilities/MegaJump", order = 1)]
-public class MegaJump : Ability
+[CreateAssetMenu(fileName = "Leap", menuName = "Music Objects/Flute Abilities/Leap", order = 1)]
+public class Leap : Ability
 {
 
     public override void Perform()
@@ -17,14 +17,14 @@ public class MegaJump : Ability
             return;
         }
 
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        LeapController leapController = player.GetComponent<LeapController>();
 
-        if (playerMovement == null)
+        if (leapController == null)
         {
             Debug.Log("PlayerMovement not found");
             return;
         }
 
-        playerMovement.ActivateDoubleJump();
+        leapController.ActivateLeap();
     }
 }

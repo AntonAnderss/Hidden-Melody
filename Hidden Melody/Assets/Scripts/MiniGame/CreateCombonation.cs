@@ -10,8 +10,11 @@ public static class CreateCombinations
             case "DashAbility":
                 return DashCombo();
 
-            case "MegaJumpAbility":
-                return MegaJumpAbility();
+            case "LeapAbility":
+                return LeapAbility();
+
+            case "ShieldAbility":
+                return ShieldAbility();
 
             default:
                 return null;
@@ -32,10 +35,10 @@ public static class CreateCombinations
 
     }
 
-    public static HitCombination MegaJumpAbility()
+    public static HitCombination LeapAbility()
     {
         return new HitCombination(
-        "MegaJumpAbility",
+        "LeapAbility",
         new List<HitZone>
         {
             new HitZone(0.05f,0.25f, KeyCode.J),
@@ -43,8 +46,19 @@ public static class CreateCombinations
             new HitZone(0.75f,0.95f, KeyCode.L)
         }
         );
+    }
 
-
+    public static HitCombination ShieldAbility()
+    {
+        return new HitCombination(
+        "ShieldAbility",
+        new List<HitZone>
+        {
+            new HitZone(0.15f,0.30f, KeyCode.J),
+            new HitZone(0.80f,0.95f,KeyCode.K),
+            new HitZone(0.50f,0.70f,KeyCode.L)
+        }
+        );
     }
 
     
