@@ -8,6 +8,7 @@ public class Instrument : ScriptableObject
 {
     [Header("Instrument Info")]
     public string instrumentName;
+    public Texture2D icon;
     public bool Collected = false;
 
     [Header("Combination")]
@@ -33,7 +34,8 @@ public class Instrument : ScriptableObject
             {
                 if (ability.Combination.SequenceEqual(Combination))
                 {
-                    ability.Perform();
+                    if(ability.Unlocked)
+                        ability.Perform();
                 }
             }
 

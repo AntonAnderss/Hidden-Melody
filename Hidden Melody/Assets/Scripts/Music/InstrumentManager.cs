@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -18,12 +19,16 @@ public class InstrumentManager : MonoBehaviour
     public PlayMode playMode;
 
     [SerializeField] public Instrument[] instruments;
-    Instrument CurrentInstrument { get { return instruments[0]; } }
+    [SerializeField] int currentInstrumentID = 0;
+    Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
 
     public InputActionReference modeChange;
     public InputActionReference noteOne;
     public InputActionReference noteTwo;
     public InputActionReference noteThree;
+    public InputActionReference previousInstrument;
+    public InputActionReference nextInstrument;
+
 
     [SerializeField] bool inCombination = false;
     [SerializeField] float combinationTime = 1.5f;
@@ -41,6 +46,9 @@ public class InstrumentManager : MonoBehaviour
         noteThree.action.started += NoteThree;
 
         modeChange.action.started += ChangeMode;
+
+        previousInstrument.action.started += PreviousInstrument;
+        nextInstrument.action.started += NextInstrument;
     }
 
     private void OnDisable()
@@ -50,6 +58,10 @@ public class InstrumentManager : MonoBehaviour
         noteThree.action.started -= NoteThree;
 
         modeChange.action.started -= ChangeMode;
+
+        previousInstrument.action.started -= PreviousInstrument;
+        nextInstrument.action.started -= NextInstrument;
+
     }
 
     public void Update()
@@ -86,8 +98,8 @@ public class InstrumentManager : MonoBehaviour
 
     void PlayNote(Note n)
     {
-        //if (playMode == PlayMode.Combination)
-            //Debug.Log("PlayeNote check");
+        if (!CurrentInstrument.Collected)
+            return;
 
         if(playMode == PlayMode.Combination)
         {
@@ -127,5 +139,37 @@ public class InstrumentManager : MonoBehaviour
         CurrentInstrument.ClearCombination();
         combinationTimer.Reset();
         inCombination = false;
+    }
+
+    void PreviousInstrument(InputAction.CallbackContext obj)
+    {
+        int originalID = currentInstrumentID;
+        bool searchingForValidID = true;
+
+        while(searchingForValidID)
+        {
+            currentInstrumentID--;
+            if (currentInstrumentID < 0)
+                currentInstrumentID = instruments.Length - 1;
+
+            if (currentInstrumentID == originalID || CurrentInstrument.Collected == true)
+                searchingForValidID = false;
+        }
+    }
+
+    void NextInstrument(InputAction.CallbackContext obj)
+    {
+        int originalID = currentInstrumentID;
+        bool searchingForValidID = true;
+
+        while (searchingForValidID)
+        {
+            currentInstrumentID++;
+            if (currentInstrumentID > instruments.Length - 1)
+                currentInstrumentID = 0;
+
+            if (currentInstrumentID == originalID || CurrentInstrument.Collected == true)
+                searchingForValidID = false;
+        }
     }
 }
