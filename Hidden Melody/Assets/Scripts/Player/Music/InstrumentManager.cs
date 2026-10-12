@@ -17,8 +17,8 @@ public class InstrumentManager : MonoBehaviour
     public enum PlayMode { Combination, Single }
     public PlayMode playMode;
 
-    [SerializeField] Instrument currInstrument;
-    //public Note[] combination = new Note[3];
+    [SerializeField] public Instrument[] instruments;
+    Instrument CurrentInstrument { get { return instruments[0]; } }
 
     public InputActionReference modeChange;
     public InputActionReference noteOne;
@@ -64,7 +64,7 @@ public class InstrumentManager : MonoBehaviour
 
         if(combinationTimer.TargetTimeReached())
         {
-            currInstrument.ClearCombination();
+            CurrentInstrument.ClearCombination();
             inCombination = false;
         }
     }
@@ -97,13 +97,13 @@ public class InstrumentManager : MonoBehaviour
                 combinationTimer.Reset();
             }
 
-            if (currInstrument.PlayedCombination(n)) //If reached a combination
+            if (CurrentInstrument.PlayedCombination(n)) //If reached a combination
                 inCombination = false;
         }
         
         if(playMode == PlayMode.Single)
         {
-            currInstrument.PlayNote(n);
+            CurrentInstrument.PlayNote(n);
         }
     }
 
@@ -124,7 +124,7 @@ public class InstrumentManager : MonoBehaviour
 
     void ResetCombination()
     {
-        currInstrument.ClearCombination();
+        CurrentInstrument.ClearCombination();
         combinationTimer.Reset();
         inCombination = false;
     }
