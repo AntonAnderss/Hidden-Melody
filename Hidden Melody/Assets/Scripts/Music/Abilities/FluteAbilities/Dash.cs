@@ -14,15 +14,15 @@ public class Dash : Ability
         }
 
 
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        DashController dashController = player.GetComponent<DashController>();
 
-        if (playerMovement == null)
+        if (dashController == null)
         {
-            Debug.Log("PlayerMovemnet not found");
+            Debug.Log("DashController not found");
             return;
         }
 
-        playerMovement.Dash();
+        dashController.Dash();
     }
 
 }

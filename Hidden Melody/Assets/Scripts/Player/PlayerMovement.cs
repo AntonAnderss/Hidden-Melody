@@ -5,17 +5,16 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 5f;
+    public float JumpForce => jumpForce;
 
     private Rigidbody rb;
     private Collider body;
     private Vector3 normalSize;
     [SerializeField]private bool grounded;
     private int lastMoveDirection = 1;
-    private bool isDashing = false;
-    private bool doubleJumpUsed = false;
-    private bool doubleJumpReady = false;
-
+    public int LastMoveDirection => lastMoveDirection;
+    private DashController dashController;
 
     public InputActionReference left, right, jump, crouch;
     public float Feet { get { return body.bounds.min.y; } }
@@ -29,10 +28,6 @@ public class PlayerMovement : MonoBehaviour
         crouch.action.started += Crouch;
     }
 
-    [SerializeField] private float dashSpeed = 25f;
-    [SerializeField] private float dashDuration = 0.15f;
-
-
 
 
     void Start()
@@ -41,12 +36,15 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Collider>();
         normalSize = transform.localScale;
         rb.freezeRotation = true;
+
+        dashController = GetComponent<DashController>();
     }
 
 
 
     void Update()
     {
+        Debug.Log("IsDashing: " + dashController.IsDashing);
         float movement = 0;
 
         if (Input.GetKey(KeyCode.A)) movement = -speed;
@@ -54,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
-        if (!isDashing)
+        if (!dashController.IsDashing)
         {
             rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
         }
@@ -62,12 +60,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
 
-
-
-        if (!isDashing)
-        {
-            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
-        }
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -103,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
             if (contact.normal.y > 0.5f)
             {
                 grounded = true;
-                doubleJumpUsed = false;
             }
         }
     }
@@ -138,39 +129,5 @@ public class PlayerMovement : MonoBehaviour
         isCrouching = !isCrouching;
     
     }
-    public void Dash()
-    {
-        StartCoroutine(DashActivate());
-     
-    }
-    private IEnumerator DashActivate()
-    {
-        isDashing = true;
 
-        rb.linearVelocity = new Vector3( dashSpeed * lastMoveDirection, rb.linearVelocity.y, 0);
-
-        yield return new WaitForSeconds(dashDuration);
-
-        isDashing = false;
-    }
-
-    //public void DoubleJump()
-    //{
-    //    if(!grounded & !doubleJumpUsed)
-    //    {
-    //        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-    //        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-    //        doubleJumpUsed = true;
-    //    }
-
-    //}
-    public void ActivateDoubleJump()
-    {
-        doubleJumpReady = true;
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        rb.AddForce(Vector3.up * jumpForce * 1.75f, ForceMode.Impulse);
-    }
 }
