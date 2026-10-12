@@ -21,10 +21,6 @@ public class Projectile : MonoBehaviour
     {
 
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        HitSound();
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -47,8 +43,6 @@ public class Projectile : MonoBehaviour
             Debug.Log("No Sound");
             return;
         }
-        //audioSource.clip = hitSound;
-        //audioSource.loop = false;
         audioSource.PlayOneShot(hitSound);
     }
 

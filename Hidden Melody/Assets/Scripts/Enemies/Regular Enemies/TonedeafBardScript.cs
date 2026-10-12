@@ -35,10 +35,14 @@ public class TonedeafBardScript : Enemy
         if(noteType == 0)
         {
             currentProjectile = Instantiate(projectilePrefab2, notePos, Quaternion.identity);
+            LinearProjectile projectileScript = currentProjectile.GetComponent<LinearProjectile>();
+            projectileScript.direction = transform.right;
         }
         else
         {
             currentProjectile = Instantiate(projectilePrefab1, notePos, Quaternion.identity);
+            LinearProjectile projectileScript = currentProjectile.GetComponent<LinearProjectile>();
+            projectileScript.direction = transform.right;
         }
 
     }

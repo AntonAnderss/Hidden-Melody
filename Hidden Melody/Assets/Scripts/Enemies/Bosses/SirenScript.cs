@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -91,6 +92,8 @@ public class SirenScript : MonoBehaviour
         float xPos = Random.Range(-9, 9);
         Vector3 spawnPos = new Vector3(transform.position.x + xPos, transform.position.y + 1.5f, 0);
         GameObject spawnedProjectile = Instantiate(projectile, spawnPos, Quaternion.identity);
+        LinearProjectile projectileScript = spawnedProjectile.GetComponent<LinearProjectile>();
+        projectileScript.direction = -transform.up;
         projectileList.Add(spawnedProjectile);
     }
     private void BeginMinigame()

@@ -1,5 +1,8 @@
 using UnityEngine;
-
+/*
+ * Author: Clara Lönnkrans
+ * 
+*/
 public class LostLifeUI : MonoBehaviour
 {
     private bool isPaused = false;

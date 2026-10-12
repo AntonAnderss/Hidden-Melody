@@ -4,6 +4,8 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 /*
+ * Fix the thing in Update Color
+ * 
  * Author: Clara Lönnkrans
  * Script for the health system. Controlls the healthbar and spawns healtsystem boss. 
  * 
@@ -21,7 +23,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float loosePerSecond = 1f;
     private healthLevel currentHealthLevel;
     [SerializeField] private PLayerRespawn checkpoints;
-    private bool isPlayerDead;
+    bool isPlayerDead;
 
     [Header("HealthBar")]
     [SerializeField] public GameObject healthBar;
