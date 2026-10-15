@@ -44,17 +44,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("IsDashing: " + dashController.IsDashing);
         float movement = 0;
 
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        //rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
         if (!dashController.IsDashing)
         {
-            rb.linearVelocity = new Vector3(movement,rb.linearVelocity.y,0);
+            rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
         }
 
         if (Input.GetKey(KeyCode.A)) movement = -speed;

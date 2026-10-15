@@ -9,6 +9,7 @@ public class LostLifeUI : MonoBehaviour
     private GameObject player;
     private HealthSystem healthSystem;
     private float normalTimeScale;
+    [SerializeField] GameObject hudCanvas;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class LostLifeUI : MonoBehaviour
         Time.timeScale = 0;
         gameObject.SetActive(true);
         Cursor.visible = true;
+        hudCanvas.SetActive(false);
         //Dissable player inputs
 
     }
@@ -36,6 +38,7 @@ public class LostLifeUI : MonoBehaviour
         Time.timeScale = normalTimeScale;
         gameObject.SetActive(false);
         Cursor.visible = false;
+        hudCanvas.SetActive(true);
         //Enable player inputs
     }
     public void ContinueButton()

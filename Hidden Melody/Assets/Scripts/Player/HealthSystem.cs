@@ -22,7 +22,7 @@ public class HealthSystem : MonoBehaviour
     public float currentHealth;
     [SerializeField] private float loosePerSecond = 1f;
     private healthLevel currentHealthLevel;
-    [SerializeField] private PLayerRespawn checkpoints;
+    [SerializeField] private PlayerRespawn checkpoints;
     bool isPlayerDead;
 
     [Header("HealthBar")]

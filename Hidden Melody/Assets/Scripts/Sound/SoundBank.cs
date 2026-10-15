@@ -42,7 +42,31 @@ public class SoundBank : MonoBehaviour
         //Debug.Log("SoundBank");
         Sound sound = Array.Find(enemySounds, x => x.soundName == name);
         int i = Random.Range(0, sound.sound.Length);
+        //Debug.Log(sound.soundName);
+        return sound?.sound[i];
+    }
+    public AudioClip GetMenuSound(string name)
+    {
+        Debug.Log("SoundBank");
+        Sound sound = Array.Find(menuSounds, x => x.soundName == name);
+        int i = Random.Range(0, sound.sound.Length);
         Debug.Log(sound.soundName);
+        return sound?.sound[i];
+    }
+    public AudioClip GetHUDSound(string name)
+    {
+        //Debug.Log("SoundBank");
+        Sound sound = Array.Find(hudSounds, x => x.soundName == name);
+        int i = Random.Range(0, sound.sound.Length);
+        //Debug.Log(sound.soundName);
+        return sound?.sound[i];
+    }
+    public AudioClip GetOtherSound(string name)
+    {
+        //Debug.Log("SoundBank");
+        Sound sound = Array.Find(otherSounds, x => x.soundName == name);
+        int i = Random.Range(0, sound.sound.Length);
+        //Debug.Log(sound.soundName);
         return sound?.sound[i];
     }
 }

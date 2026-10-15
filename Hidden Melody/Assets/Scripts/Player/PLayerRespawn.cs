@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PLayerRespawn : MonoBehaviour
+public class PlayerRespawn : MonoBehaviour
 {
     public float deathHeight = -10f;
 

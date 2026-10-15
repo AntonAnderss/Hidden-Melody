@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "PlayerINput",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "GamePlay",
