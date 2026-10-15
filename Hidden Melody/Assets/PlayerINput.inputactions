@@ -77,9 +77,19 @@
                     "priority": 0
                 },
                 {
-                    "name": "Change Instrument",
+                    "name": "Previous Instrument",
                     "type": "Button",
                     "id": "76c4cf06-7306-4ee7-a9d1-dc04da198f4e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Next Instrument",
+                    "type": "Button",
+                    "id": "d00cc8ac-4f5b-4c2b-b156-a261d374d6c6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -212,14 +222,25 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Change Instrument",
+                    "action": "Previous Instrument",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f3f0baf-da4a-4ced-90ff-4b806f1bcc35",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next Instrument",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "2bd4d630-b0ec-4627-96c5-4b5bdc77b0ac",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
