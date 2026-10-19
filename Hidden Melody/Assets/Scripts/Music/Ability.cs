@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
+/* Author: Anton Andersson */
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "Music Objects/Ability", order = 1)]
 public class Ability : ScriptableObject
@@ -16,15 +14,5 @@ public class Ability : ScriptableObject
     [Header("Logic")]
     public Note[] Combination;
     public virtual void Perform() { Debug.LogError("Hasn't overriden Ability"); }
-    public void Unlock()
-    {
-        Unlocked = true;
-        Debug.Log(Name + " Unlocked");
-    }
-}
-
-[CreateAssetMenu(fileName = "Debug Ability", menuName = "Music Objects/Debug Ability", order = 1)]
-public class DebugAbility : Ability
-{
-    public override void Perform() { Debug.Log("Performed Debug"); }
+    public void Unlock() { Unlocked = true; }
 }

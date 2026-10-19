@@ -1,3 +1,4 @@
+/* Author: Anton Andersson */
 using System.Text;
 using UnityEngine;
 

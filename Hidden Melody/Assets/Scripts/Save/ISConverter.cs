@@ -1,3 +1,4 @@
+/* Author: Anton Andersson */
 using UnityEngine;
 
 public static class ISConverter

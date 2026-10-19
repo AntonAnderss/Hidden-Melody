@@ -1,3 +1,4 @@
+/* Author: Anton Andersson */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,53 +21,27 @@ public class Instrument : ScriptableObject
     public List<Ability> abilities;
     public List<Ability> noteAbilities;
 
-    public bool PlayedCombination(Note n)
+    public bool TryPlayCombination(Note n)
     {
-        //Debug.Log("Played: " + n);
+        AddNoteToCombination(n);
+        return CompletedCombination();
+    }
 
-        Combination[CombinationIndex] = n;
-        CombinationIndex++;
-
-        //If completed combination
+    void AddNoteToCombination(Note n) { Combination[CombinationIndex++] = n; }
+    bool CompletedCombination()
+    {
         if (CombinationIndex == Combination.Length)
         {
             foreach (Ability ability in abilities)
-            {
                 if (ability.Combination.SequenceEqual(Combination))
-                {
-                    if(ability.Unlocked)
+                    if (ability.Unlocked)
                         ability.Perform();
-                }
-            }
 
-            //foreach (Note[] c in combinationToAbility.Keys)
-            //{
-            //    if (c.SequenceEqual(combination))
-            //    {
-            //        combinationToAbility[c].Use();
-
-            //        Debug.Log("Found Combination : " + abilityName);
-            //        combinationToAbility[abilityName].Use();
-            //    }
-            //}
-
-            ClearCombination();
             return true;
         }
 
         return false;
     }
-
+    /* Helper */
     public void ClearCombination() { Combination = new Note[CombinationLength]; CombinationIndex = 0; }
-
-    /**/
-    public void PlayNote(Note n)
-    {
-        Debug.Log("Hasn't been done");
-        return;
-
-        //foreach (Ability ability in abilities)
-            //if (ability.Combination[0] )
-               //noteToAbility[note].Use();
-    }
 }

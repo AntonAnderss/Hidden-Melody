@@ -1,35 +1,22 @@
-using System;
-using Unity.VisualScripting;
+/* Author: Anton Andersson */
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-
-/* ToDo
- *  Add GUI
- *  Add instrument management
- *  Make instruments to Scriptable Objects
- *  Add unlockable abilities (In abilities)
- *  Add Timer for Note Abilities
- *  Refactor
- */
 
 public class InstrumentManager : MonoBehaviour
 {
-    public enum PlayMode { Combination, Single }
-    public PlayMode playMode;
-
+    [Header("Instrument")]
     [SerializeField] public Instrument[] instruments;
     [SerializeField] int currentInstrumentID = 0;
     Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
 
-    public InputActionReference modeChange;
+    [Header("Inputs")]
     public InputActionReference noteOne;
     public InputActionReference noteTwo;
     public InputActionReference noteThree;
     public InputActionReference previousInstrument;
     public InputActionReference nextInstrument;
 
-
+    [Header("Combination")]
     [SerializeField] bool inCombination = false;
     [SerializeField] float combinationTime = 1.5f;
     Timer combinationTimer;
@@ -45,8 +32,6 @@ public class InstrumentManager : MonoBehaviour
         noteTwo.action.started += NoteTwo;
         noteThree.action.started += NoteThree;
 
-        modeChange.action.started += ChangeMode;
-
         previousInstrument.action.started += PreviousInstrument;
         nextInstrument.action.started += NextInstrument;
     }
@@ -57,28 +42,17 @@ public class InstrumentManager : MonoBehaviour
         noteTwo.action.started -= NoteTwo;
         noteThree.action.started -= NoteThree;
 
-        modeChange.action.started -= ChangeMode;
-
         previousInstrument.action.started -= PreviousInstrument;
         nextInstrument.action.started -= NextInstrument;
-
     }
 
     public void Update()
     {
-        //for(int i = 0; i < 3;  i++)
-        //{
-            //combination[i] = currInstrument.combination[i];
-        //}
-
         if (!inCombination)
             return;
 
-        if(combinationTimer.TargetTimeReached())
-        {
-            CurrentInstrument.ClearCombination();
-            inCombination = false;
-        }
+        if (combinationTimer.TargetTimeReached())
+            ResetCombination();
     }
 
     /* Note Change*/
@@ -98,42 +72,19 @@ public class InstrumentManager : MonoBehaviour
 
     void PlayNote(Note n)
     {
-        if (!CurrentInstrument.Collected)
+        if (!CollectedInstrument(currentInstrumentID))
             return;
 
-        if(playMode == PlayMode.Combination)
-        {
-            if (!inCombination)
-            {
-                inCombination = true;
-                combinationTimer.Reset();
-            }
+        if (!inCombination)
+            StartCombination();
 
-            if (CurrentInstrument.PlayedCombination(n)) //If reached a combination
-                inCombination = false;
-        }
-        
-        if(playMode == PlayMode.Single)
-        {
-            CurrentInstrument.PlayNote(n);
-        }
+        if(inCombination)
+            if (CurrentInstrument.TryPlayCombination(n)) //If a combination is completed
+                ResetCombination();
     }
 
-    /* Mode Change*/
-    void ChangeMode(InputAction.CallbackContext obj) 
-    {
-        ModeSwitch();
-        ResetCombination();
-    }
-
-    void ModeSwitch()
-    {
-        if (playMode == PlayMode.Combination)
-            playMode = PlayMode.Single;
-        else if (playMode == PlayMode.Single)
-            playMode = PlayMode.Combination;
-    }
-
+    /* Combination-based */
+    void StartCombination() { inCombination = true; }
     void ResetCombination()
     {
         CurrentInstrument.ClearCombination();
@@ -141,6 +92,7 @@ public class InstrumentManager : MonoBehaviour
         inCombination = false;
     }
 
+    /* Switching Between Instruments */
     void PreviousInstrument(InputAction.CallbackContext obj)
     {
         int originalID = currentInstrumentID;
@@ -152,11 +104,10 @@ public class InstrumentManager : MonoBehaviour
             if (currentInstrumentID < 0)
                 currentInstrumentID = instruments.Length - 1;
 
-            if (currentInstrumentID == originalID || CurrentInstrument.Collected == true)
+            if (currentInstrumentID == originalID || CollectedInstrument(currentInstrumentID))
                 searchingForValidID = false;
         }
     }
-
     void NextInstrument(InputAction.CallbackContext obj)
     {
         int originalID = currentInstrumentID;
@@ -168,8 +119,11 @@ public class InstrumentManager : MonoBehaviour
             if (currentInstrumentID > instruments.Length - 1)
                 currentInstrumentID = 0;
 
-            if (currentInstrumentID == originalID || CurrentInstrument.Collected == true)
+            if (currentInstrumentID == originalID || CollectedInstrument(currentInstrumentID))
                 searchingForValidID = false;
         }
     }
+
+    /* Helper */
+    bool CollectedInstrument(int instrumentID) { return instruments[instrumentID].Collected; }
 }

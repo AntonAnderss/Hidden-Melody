@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Debug
   m_EditorClassIdentifier: Assembly-CSharp::Instrument
   instrumentName: Debug
+  icon: {fileID: 0}
   Collected: 1
-  Combination: 
+  Combination: 000000000000000000000000i
   CombinationIndex: 0
   abilities:
-  - {fileID: 11400000, guid: 5c33061bdac2c43438bd421f7eca1d9f, type: 2}
+  - {fileID: 11400000, guid: 9ab638be52b57dd4f9287ded99883283, type: 2}
   noteAbilities: []

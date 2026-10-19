@@ -1,3 +1,4 @@
+/* Author: Anton Andersson */
 using NUnit.Framework;
 using System;
 using System.IO;
