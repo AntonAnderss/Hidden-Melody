@@ -27,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
         jump.action.started += Jump;
         crouch.action.started += Crouch;
     }
+    private void OnDisable()
+    {
+        jump.action.started -= Jump;
+        crouch.action.started -= Crouch;
+    }
 
 
 
@@ -49,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
 
-        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
         if (!dashController.IsDashing)
         {

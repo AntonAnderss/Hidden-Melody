@@ -13,7 +13,7 @@ public class DashController : MonoBehaviour
 
     private bool isDashing = false;
     private float nextDashTime = 0f;
-
+    private int dashDirection;
     public bool IsDashing => isDashing;
 
     void Start()
@@ -21,6 +21,7 @@ public class DashController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
     }
+
 
     public void Dash()
     {
@@ -31,6 +32,8 @@ public class DashController : MonoBehaviour
 
         nextDashTime = Time.time + dashCooldown;
 
+        dashDirection = playerMovement.LastMoveDirection;
+
         StartCoroutine(DashActivate());
 
     }
@@ -38,11 +41,16 @@ public class DashController : MonoBehaviour
     private IEnumerator DashActivate()
     {
         isDashing = true;
+        float timer = 0f;
 
-        rb.linearVelocity = new Vector3(dashSpeed * playerMovement.LastMoveDirection, rb.linearVelocity.y, 0);
-        yield return new WaitForSeconds(dashDuration);
-
+        while (timer < dashDuration)
+        {
+            rb.linearVelocity = new Vector3(dashSpeed * playerMovement.LastMoveDirection, rb.linearVelocity.y, 0);
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForSeconds(dashDuration);
+        }
         isDashing = false;
+        
     }
 
 
