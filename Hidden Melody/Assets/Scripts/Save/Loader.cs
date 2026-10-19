@@ -4,5 +4,13 @@ using UnityEngine;
 
 public class Loader
 {
-    StringBuilder stringBuilder = new StringBuilder();
+    public void LoadSave()
+    {
+        //
+    }
+
+    string GetData()
+    {
+        return "";
+    }
 }

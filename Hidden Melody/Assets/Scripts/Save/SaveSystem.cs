@@ -41,7 +41,7 @@ public class SaveSystem : MonoBehaviour
         
         using (FileStream fileStream = File.OpenWrite(Path)) 
         {
-            byte[] saveData = new UTF8Encoding(true).GetBytes(saver.GetSave(instruments, InstrumentID));
+            byte[] saveData = new UTF8Encoding(true).GetBytes(saver.CreateSave(instruments, InstrumentID));
 
             fileStream.Write(saveData, 0, saveData.Length);
 

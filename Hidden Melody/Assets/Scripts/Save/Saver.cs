@@ -9,7 +9,7 @@ public class Saver
     StringBuilder tempBuilder = new StringBuilder();
     private void ResetTemp() { tempBuilder.Clear(); }
 
-    public string GetSave(Instrument[] instruments, string InstrumentID)
+    public string CreateSave(Instrument[] instruments, string InstrumentID)
     {
         Reset();
 
