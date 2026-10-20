@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Collider body;
     private Vector3 normalSize;
     [SerializeField]private bool grounded;
+    [SerializeField] private Transform characterVisual;
     private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
     private DashController dashController;
@@ -68,11 +69,13 @@ public class PlayerMovement : MonoBehaviour
         {
             movement = -speed;
             lastMoveDirection = -1;
+            characterVisual.localRotation = Quaternion.Euler(0f, -90f, 0f);
         }
         if (Input.GetKey(KeyCode.D))
         {
             movement = speed;
             lastMoveDirection = 1;
+            characterVisual.localRotation = Quaternion.Euler(0f, 90f, 0f);
         }
 
         /*if (Input.GetKeyDown(KeyCode.Space) && grounded)
