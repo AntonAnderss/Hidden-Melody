@@ -1,9 +1,7 @@
 /* Author: Anton Andersson */
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
@@ -14,12 +12,11 @@ public class SaveSystem : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] GameObject player;
     [SerializeField] InstrumentManager instrumentManager;
-    [SerializeField] Instrument[] instruments;
+    Instrument[] Instruments { get { return instrumentManager.instruments; } }
 
     private void LoadInfo()
     {
         instrumentManager = player.GetComponent<InstrumentManager>();
-        instruments = instrumentManager.instruments;
     }
 
     [Header("Object ID")]
@@ -41,7 +38,7 @@ public class SaveSystem : MonoBehaviour
         
         using (FileStream fileStream = File.OpenWrite(Path)) 
         {
-            byte[] saveData = new UTF8Encoding(true).GetBytes(saver.CreateSave(instruments, InstrumentID));
+            byte[] saveData = new UTF8Encoding(true).GetBytes(saver.CreateSave(Instruments, InstrumentID));
 
             fileStream.Write(saveData, 0, saveData.Length);
 
@@ -61,5 +58,11 @@ public class SaveSystem : MonoBehaviour
             byte[] info = new UTF8Encoding(true).GetBytes("New File");
             fileStream.Write(info, 0, info.Length);
         }
+    }
+
+    public void Load() 
+    {
+        LoadInfo();
+        loader.LoadSave(Path, ref instrumentManager.instruments);
     }
 }
