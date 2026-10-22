@@ -7,15 +7,36 @@ public class WalkState : BaseState
     public override void Enter()
     {
         base.Enter();
-
+        Debug.Log("ENTER WALK");
         stateMachine.Animator.SetInteger("state", 2);
     }
 
     public override void Update()
     {
         base.Update();
+        if (!stateMachine.PlayerMovement.IsGrounded)
+        {
+            if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
+            {
+                stateMachine.ChangeState(stateMachine.jumpState);
+            }
+            else if (stateMachine.Rigidbody.linearVelocity.y < -0.1f)
+            {
+                stateMachine.ChangeState(stateMachine.fallState);
+            }
 
-        // Om spelaren slutar röra sig
+            return;
+        }
+        if (!stateMachine.PlayerMovement.IsGrounded)
+        {
+            if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
+                stateMachine.ChangeState(stateMachine.jumpState);
+            else
+                stateMachine.ChangeState(stateMachine.fallState);
+
+            return;
+        }
+        // If player stops moving
         if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             stateMachine.ChangeState(stateMachine.idleState);

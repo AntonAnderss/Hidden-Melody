@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class StateMachineManager : MonoBehaviour
 {
-    BaseState currentState;
+    protected BaseState currentState;
+    public bool LockedInIdle { get; set; }
 
     void Start()
     {
@@ -16,6 +17,9 @@ public class StateMachineManager : MonoBehaviour
 
     void Update()
     {
+        if (LockedInIdle)
+            return;
+
         if (currentState != null)
         {
             currentState.Update();

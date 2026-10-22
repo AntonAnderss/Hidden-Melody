@@ -7,6 +7,7 @@ public class NoteControlController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float controlDuration = 10f;
     [SerializeField] private PlatformerCamera platformerCamera;
+    private StateMachine stateMachine;
 
     private PlayerMovement playerMovement;
 
@@ -17,6 +18,7 @@ public class NoteControlController : MonoBehaviour
 
     private void Start()
     {
+        stateMachine = GetComponent<StateMachine>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -62,6 +64,9 @@ public class NoteControlController : MonoBehaviour
 
         // Stop controlling the player
         playerMovement.enabled = false;
+        stateMachine.ChangeState(stateMachine.idleState);
+        stateMachine.LockedInIdle = true;
+
 
         platformerCamera.SetTarget(currentNote.transform);
 
@@ -77,6 +82,7 @@ public class NoteControlController : MonoBehaviour
 
         // Give control back to the player
         playerMovement.enabled = true;
+        stateMachine.LockedInIdle = false;
 
         controllingNote = false;
     }

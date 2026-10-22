@@ -7,15 +7,26 @@ public class StateMachine : StateMachineManager
     public IdleState idleState;
     public WalkState walkState;
     public BaseState pendingNextState;
+    public PlayerMovement PlayerMovement { get; private set; }
+    public Rigidbody Rigidbody { get; private set; }
+
+    public JumpState jumpState;
+    public LandState landState;
+    public FallState fallState;
     private void Awake()
     {
+        Rigidbody = GetComponent<Rigidbody>();
+        PlayerMovement = GetComponent<PlayerMovement>();
         Animator = GetComponentInChildren<Animator>();
         idleState = new IdleState(this);
         walkState = new WalkState(this);
+        fallState = new FallState(this);
+        jumpState = new JumpState(this);
+        landState = new LandState(this);    
+
         //patrollingState = new PatrollingState(this);
         //layingDownState = new LayingDownState(this);
     }
-
     protected override BaseState GetInitialState()
     {
         return idleState;
@@ -30,5 +41,4 @@ public class StateMachine : StateMachineManager
             pendingNextState = null;
         }
     }
-
 }

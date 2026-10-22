@@ -13,12 +13,37 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("ENTER IDLE");
         stateMachine.Animator.SetInteger("state", 1);
     }
 
     public override void Update()
     {
         base.Update();
+
+        // Player starts a jump
+        if (!stateMachine.PlayerMovement.IsGrounded)
+        {
+            if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
+            {
+                stateMachine.ChangeState(stateMachine.jumpState);
+            }
+            else if (stateMachine.Rigidbody.linearVelocity.y < -0.1f)
+            {
+                stateMachine.ChangeState(stateMachine.fallState);
+            }
+
+            return;
+        }
+
+        // Player falls from an edge
+        if (!stateMachine.PlayerMovement.IsGrounded &&
+            stateMachine.Rigidbody.linearVelocity.y <= 0f)
+        {
+            stateMachine.ChangeState(stateMachine.fallState);
+            return;
+        }
+
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             stateMachine.ChangeState(stateMachine.walkState);

@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Collider body;
     private Vector3 normalSize;
     [SerializeField]private bool grounded;
+    public bool IsGrounded => grounded;
     [SerializeField] private Transform characterVisual;
     private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
