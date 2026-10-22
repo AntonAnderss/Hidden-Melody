@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Instrument
   instrumentName: Flute
   icon: {fileID: 0}
-  Collected: 1
+  Collected: 0
   Combination: 000000000000000000000000i
   CombinationIndex: 0
   abilities:

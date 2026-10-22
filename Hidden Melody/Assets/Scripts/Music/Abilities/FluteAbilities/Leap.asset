@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Leap
   m_EditorClassIdentifier: Assembly-CSharp::MegaJump
   Name: Leap
-  Unlocked: 1
+  Unlocked: 0
   Combination: 030000000200000001000000i

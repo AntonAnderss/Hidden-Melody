@@ -63,6 +63,6 @@ public class SaveSystem : MonoBehaviour
     public void Load() 
     {
         LoadInfo();
-        loader.LoadSave(Path, ref instrumentManager.instruments);
+        loader.LoadSave(Path, ref instrumentManager.instruments, InstrumentID);
     }
 }

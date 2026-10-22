@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: Assembly-CSharp::Shield
   Name: Shield
-  Unlocked: 1
+  Unlocked: 0
   Combination: 020000000100000003000000i
