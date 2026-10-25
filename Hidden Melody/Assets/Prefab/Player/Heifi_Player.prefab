@@ -169,7 +169,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &8047357327352320123
@@ -187,6 +187,7 @@ MonoBehaviour:
   speed: 5
   jumpForce: 6.5
   grounded: 0
+  characterVisual: {fileID: 0}
   left: {fileID: -3060771130678641088, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   right: {fileID: -5471297292594734992, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   jump: {fileID: 8317493720988511252, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
@@ -317,3 +318,4 @@ MonoBehaviour:
   notePrefab: {fileID: 0}
   moveSpeed: 5
   controlDuration: 5
+  platformerCamera: {fileID: 0}

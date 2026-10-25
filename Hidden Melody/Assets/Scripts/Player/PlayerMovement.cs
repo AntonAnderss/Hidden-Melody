@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public InputActionReference left, right, jump, crouch;
     public float Feet { get { return body.bounds.min.y; } }
     public bool isCrouching = false;
+    private float movement;
 
     private void OnEnable()
     {
@@ -48,19 +49,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    
     void Update()
     {
-        float movement = 0;
+        movement = 0;
 
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
 
 
-        if (!dashController.IsDashing)
-        {
-            rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
-        }
+
 
         if (Input.GetKey(KeyCode.A)) movement = -speed;
         if (Input.GetKey(KeyCode.D)) movement = speed;
@@ -91,6 +89,13 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = normalSize;
 
         transform.position += Vector3.up * (Feet - body.bounds.min.y);
+    }
+    private void FixedUpdate()
+    {
+        if (!dashController.IsDashing)
+        {
+            rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+        }
     }
 
 
