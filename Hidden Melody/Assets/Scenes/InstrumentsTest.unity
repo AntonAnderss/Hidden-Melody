@@ -391,7 +391,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: GamePlay
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &422681013
@@ -406,17 +406,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb57aed510992154b91117492cc355a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstrumentManager
-  playMode: 0
   instruments:
   - {fileID: 11400000, guid: b7d005096c57bf14ab973e0c4ec52a8b, type: 2}
   - {fileID: 11400000, guid: 03859284d8cc4564282e26515a8c09d1, type: 2}
   currentInstrumentID: 0
-  modeChange: {fileID: 1834212627469565697, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  noteOne: {fileID: -8193904124002307463, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  noteTwo: {fileID: 6518409269372768019, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  noteThree: {fileID: -1960475855157317034, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  previousInstrument: {fileID: 2571211466510914674, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
-  nextInstrument: {fileID: -6463064485913719488, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  noteOne: {fileID: 1070143487001061745, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  noteTwo: {fileID: -5634649857417515908, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  noteThree: {fileID: 987117141272107928, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  previousInstrument: {fileID: -8573105806947374068, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  nextInstrument: {fileID: -6904137122892421967, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   inCombination: 0
   combinationTime: 1.5
 --- !u!1 &468015387

@@ -1,31 +1,84 @@
+/* */
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
+    [Header("Inputs")]
+    [SerializeField] InputActionReference leftInput;
+    void WalkLeft(InputAction.CallbackContext obj)
+    {
+        movementVector += new Vector2(-CurrentSpeed, 0);
+        lastMoveDirection = -1;
+    }
+    [SerializeField] InputActionReference rightInput;
+    void WalkRight(InputAction.CallbackContext obj)
+    {
+        movementVector += new Vector2(CurrentSpeed, 0);
+        lastMoveDirection = 1;
+    }
+    [SerializeField] InputActionReference jumpInput;
+    void Jump(InputAction.CallbackContext obj)
+    {
+        if (grounded)
+        {
+            movementVector += Vector2.up * jumpForce;
+            grounded = false;
+        }
+    }
+    [SerializeField] InputActionReference crouchInput;
+    void Crouch(InputAction.CallbackContext obj) { crouching = !crouching; }
+
+    [Header("")]
+    [SerializeField] Vector2 movementVector;
+
+    [Header("Speed")]
+    [SerializeField] float movementSpeed = 5.0f;
+    [SerializeField] bool running = false;
+    [SerializeField] float runningMultiplier = 1.2f;
+    [SerializeField] bool crouching = false;
+    [SerializeField] float crouchMultiplier = 0.8f;
+    float CurrentSpeed
+    {
+        get
+        {
+            if (crouching)
+                return movementSpeed * crouchMultiplier;
+            else if(running)
+                return movementSpeed * runningMultiplier;
+            else 
+                return movementSpeed;
+        }
+    }
+
+    [Header("Jump")]
     [SerializeField] private float jumpForce = 5f;
     public float JumpForce => jumpForce;
+    [SerializeField] private bool grounded = false;
 
+    [Header("Unorganized")]
     private Rigidbody rb;
     private Collider body;
     private Vector3 normalSize;
-    [SerializeField]private bool grounded;
     private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
     private DashController dashController;
-
-    public InputActionReference left, right, jump, crouch;
     public float Feet { get { return body.bounds.min.y; } }
-    public bool isCrouching = false;
 
     private void OnEnable()
     {
-        //left.action.started += WalkLeft;
-        //right.action.started += WalkRight;
-        jump.action.started += Jump;
-        crouch.action.started += Crouch;
+        leftInput.action.started += WalkLeft;
+        rightInput.action.started += WalkRight;
+        jumpInput.action.started += Jump;
+        crouchInput.action.started += Crouch;
+    }
+    private void OnDisable()
+    {
+        leftInput.action.started -= WalkLeft;
+        rightInput.action.started -= WalkRight;
+        jumpInput.action.started -= Jump;
+        crouchInput.action.started -= Crouch;
     }
 
 
@@ -38,16 +91,16 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         dashController = GetComponent<DashController>();
+
     }
 
-
-
-    void Update()
+    /*
+    void Update() // Should not be used
     {
         float movement = 0;
 
-        if (Input.GetKey(KeyCode.A)) movement = -speed;
-        if (Input.GetKey(KeyCode.D)) movement = speed;
+        if (Input.GetKey(KeyCode.A)) movement = -movementSpeed;
+        if (Input.GetKey(KeyCode.D)) movement = movementSpeed;
 
         rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
 
@@ -56,18 +109,18 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
         }
 
-        if (Input.GetKey(KeyCode.A)) movement = -speed;
-        if (Input.GetKey(KeyCode.D)) movement = speed;
+        if (Input.GetKey(KeyCode.A)) movement = -movementSpeed;
+        if (Input.GetKey(KeyCode.D)) movement = movementSpeed;
 
 
         if (Input.GetKey(KeyCode.A))
         {
-            movement = -speed;
+            movement = -movementSpeed;
             lastMoveDirection = -1;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            movement = speed;
+            movement = movementSpeed;
             lastMoveDirection = 1;
         }
 
@@ -75,18 +128,20 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
-        } */
+        } 
 
-        if (isCrouching)
+        if (crouching)
             transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
         else
             transform.localScale = normalSize;
 
         transform.position += Vector3.up * (Feet - body.bounds.min.y);
     }
+    */
 
 
 
+    /* Ground check */
     void OnCollisionStay(Collision collision)
     {
         foreach (ContactPoint contact in collision.contacts)
@@ -102,31 +157,4 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = false;
     }
-
-    /* Movement */
-    //void WalkLeft(InputAction.CallbackContext obj)
-    //{
-    //    rb.linearVelocity += new Vector3(-speed, rb.linearVelocity.y, 0);
-    //}
-
-    //void WalkRight(InputAction.CallbackContext obj)
-    //{
-    //    rb.linearVelocity += new Vector3(speed, rb.linearVelocity.y, 0);
-    //}
-
-    void Jump(InputAction.CallbackContext obj)
-    {
-        if(grounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            grounded = false;
-        }
-    }
-
-    void Crouch(InputAction.CallbackContext obj)
-    {
-        isCrouching = !isCrouching;
-    
-    }
-
 }
