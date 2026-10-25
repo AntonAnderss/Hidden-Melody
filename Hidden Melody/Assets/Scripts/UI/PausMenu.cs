@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -13,12 +14,16 @@ public class PausMenu : MonoBehaviour
     private float normalTimeScale;
     [SerializeField] GameObject hudCanvas;
     [SerializeField] GameObject pausMenuCanvas;
+    [SerializeField] GameObject pausMenu;
+    [SerializeField] GameObject menuList;
+    private PlayerRespawn checkpoints;
     AudioSource audioSource;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         audioSource = GetComponent<AudioSource>();
+        checkpoints = player.GetComponent<PlayerRespawn>();
     }
     public void OnPause(InputValue input)
     {
@@ -31,12 +36,21 @@ public class PausMenu : MonoBehaviour
             PauseGame();
         }
     }
+    void ResetMenu()
+    {
+        for( int i = 0; i < menuList.transform.childCount; i++ )
+        {
+            menuList.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        hudCanvas.SetActive(true);
+        pausMenuCanvas.SetActive(true);
+    }
     void PauseGame()
     {
         isPaused = true;
         normalTimeScale = Time.timeScale;
         Time.timeScale = 0;
-        pausMenuCanvas.SetActive(true);
+        pausMenu.SetActive(true);
         Cursor.visible = true;
         player.GetComponent<PlayerInput>().enabled = false;
         hudCanvas.SetActive(false);
@@ -49,10 +63,9 @@ public class PausMenu : MonoBehaviour
         Debug.Log("Unpause");
         isPaused = false;
         Time.timeScale = normalTimeScale;
-        pausMenuCanvas.SetActive(false);
         Cursor.visible = false;
         player.GetComponent<PlayerInput>().enabled = true;
-        hudCanvas.SetActive(true);
+        ResetMenu();
         PlaySound("OpenMenu");
     }
     public void ResumeButton()
@@ -65,7 +78,8 @@ public class PausMenu : MonoBehaviour
     }
     public void ReturnToCheckpointButton()
     {
-        
+        checkpoints.Respawn();
+        UnPauseGame();
     }
     public void ExitButton()
     {

@@ -21,8 +21,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float maxHealth = 100;
     public float currentHealth;
     [SerializeField] private float loosePerSecond = 1f;
+
     private healthLevel currentHealthLevel;
-    [SerializeField] private PlayerRespawn checkpoints;
+    private PlayerRespawn checkpoints;
     bool isPlayerDead;
 
     [Header("HealthBar")]
@@ -65,6 +66,7 @@ public class HealthSystem : MonoBehaviour
         colorAdjustments.saturation.value = 100;
 
         isPlayerDead = false;
+        checkpoints = GetComponent<PlayerRespawn>();
 
     }
 
