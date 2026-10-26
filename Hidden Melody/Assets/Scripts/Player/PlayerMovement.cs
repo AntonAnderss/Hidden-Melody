@@ -1,4 +1,4 @@
-/* */
+/* Author: Anton Andersson & Rasmus (Crouch)*/
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,24 +7,47 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Inputs")]
     [SerializeField] InputActionReference leftInput;
+    [SerializeField] bool walkingLeft = false;
     void WalkLeft(InputAction.CallbackContext obj)
     {
-        movementVector += new Vector2(-CurrentSpeed, 0);
-        lastMoveDirection = -1;
+        if(obj.started)
+        {
+            walkingLeft = true;
+            lastMoveDirection = -1;
+        }
+
+        if(obj.canceled)
+        {
+            walkingLeft = false;
+        }
     }
     [SerializeField] InputActionReference rightInput;
+    [SerializeField] bool walkingRight = false;
     void WalkRight(InputAction.CallbackContext obj)
     {
-        movementVector += new Vector2(CurrentSpeed, 0);
-        lastMoveDirection = 1;
+        if (obj.started)
+        {
+            walkingRight = true;
+            lastMoveDirection = 1;
+        }
+
+        if (obj.canceled)
+        {
+            walkingRight = false;
+        }
     }
     [SerializeField] InputActionReference jumpInput;
+    [SerializeField] bool shouldJump = false;
     void Jump(InputAction.CallbackContext obj)
     {
-        if (grounded)
+        if (obj.started)
         {
-            movementVector += Vector2.up * jumpForce;
-            grounded = false;
+            shouldJump = true;
+        }
+
+        if (obj.canceled)
+        {
+            shouldJump = false;
         }
     }
     [SerializeField] InputActionReference crouchInput;
@@ -32,9 +55,33 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("")]
     [SerializeField] Vector2 movementVector;
+    void DecideMovementVector()
+    {
+        movementVector = Vector2.zero;
+        if(walkingLeft && walkingRight)
+        {
+             //Nothing happens
+        }
+        else if(walkingLeft)
+        {
+            movementVector += Vector2.left * CurrentSpeed;
+        }
+        else if(walkingRight)
+        {
+            movementVector += Vector2.right * CurrentSpeed;
+        }
+
+        // Jump
+        if (grounded && shouldJump)
+        {
+            movementVector += Vector2.up * jumpForce;
+            grounded = false;
+        }
+    }
 
     [Header("Speed")]
     [SerializeField] float movementSpeed = 5.0f;
+    [SerializeField] float maxMovementSpeed = 5.0f;
     [SerializeField] bool running = false;
     [SerializeField] float runningMultiplier = 1.2f;
     [SerializeField] bool crouching = false;
@@ -52,32 +99,55 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    float MaxMovementSpeed
+    {
+        get
+        {
+            if (crouching)
+                return maxMovementSpeed * crouchMultiplier;
+            else if (running)
+                return maxMovementSpeed * runningMultiplier;
+            else
+                return maxMovementSpeed;
+        }
+    }
+
+    [Header("Crouch")]
+    [SerializeField] CapsuleCollider capsuleCollider;
+    [SerializeField] float normalColliderHeight;
+    [SerializeField] Vector3 normalColliderCenter;
+
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 3.5f;
     public float JumpForce => jumpForce;
     [SerializeField] private bool grounded = false;
 
-    [Header("Unorganized")]
-    private Rigidbody rb;
-    private Collider body;
-    private Vector3 normalSize;
+    [Header("Dash Dependencies")]
     private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
     private DashController dashController;
-    public float Feet { get { return body.bounds.min.y; } }
+
+    [Header("Unorganized")]
+    private Rigidbody rb;
 
     private void OnEnable()
     {
         leftInput.action.started += WalkLeft;
+        leftInput.action.canceled += WalkLeft;
         rightInput.action.started += WalkRight;
+        rightInput.action.canceled += WalkRight;
         jumpInput.action.started += Jump;
+        jumpInput.action.canceled += Jump;
         crouchInput.action.started += Crouch;
     }
     private void OnDisable()
     {
         leftInput.action.started -= WalkLeft;
+        leftInput.action.canceled -= WalkLeft;
         rightInput.action.started -= WalkRight;
+        rightInput.action.canceled -= WalkRight;
         jumpInput.action.started -= Jump;
+        jumpInput.action.canceled -= Jump;
         crouchInput.action.started -= Crouch;
     }
 
@@ -86,60 +156,49 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        body = GetComponent<Collider>();
-        normalSize = transform.localScale;
         rb.freezeRotation = true;
 
         dashController = GetComponent<DashController>();
 
+        normalColliderHeight = capsuleCollider.height;
+        normalColliderCenter = capsuleCollider.center;
     }
 
-    /*
-    void Update() // Should not be used
+    private void FixedUpdate()
     {
-        float movement = 0;
-
-        if (Input.GetKey(KeyCode.A)) movement = -movementSpeed;
-        if (Input.GetKey(KeyCode.D)) movement = movementSpeed;
-
-        rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
-
-        if (!dashController.IsDashing)
+        if(!dashController.IsDashing)
         {
-            rb.linearVelocity = new Vector3(movement, rb.linearVelocity.y, 0);
+            DecideMovementVector();
+            rb.linearVelocity += new Vector3(movementVector.x, movementVector.y, 0);
+            movementVector = Vector2.zero;
+
+            if(rb.linearVelocity.x > MaxMovementSpeed)
+            {
+                rb.linearVelocity = new Vector3(MaxMovementSpeed, rb.linearVelocity.y, 0);
+            }
+            else if(rb.linearVelocity.x < -MaxMovementSpeed)
+            {
+                rb.linearVelocity = new Vector3(-MaxMovementSpeed, rb.linearVelocity.y, 0);
+            }
         }
-
-        if (Input.GetKey(KeyCode.A)) movement = -movementSpeed;
-        if (Input.GetKey(KeyCode.D)) movement = movementSpeed;
-
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            movement = -movementSpeed;
-            lastMoveDirection = -1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            movement = movementSpeed;
-            lastMoveDirection = 1;
-        }
-
-        /*if (Input.GetKeyDown(KeyCode.Space) && grounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            grounded = false;
-        } 
-
+        
+        //Crouch
         if (crouching)
-            transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
+        {
+            capsuleCollider.height = normalColliderHeight / 2f;
+
+            capsuleCollider.center = new Vector3(
+                normalColliderCenter.x,
+                normalColliderCenter.y - normalColliderHeight / 4f,
+                normalColliderCenter.z
+            );
+        }
         else
-            transform.localScale = normalSize;
-
-        transform.position += Vector3.up * (Feet - body.bounds.min.y);
+        {
+            capsuleCollider.height = normalColliderHeight;
+            capsuleCollider.center = normalColliderCenter;
+        }
     }
-    */
-
-
 
     /* Ground check */
     void OnCollisionStay(Collision collision)
