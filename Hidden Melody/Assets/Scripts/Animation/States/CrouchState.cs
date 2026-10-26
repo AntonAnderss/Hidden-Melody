@@ -23,7 +23,7 @@ public class CrouchState : BaseState
         {
             stateMachine.ChangeState(stateMachine.crouchIdleState);
         }
-        if (!stateMachine.PlayerMovement.crouching)
+        if (!stateMachine.PlayerMovement.isCrouching)
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {

@@ -19,7 +19,7 @@ public class CrouchIdleState : BaseState
         base.Update();
 
         // Stops crouching
-        if (!stateMachine.PlayerMovement.crouching)
+        if (!stateMachine.PlayerMovement.isCrouching)
         {
             stateMachine.ChangeState(stateMachine.idleState);
             return;
