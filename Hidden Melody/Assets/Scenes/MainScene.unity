@@ -4151,13 +4151,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1996561744}
     - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: noteOne
+      value: 
+      objectReference: {fileID: 1070143487001061745, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: noteTwo
+      value: 
+      objectReference: {fileID: -5634649857417515908, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: noteThree
+      value: 
+      objectReference: {fileID: 987117141272107928, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: nextInstrument
       value: 
-      objectReference: {fileID: -6463064485913719488, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+      objectReference: {fileID: -6904137122892421967, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
     - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: previousInstrument
       value: 
-      objectReference: {fileID: 2571211466510914674, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+      objectReference: {fileID: -8573105806947374068, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
     - target: {fileID: 4127509676894398581, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: instruments.Array.size
       value: 2
@@ -4170,6 +4182,10 @@ PrefabInstance:
       propertyPath: 'instruments.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: fc717401330bfe74db8351291d3df16c, type: 2}
+    - target: {fileID: 5398722171667596085, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5965865224195299906, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: shieldObject
       value: 
@@ -4179,9 +4195,45 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: grounded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: jumpForce
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: jumpInput
+      value: 
+      objectReference: {fileID: -6163111718097429695, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: leftInput
+      value: 
+      objectReference: {fileID: 3007712213161953255, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: rightInput
+      value: 
+      objectReference: {fileID: 3725120687475763395, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: crouchInput
+      value: 
+      objectReference: {fileID: -689793609899052600, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: capsuleCollider
+      value: 
+      objectReference: {fileID: 606708377}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: characterVisual
       value: 
       objectReference: {fileID: 1221783701}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: crouchMultiplier
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047357327352320123, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+      propertyPath: runningMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8140604757597515370, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
       propertyPath: fillImage
       value: 
@@ -4261,6 +4313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb57aed510992154b91117492cc355a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstrumentManager
+--- !u!136 &606708377 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 5398722171667596085, guid: 8addea13fbea5404293ae2e5ae9c03bb, type: 3}
+  m_PrefabInstance: {fileID: 606708328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &614194232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4852057785205268819, guid: 9ba9e5e47997f5649bb647fcaecb9d1e, type: 3}
@@ -5912,6 +5969,10 @@ PrefabInstance:
       propertyPath: cameraShake
       value: 
       objectReference: {fileID: 1996561744}
+    - target: {fileID: 6728844902134129535, guid: ebdeba89657a52348abe27c00f3401ea, type: 3}
+      propertyPath: interactKey
+      value: 
+      objectReference: {fileID: -954368674271966900, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
     - target: {fileID: 6728844902134129535, guid: ebdeba89657a52348abe27c00f3401ea, type: 3}
       propertyPath: greenCorrect
       value: 
