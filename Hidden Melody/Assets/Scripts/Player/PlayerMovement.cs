@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxMovementSpeed = 5.0f;
     [SerializeField] bool running = false;
     [SerializeField] float runningMultiplier = 1.2f;
-    [SerializeField] bool crouching = false;
+    [SerializeField] public bool crouching = false;
     [SerializeField] float crouchMultiplier = 0.8f;
     float CurrentSpeed
     {
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpForce = 3.5f;
     public float JumpForce => jumpForce;
-    [SerializeField] private bool grounded = false;
+    [SerializeField] public bool grounded = false;
 
     [Header("Dash Dependencies")]
     [SerializeField] private DashController dashController = null;
