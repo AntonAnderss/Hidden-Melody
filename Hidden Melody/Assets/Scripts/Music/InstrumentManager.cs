@@ -17,7 +17,7 @@ public class InstrumentManager : MonoBehaviour
     public InputActionReference nextInstrument;
 
     [Header("Combination")]
-    [SerializeField] bool inCombination = false;
+    [SerializeField] public bool inCombination = false;
     [SerializeField] float combinationTime = 1.5f;
     Timer combinationTimer;
 

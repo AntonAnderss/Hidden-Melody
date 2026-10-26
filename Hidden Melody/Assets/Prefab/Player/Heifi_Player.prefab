@@ -18,6 +18,10 @@ GameObject:
   - component: {fileID: 4098410057846023401}
   - component: {fileID: 4127509676894398581}
   - component: {fileID: 8740822377228205000}
+  - component: {fileID: 3368673807753256984}
+  - component: {fileID: 5965865224195299906}
+  - component: {fileID: 6748457609149454345}
+  - component: {fileID: 2422393431843265245}
   m_Layer: 0
   m_Name: Heifi_Player
   m_TagString: Player
@@ -165,7 +169,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &8047357327352320123
@@ -183,13 +187,12 @@ MonoBehaviour:
   speed: 5
   jumpForce: 6.5
   grounded: 0
+  characterVisual: {fileID: 0}
   left: {fileID: -3060771130678641088, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   right: {fileID: -5471297292594734992, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   jump: {fileID: 8317493720988511252, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   crouch: {fileID: 6468948682339298941, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   isCrouching: 0
-  dashSpeed: 15
-  dashDuration: 0.15
 --- !u!114 &4098410057846023401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,11 +236,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstrumentManager
   playMode: 0
-  currInstrument: {fileID: 11400000, guid: 03859284d8cc4564282e26515a8c09d1, type: 2}
+  instruments: []
+  currentInstrumentID: 0
   modeChange: {fileID: 1834212627469565697, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteOne: {fileID: -8193904124002307463, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteTwo: {fileID: 6518409269372768019, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   noteThree: {fileID: -1960475855157317034, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  previousInstrument: {fileID: 0}
+  nextInstrument: {fileID: 0}
   inCombination: 0
   combinationTime: 1.5
 --- !u!114 &8740822377228205000
@@ -253,3 +259,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PLayerRespawn
   deathHeight: -27.5
+--- !u!114 &3368673807753256984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187903854506178366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2fe40dc280da74eb28fa8902b0289d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashController
+  dashSpeed: 25
+  dashDuration: 0.15
+  dashCooldown: 2.5
+--- !u!114 &5965865224195299906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187903854506178366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6214c3b70a4944781dccf230587061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShieldController
+  shieldObject: {fileID: 0}
+  shieldDuration: 2
+  shieldCooldown: 3
+--- !u!114 &6748457609149454345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187903854506178366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5d875735c446a4089ac44602656b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeapController
+  leapStrength: 1.75
+  leapCooldown: 2.5
+--- !u!114 &2422393431843265245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187903854506178366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f44296e4f8ccd4d87eb65d807f03f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoteControlController
+  notePrefab: {fileID: 0}
+  moveSpeed: 5
+  controlDuration: 5
+  platformerCamera: {fileID: 0}

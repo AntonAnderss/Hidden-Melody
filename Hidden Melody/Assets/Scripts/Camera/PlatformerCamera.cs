@@ -165,4 +165,16 @@ public class PlatformerCamera : MonoBehaviour
     {
         return Vector2.Max(min, Vector2.Min(value, max));
     }
+    public void SetTarget(Transform newTarget)
+    {
+        if (newTarget == null)
+            return;
+
+        target = newTarget;
+
+        body = newTarget.GetComponent<Rigidbody>();
+        bodyCollider = newTarget.GetComponent<Collider>();
+
+        lastTargetPosition = target.position;
+    }
 }
