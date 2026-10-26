@@ -17,10 +17,12 @@ public class ShieldController : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        //playerMovement = GetComponentInParent<PlayerMovement>();
 
-        startShieldPosition = shieldObject.transform.localPosition;
-        startShieldRotation = shieldObject.transform.localRotation;
+        //startShieldPosition = shieldObject.transform.localPosition;
+        //startShieldRotation = shieldObject.transform.localRotation;
+
+        //UpdateShieldDirection();
 
         shieldObject.SetActive(false);
 
@@ -28,10 +30,10 @@ public class ShieldController : MonoBehaviour
 
     private void Update()
     {
-        if(shieldActive)
-        {
-            UpdateShieldDirection();
-        }
+        //if(shieldActive)
+        //{
+        //    UpdateShieldDirection();
+        //}
     }
 
     private void UpdateShieldDirection()
@@ -65,14 +67,14 @@ public class ShieldController : MonoBehaviour
             return;
 
         nextShieldTime = Time.time + shieldCooldown;
-        UpdateShieldDirection();
+        
         StartCoroutine(ShieldActive());
     }
 
     private IEnumerator ShieldActive()
     {
         shieldActive = true;
-
+        //UpdateShieldDirection();
         shieldObject.SetActive(true);
 
         yield return new WaitForSeconds(shieldDuration);

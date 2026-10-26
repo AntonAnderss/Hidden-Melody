@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Dash Dependencies")]
     [SerializeField] private DashController dashController = null;
-    private int lastMoveDirection = 1;
+    private int lastMoveDirection = -1;
     public int LastMoveDirection => lastMoveDirection;
 
     [Header("Unorganized")]

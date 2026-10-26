@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NoteControl
   m_EditorClassIdentifier: Assembly-CSharp::NoteControl
   Name: Note Control
-  Unlocked: 0
+  Unlocked: 1
   Description: Let's the player take controll of a note that can be moved around without gravity.
   Combination: 010000000200000003000000i

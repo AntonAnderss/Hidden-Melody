@@ -58,15 +58,18 @@ public class InstrumentManager : MonoBehaviour
     /* Note Change*/
     void NoteOne(InputAction.CallbackContext obj)
     {
+        Debug.Log("NOTE ONE INPUT");
         PlayNote(Note.One);
         
     }
     void NoteTwo(InputAction.CallbackContext obj)
     {
+        Debug.Log("NOTE TWO INPUT");
         PlayNote(Note.Two);
     }
     void NoteThree(InputAction.CallbackContext obj)
     {
+        Debug.Log("NOTE THREE INPUT");
         PlayNote(Note.Three);
     }
 

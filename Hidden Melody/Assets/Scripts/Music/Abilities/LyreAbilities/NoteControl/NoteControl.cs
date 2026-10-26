@@ -17,7 +17,7 @@ public class NoteControl : Ability
         if (player == null)
             return;
 
-        NoteControlController controller = player.GetComponent<NoteControlController>();
+        NoteControlController controller = player.GetComponentInChildren<NoteControlController>();
 
         if (controller == null)
         {

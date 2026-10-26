@@ -11,10 +11,10 @@ public class LeapController : MonoBehaviour
 
     private float nextLeapTime = 0f;
 
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<PlayerMovement>();
+        rb = GetComponentInParent<Rigidbody>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
 
