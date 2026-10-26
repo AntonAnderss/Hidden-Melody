@@ -65,10 +65,12 @@ public class PlayerMovement : MonoBehaviour
         else if(walkingLeft)
         {
             movementVector += Vector2.left * CurrentSpeed;
+            transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         }
         else if(walkingRight)
         {
             movementVector += Vector2.right * CurrentSpeed;
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         // Jump
@@ -123,12 +125,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public bool grounded = false;
 
     [Header("Dash Dependencies")]
+    [SerializeField] private DashController dashController = null;
     private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
-    private DashController dashController;
 
     [Header("Unorganized")]
-    private Rigidbody rb;
+    [SerializeField]private Rigidbody rb;
 
     private void OnEnable()
     {
@@ -158,15 +160,16 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        dashController = GetComponent<DashController>();
-
         normalColliderHeight = capsuleCollider.height;
         normalColliderCenter = capsuleCollider.center;
     }
 
     private void FixedUpdate()
     {
-        if(!dashController.IsDashing)
+        if(dashController == null)
+            dashController = GetComponentInChildren<DashController>();
+
+        if (!dashController.IsDashing)
         {
             DecideMovementVector();
             rb.linearVelocity += new Vector3(movementVector.x, movementVector.y, 0);
