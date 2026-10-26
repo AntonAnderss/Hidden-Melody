@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a206833329b230e42a0e52ae845358f2, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: Assembly-CSharp::Dash
-  Name: DashAbility
-  Unlocked: 1
+  Name: Dash
+  Unlocked: 0
+  Description: Quickly dash in the direction the player is facing.
   Combination: 010000000200000003000000i

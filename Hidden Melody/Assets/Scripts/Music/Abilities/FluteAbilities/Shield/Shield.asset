@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: Assembly-CSharp::Shield
   Name: Shield
-  Unlocked: 1
+  Unlocked: 0
+  Description: Creates a shield infront of the player that last a short while.
   Combination: 020000000100000003000000i

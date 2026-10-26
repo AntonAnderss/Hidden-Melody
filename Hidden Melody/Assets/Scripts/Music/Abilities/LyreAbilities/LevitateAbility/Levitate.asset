@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Levitate
   m_EditorClassIdentifier: Assembly-CSharp::Levitate
   Name: Levitate
-  Unlocked: 1
+  Unlocked: 0
+  Description: Makes a object levitate over the ground for a shot while.
   Combination: 030000000200000001000000i

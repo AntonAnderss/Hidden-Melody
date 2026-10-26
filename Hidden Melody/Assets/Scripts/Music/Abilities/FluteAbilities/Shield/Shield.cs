@@ -9,6 +9,10 @@ public class Shield : Ability
 {
     public override void Perform()
     {
+        if (!Unlocked)
+        {
+            return;
+        }
         GameObject player =
             GameObject.FindGameObjectWithTag("Player");
 

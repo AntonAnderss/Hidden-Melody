@@ -9,7 +9,6 @@ public class FallState : BaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ENTER FALL");
         stateMachine.Animator.SetInteger("state", 4);
     }
 

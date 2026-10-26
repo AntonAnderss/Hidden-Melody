@@ -7,7 +7,6 @@ public class WalkState : BaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ENTER WALK");
         stateMachine.Animator.SetInteger("state", 2);
     }
 
@@ -34,6 +33,13 @@ public class WalkState : BaseState
             else
                 stateMachine.ChangeState(stateMachine.fallState);
 
+            return;
+        }
+
+        // Crouch state
+        if (stateMachine.PlayerMovement.isCrouching)
+        {
+            stateMachine.ChangeState(stateMachine.crouchState);
             return;
         }
         // If player stops moving

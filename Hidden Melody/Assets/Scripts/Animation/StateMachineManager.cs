@@ -29,7 +29,6 @@ public class StateMachineManager : MonoBehaviour
     public void ChangeState(BaseState newState)
     {
         if (newState == null || newState == currentState) return;
-        Debug.Log("What state am i in? : " + newState);
         currentState.Exit();
         currentState = newState;
         currentState.Enter();

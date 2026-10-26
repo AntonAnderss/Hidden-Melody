@@ -7,7 +7,10 @@ public class Leap : Ability
     public override void Perform()
     {
 
-        Debug.Log("DoubleJump");
+        if (!Unlocked)
+        {
+            return;
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 

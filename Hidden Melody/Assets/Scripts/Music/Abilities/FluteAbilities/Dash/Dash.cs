@@ -5,6 +5,11 @@ public class Dash : Ability
 {
     public override void Perform()
     {
+        if(!Unlocked)
+        {
+            Debug.Log("Dash is locked");
+            return;
+        }
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Debug.Log("Dash");
         if (player == null)

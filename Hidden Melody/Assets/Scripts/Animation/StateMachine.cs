@@ -13,6 +13,8 @@ public class StateMachine : StateMachineManager
     public JumpState jumpState;
     public LandState landState;
     public FallState fallState;
+    public CrouchState crouchState;
+    public CrouchIdleState crouchIdleState;
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
@@ -22,7 +24,9 @@ public class StateMachine : StateMachineManager
         walkState = new WalkState(this);
         fallState = new FallState(this);
         jumpState = new JumpState(this);
-        landState = new LandState(this);    
+        landState = new LandState(this);
+        crouchIdleState = new CrouchIdleState(this);
+        crouchState = new CrouchState(this);
 
         //patrollingState = new PatrollingState(this);
         //layingDownState = new LayingDownState(this);
@@ -36,7 +40,6 @@ public class StateMachine : StateMachineManager
     {
         if (pendingNextState != null)
         {
-            Debug.Log("GetUp finished");
             ChangeState(pendingNextState);
             pendingNextState = null;
         }

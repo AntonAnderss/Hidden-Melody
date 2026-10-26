@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class NoteControlController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class NoteControlController : MonoBehaviour
     private Rigidbody noteRb;
 
     private bool controllingNote = false;
-
+    private Vector2 moveInput;
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -24,11 +25,11 @@ public class NoteControlController : MonoBehaviour
 
     private void Update()
     {
-        if (!controllingNote)
-            return;
 
         float horizontal = 0f;
         float vertical = 0f;
+        if (!controllingNote)
+            return;
 
         if (Input.GetKey(KeyCode.A))
             horizontal = -1f;
@@ -42,7 +43,18 @@ public class NoteControlController : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             vertical = -1f;
 
-        noteRb.linearVelocity = new Vector3(horizontal * moveSpeed,vertical * moveSpeed,0f);
+        moveInput = new Vector2(horizontal, vertical);
+    }
+
+
+        
+    private void FixedUpdate()
+    {
+        if(!controllingNote || noteRb== null)
+        {
+            return;
+        }
+        noteRb.linearVelocity = new Vector3(moveInput.x * moveSpeed, moveInput.y * moveSpeed, 0f);
     }
 
     public void ActivateControl()
@@ -56,9 +68,10 @@ public class NoteControlController : MonoBehaviour
     private IEnumerator ControlNote()
     {
         controllingNote = true;
-
+        float direction = playerMovement.LastMoveDirection;
+        Vector3 spawnOffset = new Vector3(1.5f * direction, 0f, 0f);
         // Create the note at the player's position
-        currentNote = Instantiate(notePrefab,transform.position,Quaternion.identity);
+        currentNote = Instantiate(notePrefab,transform.position + spawnOffset,Quaternion.identity);
 
         noteRb = currentNote.GetComponent<Rigidbody>();
 

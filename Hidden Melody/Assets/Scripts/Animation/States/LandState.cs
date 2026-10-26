@@ -10,7 +10,6 @@ public class LandState : BaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ENTER LAND");
         stateMachine.Animator.SetInteger("state", 5);
     }
 

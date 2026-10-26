@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f4be5bf88eed04e9e7885a7b2f9433, type: 3}
   m_Name: NoteControl
   m_EditorClassIdentifier: Assembly-CSharp::NoteControl
-  Name: NoteControl
-  Unlocked: 1
+  Name: Note Control
+  Unlocked: 0
+  Description: Let's the player take controll of a note that can be moved around without gravity.
   Combination: 010000000200000003000000i

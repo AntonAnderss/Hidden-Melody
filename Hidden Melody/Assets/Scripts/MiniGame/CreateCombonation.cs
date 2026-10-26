@@ -7,15 +7,20 @@ public static class CreateCombinations
     {
         switch (ability)
         {
-            case "DashAbility":
+            case "Dash":
                 return DashCombo();
 
-            case "LeapAbility":
+            case "Leap":
                 return LeapAbility();
 
-            case "ShieldAbility":
+            case "Shield":
                 return ShieldAbility();
 
+            case "Levitate":
+                return LevitateAbility();
+
+            case "Note Control":
+                return NoteControlAbility();
             default:
                 return null;
         }
@@ -24,7 +29,7 @@ public static class CreateCombinations
     public static HitCombination DashCombo()
     {
         return new HitCombination(
-        "DashAbility",
+        "Dash",
         new List<HitZone>
         {
             new HitZone(0.35f,0.45f, KeyCode.J),
@@ -38,7 +43,7 @@ public static class CreateCombinations
     public static HitCombination LeapAbility()
     {
         return new HitCombination(
-        "LeapAbility",
+        "Leap",
         new List<HitZone>
         {
             new HitZone(0.05f,0.25f, KeyCode.J),
@@ -51,7 +56,7 @@ public static class CreateCombinations
     public static HitCombination ShieldAbility()
     {
         return new HitCombination(
-        "ShieldAbility",
+        "Shield",
         new List<HitZone>
         {
             new HitZone(0.15f,0.30f, KeyCode.J),
@@ -60,6 +65,30 @@ public static class CreateCombinations
         }
         );
     }
+    public static HitCombination LevitateAbility()
+    {
+        return new HitCombination(
+        "Levitate",
+        new List<HitZone>
+        {
+            new HitZone(0.15f,0.30f, KeyCode.J),
+            new HitZone(0.30f,0.45f,KeyCode.K),
+            new HitZone(0.45f,0.60f,KeyCode.L)
+        }
+        );
+    }
+    //NoteControlAbility
+    public static HitCombination NoteControlAbility()
+    {
+        return new HitCombination(
+        "Note Control",
+        new List<HitZone>
+        {
+            new HitZone(0.15f,0.30f, KeyCode.J),
+            new HitZone(0.80f,0.99f,KeyCode.K),
+            new HitZone(0.75f,0.90f,KeyCode.L)
+        }
+        );
+    }
 
-    
 }

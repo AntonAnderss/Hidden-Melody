@@ -21,7 +21,7 @@ public class MiniGame : MonoBehaviour
     [SerializeField] private RectTransform sliderRect;
     [SerializeField] private Canvas miniGameCanvas;
     //[SerializeField] private HealthSystem healthSystem;
-    //[SerializeField] private GameObject cameraActive;
+
     public bool minigameCompleted { get; private set; }
     private HitCombination currentCombination;
     private bool minigameActive = false;

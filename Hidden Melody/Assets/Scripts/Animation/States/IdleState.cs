@@ -13,7 +13,6 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ENTER IDLE");
         stateMachine.Animator.SetInteger("state", 1);
     }
 
@@ -35,7 +34,12 @@ public class IdleState : BaseState
 
             return;
         }
-
+        // Crouch 
+        if (stateMachine.PlayerMovement.isCrouching)
+        {
+            stateMachine.ChangeState(stateMachine.crouchIdleState);
+            return;
+        }
         // Player falls from an edge
         if (!stateMachine.PlayerMovement.IsGrounded &&
             stateMachine.Rigidbody.linearVelocity.y <= 0f)
@@ -48,6 +52,7 @@ public class IdleState : BaseState
         {
             stateMachine.ChangeState(stateMachine.walkState);
         }
+
     }
 
     public override void Exit()

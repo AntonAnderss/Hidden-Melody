@@ -8,6 +8,10 @@ public class NoteControl : Ability
 {
     public override void Perform()
     {
+        if (!Unlocked)
+        {
+            return;
+        }
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (player == null)

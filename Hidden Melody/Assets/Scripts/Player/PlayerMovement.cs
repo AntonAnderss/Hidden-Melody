@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     public InputActionReference left, right, jump, crouch;
     public float Feet { get { return body.bounds.min.y; } }
     public bool isCrouching = false;
+    private CapsuleCollider capsuleCollider;
+
+    private float normalColliderHeight;
+    private Vector3 normalColliderCenter;
     private float movement;
 
     private void OnEnable()
@@ -44,7 +48,10 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Collider>();
         normalSize = transform.localScale;
         rb.freezeRotation = true;
+        capsuleCollider = GetComponent<CapsuleCollider>();
 
+        normalColliderHeight = capsuleCollider.height;
+        normalColliderCenter = capsuleCollider.center;
         dashController = GetComponent<DashController>();
     }
 
@@ -84,11 +91,20 @@ public class PlayerMovement : MonoBehaviour
         } */
 
         if (isCrouching)
-            transform.localScale = new Vector3(normalSize.x, normalSize.y / 2, normalSize.z);
-        else
-            transform.localScale = normalSize;
+        {
+            capsuleCollider.height = normalColliderHeight / 2f;
 
-        transform.position += Vector3.up * (Feet - body.bounds.min.y);
+            capsuleCollider.center = new Vector3(
+                normalColliderCenter.x,
+                normalColliderCenter.y - normalColliderHeight / 4f,
+                normalColliderCenter.z
+            );
+        }
+        else
+        {
+            capsuleCollider.height = normalColliderHeight;
+            capsuleCollider.center = normalColliderCenter;
+        }
     }
     private void FixedUpdate()
     {

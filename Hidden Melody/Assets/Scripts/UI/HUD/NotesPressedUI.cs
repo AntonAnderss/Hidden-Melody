@@ -4,7 +4,11 @@ using System.Collections;
 public class NotesPressedUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text[] noteTexts;
-    [SerializeField] private float resetDelay = 1f;
+    [SerializeField] private float resetDelay = 0.5f;
+    [SerializeField] InstrumentManager instrumentManager;
+    private float resetTimer = 0f;
+    private bool waitingForReset = false;
+    private bool inCombination = false;
     private int currentIndex = 0;
     
 
@@ -29,6 +33,24 @@ public class NotesPressedUI : MonoBehaviour
         {
             AddNote("L");
         }
+        if (inCombination && !instrumentManager.inCombination)
+        {
+            waitingForReset = true;
+            resetTimer = resetDelay;
+            Debug.Log("Reset Notes");
+        }
+
+        inCombination = instrumentManager.inCombination;
+
+        if(waitingForReset)
+        {
+            resetTimer -= Time.deltaTime;
+            if(resetTimer <= 0f)
+            {
+                ResetNotes();
+                waitingForReset=false;
+            }
+        }
     }
 
     private void AddNote(string note)
@@ -39,17 +61,13 @@ public class NotesPressedUI : MonoBehaviour
         noteTexts[currentIndex].text = note;
         currentIndex++;
 
-        if (currentIndex >= noteTexts.Length)
+        if (currentIndex >= noteTexts.Length && !instrumentManager.inCombination && resetTimer <= 0f)
         {
-            StartCoroutine(ResetAfterDelay());
+            waitingForReset = true;
+            resetTimer = resetDelay;
         }
     }
-    private IEnumerator ResetAfterDelay()
-    {
-        yield return new WaitForSeconds(resetDelay);
 
-        ResetNotes();
-    }
     public void ResetNotes()
     {
         currentIndex = 0;
