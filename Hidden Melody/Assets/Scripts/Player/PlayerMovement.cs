@@ -74,25 +74,28 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        if (grounded && shouldJump)
+        if (IsGrounded && shouldJump)
         {
             movementVector += Vector2.up * jumpForce;
             grounded = false;
         }
     }
+    [SerializeField] float zLevel = 0.0f;
 
     [Header("Speed")]
-    [SerializeField] float movementSpeed = 5.0f;
+    [SerializeField] float movementSpeed = 0.5f;
     [SerializeField] float maxMovementSpeed = 5.0f;
     [SerializeField] bool running = false;
+    public bool IsRunning { get { return running; } } 
     [SerializeField] float runningMultiplier = 1.2f;
-    [SerializeField] public bool crouching = false;
+    [SerializeField] bool crouching = false;
+    public bool IsCrouching { get { return crouching; } }
     [SerializeField] float crouchMultiplier = 0.8f;
     float CurrentSpeed
     {
         get
         {
-            if (crouching)
+            if (IsCrouching)
                 return movementSpeed * crouchMultiplier;
             else if(running)
                 return movementSpeed * runningMultiplier;
@@ -100,12 +103,13 @@ public class PlayerMovement : MonoBehaviour
                 return movementSpeed;
         }
     }
+    [SerializeField] float drag = 0.8f;
 
     float MaxMovementSpeed
     {
         get
         {
-            if (crouching)
+            if (IsCrouching)
                 return maxMovementSpeed * crouchMultiplier;
             else if (running)
                 return maxMovementSpeed * runningMultiplier;
@@ -116,17 +120,18 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Crouch")]
     [SerializeField] CapsuleCollider capsuleCollider;
-    [SerializeField] float normalColliderHeight;
-    [SerializeField] Vector3 normalColliderCenter;
+    [SerializeField] float height;
+    [SerializeField] Vector3 center;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 3.5f;
     public float JumpForce => jumpForce;
-    [SerializeField] public bool grounded = false;
+    [SerializeField] bool grounded = false;
+    public bool IsGrounded { get { return grounded; } }
 
     [Header("Dash Dependencies")]
     [SerializeField] private DashController dashController = null;
-    private int lastMoveDirection = -1;
+    private int lastMoveDirection = 1;
     public int LastMoveDirection => lastMoveDirection;
 
     [Header("Unorganized")]
@@ -160,19 +165,28 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        normalColliderHeight = capsuleCollider.height;
-        normalColliderCenter = capsuleCollider.center;
+        height = capsuleCollider.height;
+        center = capsuleCollider.center;
     }
 
     private void FixedUpdate()
     {
-        if(dashController == null)
+        //Make sure player doesn't move on z-axis
+        if (transform.position.z != zLevel)
+            transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
+
+        if (dashController == null)
             dashController = GetComponentInChildren<DashController>();
 
         if (!dashController.IsDashing)
         {
             DecideMovementVector();
-            rb.linearVelocity += new Vector3(movementVector.x, movementVector.y, 0);
+
+            if(movementVector.x == 0) //Isn't moving
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x * drag, rb.linearVelocity.y + movementVector.y, 0); //Slow down
+            else
+                rb.linearVelocity += new Vector3(movementVector.x, movementVector.y, 0l);
+
             movementVector = Vector2.zero;
 
             if(rb.linearVelocity.x > MaxMovementSpeed)
@@ -186,20 +200,20 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //Crouch
-        if (crouching)
+        if (IsCrouching)
         {
-            capsuleCollider.height = normalColliderHeight / 2f;
+            capsuleCollider.height = height / 2f;
 
             capsuleCollider.center = new Vector3(
-                normalColliderCenter.x,
-                normalColliderCenter.y - normalColliderHeight / 4f,
-                normalColliderCenter.z
+                center.x,
+                center.y - height / 4f,
+                center.z
             );
         }
         else
         {
-            capsuleCollider.height = normalColliderHeight;
-            capsuleCollider.center = normalColliderCenter;
+            capsuleCollider.height = height;
+            capsuleCollider.center = center;
         }
     }
 

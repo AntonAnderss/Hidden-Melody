@@ -14896,6 +14896,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -689793609899052600, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
     - target: {fileID: 7562823935010374344, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
+      propertyPath: movementSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562823935010374344, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: dashController
       value: 
       objectReference: {fileID: 607840986}
@@ -14917,7 +14921,7 @@ PrefabInstance:
       objectReference: {fileID: 166632950}
     - target: {fileID: 7883255972106627798, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_VersionIndex
-      value: 55
+      value: 58
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

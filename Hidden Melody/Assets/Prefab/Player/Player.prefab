@@ -9,17 +9,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3210458704769859125}
+  - component: {fileID: 8753106769240629412}
   - component: {fileID: -6874789881140228997}
   - component: {fileID: 7562823935010374344}
   - component: {fileID: 5197638494203050855}
   - component: {fileID: 1866974218548789253}
   - component: {fileID: 4091770797078328033}
-  - component: {fileID: 109594505243511362}
   - component: {fileID: 5581677198555285027}
   - component: {fileID: 4097815432722541041}
+  - component: {fileID: 3957026812931661914}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,6 +42,21 @@ Transform:
   - {fileID: 8923344025358967591}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8753106769240629412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324143792862637006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c47e8dec1de47d429aed294966d8af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  gameplayName: Gameplay
+  minigameName: Minigame
+  Input: {fileID: 0}
 --- !u!114 &-6874789881140228997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,19 +107,21 @@ MonoBehaviour:
   shouldJump: 0
   crouchInput: {fileID: -689793609899052600, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   movementVector: {x: 0, y: 0}
-  movementSpeed: 5
+  zLevel: 0
+  movementSpeed: 0.5
   maxMovementSpeed: 5
   running: 0
   runningMultiplier: 1.5
   crouching: 0
   crouchMultiplier: 0.4
+  drag: 0.8
   capsuleCollider: {fileID: 4091770797078328033}
-  normalColliderHeight: 0
-  normalColliderCenter: {x: 0, y: 0, z: 0}
+  height: 0
+  center: {x: 0, y: 0, z: 0}
   jumpForce: 3.5
   grounded: 0
-  dashController: {fileID: 0}
-  rb: {fileID: 0}
+  dashController: {fileID: 7560994398924433994}
+  rb: {fileID: 3957026812931661914}
 --- !u!114 &5197638494203050855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +172,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4324143792862637006}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 02f23829cabaefe40ace95f81e4f8b08, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -170,33 +188,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &109594505243511362
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4324143792862637006}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 8
-  m_CollisionDetection: 0
 --- !u!114 &5581677198555285027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +213,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   deathHeight: -10
+--- !u!54 &3957026812931661914
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324143792862637006}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7294676662874685177
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6214c3b70a4944781dccf230587061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShieldController
-  shieldObject: {fileID: 0}
+  shieldObject: {fileID: 7882618282510701684}
   shieldDuration: 2
   shieldCooldown: 3
 --- !u!114 &5845407055894255746
@@ -300,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5d875735c446a4089ac44602656b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeapController
-  leapStrength: 1.75
+  leapStrength: 3.75
   leapCooldown: 2.5
 --- !u!114 &911656310174009701
 MonoBehaviour:
@@ -314,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f44296e4f8ccd4d87eb65d807f03f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoteControlController
-  notePrefab: {fileID: 0}
+  notePrefab: {fileID: 2120554685131749258, guid: 9497e2317f17ebf47a475ce8b4a04c45, type: 3}
   moveSpeed: 5
   controlDuration: 10
   platformerCamera: {fileID: 0}
@@ -343,6 +361,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 1ab986b8b960fca4dba9cb3b34e955fe, type: 2}
+    - target: {fileID: 3151047632125629674, guid: 7446fc63649c2ee48b182b2009c99608, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286065629415039563, guid: 7446fc63649c2ee48b182b2009c99608, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4476712830035435857, guid: 7446fc63649c2ee48b182b2009c99608, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8334810020102068652, guid: 7446fc63649c2ee48b182b2009c99608, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.05996704
@@ -460,11 +490,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield
       objectReference: {fileID: 0}
+    - target: {fileID: 1280869509965371021, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}
+      propertyPath: m_VersionIndex
+      value: 79
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}
+--- !u!1 &7882618282510701684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1280372571878320175, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}
+  m_PrefabInstance: {fileID: 8980287068650945627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8465381728347130138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 710284885034513729, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}

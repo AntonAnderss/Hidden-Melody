@@ -13,7 +13,7 @@ public class WalkState : BaseState
     public override void Update()
     {
         base.Update();
-        if (!stateMachine.PlayerMovement.grounded)
+        if (!stateMachine.PlayerMovement.IsGrounded)
         {
             if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
             {
@@ -26,7 +26,7 @@ public class WalkState : BaseState
 
             return;
         }
-        if (!stateMachine.PlayerMovement.grounded)
+        if (!stateMachine.PlayerMovement.IsGrounded)
         {
             if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
                 stateMachine.ChangeState(stateMachine.jumpState);
@@ -37,7 +37,7 @@ public class WalkState : BaseState
         }
 
         // Crouch state
-        if (stateMachine.PlayerMovement.crouching)
+        if (stateMachine.PlayerMovement.IsCrouching)
         {
             stateMachine.ChangeState(stateMachine.crouchState);
             return;
