@@ -21,7 +21,7 @@ public class IdleState : BaseState
         base.Update();
 
         // Player starts a jump
-        if (!stateMachine.PlayerMovement.grounded)
+        if (!stateMachine.PlayerMovement.IsGrounded)
         {
             if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
             {
@@ -35,13 +35,13 @@ public class IdleState : BaseState
             return;
         }
         // Crouch 
-        if (stateMachine.PlayerMovement.crouching)
+        if (stateMachine.PlayerMovement.IsCrouching)
         {
             stateMachine.ChangeState(stateMachine.crouchIdleState);
             return;
         }
         // Player falls from an edge
-        if (!stateMachine.PlayerMovement.grounded &&
+        if (!stateMachine.PlayerMovement.IsGrounded &&
             stateMachine.Rigidbody.linearVelocity.y <= 0f)
         {
             stateMachine.ChangeState(stateMachine.fallState);
