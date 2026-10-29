@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Unorganized")]
     [SerializeField]private Rigidbody rb;
+    public bool IsWalking { get { return walkingLeft || walkingRight; } }
 
     private void OnEnable()
     {
