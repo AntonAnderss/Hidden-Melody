@@ -17,7 +17,7 @@ public class Levitate : Ability
         if (player == null)
             return;
 
-        LevitateAbilityController controller = player.GetComponent<LevitateAbilityController>();
+        LevitateAbilityController controller = player.GetComponentInChildren<LevitateAbilityController>();
 
         if (controller == null)
             return;

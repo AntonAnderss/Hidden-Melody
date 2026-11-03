@@ -1,4 +1,5 @@
 /* Author: Anton Andersson */
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class InstrumentManager : MonoBehaviour
     [Header("Instrument")]
     [SerializeField] public Instrument[] instruments;
     [SerializeField] int currentInstrumentID = 0;
-    Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
+    public Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
 
     [Header("Inputs")]
     public InputActionReference noteOne;
@@ -18,6 +19,7 @@ public class InstrumentManager : MonoBehaviour
 
     [Header("Combination")]
     [SerializeField] public bool inCombination = false;
+    bool shouldReset = false;
     [SerializeField] float combinationTime = 1.5f;
     Timer combinationTimer;
 
@@ -51,24 +53,14 @@ public class InstrumentManager : MonoBehaviour
         if (!inCombination)
             return;
 
-        if (combinationTimer.TargetTimeReached())
+        if (combinationTimer.TargetTimeReached() || shouldReset)
             ResetCombination();
     }
 
     /* Note Change*/
-    void NoteOne(InputAction.CallbackContext obj)
-    {
-        PlayNote(Note.One);
-        
-    }
-    void NoteTwo(InputAction.CallbackContext obj)
-    {
-        PlayNote(Note.Two);
-    }
-    void NoteThree(InputAction.CallbackContext obj)
-    {
-        PlayNote(Note.Three);
-    }
+    void NoteOne(InputAction.CallbackContext obj) { PlayNote(Note.One); }
+    void NoteTwo(InputAction.CallbackContext obj) { PlayNote(Note.Two); }
+    void NoteThree(InputAction.CallbackContext obj) { PlayNote(Note.Three); }
 
     void PlayNote(Note n)
     {
@@ -78,9 +70,9 @@ public class InstrumentManager : MonoBehaviour
         if (!inCombination)
             StartCombination();
 
-        if(inCombination)
+        if (inCombination)
             if (CurrentInstrument.TryPlayCombination(n)) //If a combination is completed
-                ResetCombination();
+                shouldReset = true;
     }
 
     /* Combination-based */
@@ -90,40 +82,85 @@ public class InstrumentManager : MonoBehaviour
         CurrentInstrument.ClearCombination();
         combinationTimer.Reset();
         inCombination = false;
+        shouldReset = false;
     }
 
     /* Switching Between Instruments */
-    void PreviousInstrument(InputAction.CallbackContext obj)
+    public int CurrentInstrumentIndex { get { return currentInstrumentID; } }
+    /// <summary>
+    /// Returns the Index of the previous Collected Instrument
+    /// </summary>
+    public int GetPreviousInstrumentIndex()
     {
         int originalID = currentInstrumentID;
-        bool searchingForValidID = true;
-
-        while(searchingForValidID)
-        {
-            currentInstrumentID--;
-            if (currentInstrumentID < 0)
-                currentInstrumentID = instruments.Length - 1;
-
-            if (currentInstrumentID == originalID || CollectedInstrument(currentInstrumentID))
-                searchingForValidID = false;
-        }
-    }
-    void NextInstrument(InputAction.CallbackContext obj)
-    {
-        int originalID = currentInstrumentID;
+        int searchID = currentInstrumentID;
         bool searchingForValidID = true;
 
         while (searchingForValidID)
         {
-            currentInstrumentID++;
-            if (currentInstrumentID > instruments.Length - 1)
-                currentInstrumentID = 0;
+            searchID++;
+            if (searchID > instruments.Length - 1)
+                searchID = 0;
 
-            if (currentInstrumentID == originalID || CollectedInstrument(currentInstrumentID))
+            if (searchID == originalID || CollectedInstrument(searchID))
                 searchingForValidID = false;
         }
+
+        return searchID;
     }
+    /// <summary>
+    /// Returns the Index of the next Collected Instrument
+    /// </summary>
+    public int GetNextInstrumentIndex()
+    {
+        int originalID = currentInstrumentID;
+        int searchID = currentInstrumentID;
+        bool searchingForValidID = true;
+
+        while (searchingForValidID)
+        {
+            searchID++;
+            if (searchID > instruments.Length - 1)
+                searchID = 0;
+
+            if (searchID == originalID || CollectedInstrument(searchID))
+                searchingForValidID = false;
+        }
+
+        return searchID;
+    }
+    void PreviousInstrument(InputAction.CallbackContext obj) { currentInstrumentID = GetPreviousInstrumentIndex(); }
+    void NextInstrument(InputAction.CallbackContext obj) { currentInstrumentID = GetNextInstrumentIndex(); }
 
     /* Helper */
     bool CollectedInstrument(int instrumentID) { return instruments[instrumentID].Collected; }
+
+    /* HUD Functions */
+    /// <summary>
+    /// Returns the amount of collected instruments
+    /// </summary>
+    public int GetInstrumentCount()
+    {
+        int i = 0;
+        foreach (Instrument instrument in instruments)
+            if (instrument != null && instrument.Collected)
+                i++;
+
+        return i;
+    }
+    /// <summary>
+    /// Returns the amount of instruments. Both collected & uncollected
+    /// </summary>
+    public int GetTotalInstrumentCount()
+    {
+        int i = 0;
+        foreach (Instrument instrument in instruments)
+            if (instrument != null)
+                i++;
+
+        return i;
+    }
+
+    public Instrument GetPreviousInstrument() { return instruments[GetPreviousInstrumentIndex()]; }
+    public Instrument GetNextInstrument() { return instruments[GetNextInstrumentIndex()]; }
 }

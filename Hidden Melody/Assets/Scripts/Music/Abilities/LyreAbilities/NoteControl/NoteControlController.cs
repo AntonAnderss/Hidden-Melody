@@ -19,8 +19,8 @@ public class NoteControlController : MonoBehaviour
     private Vector2 moveInput;
     private void Start()
     {
-        stateMachine = GetComponent<StateMachine>();
-        playerMovement = GetComponent<PlayerMovement>();
+        stateMachine = GetComponentInParent<StateMachine>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     private void Update()

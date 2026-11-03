@@ -5,7 +5,8 @@ public class Dash : Ability
 {
     public override void Perform()
     {
-        if(!Unlocked)
+        Debug.Log("Dash is  activated");
+        if (!Unlocked)
         {
             Debug.Log("Dash is locked");
             return;
@@ -19,7 +20,7 @@ public class Dash : Ability
         }
 
 
-        DashController dashController = player.GetComponent<DashController>();
+        DashController dashController = player.GetComponentInChildren<DashController>();
 
         if (dashController == null)
         {

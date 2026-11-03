@@ -16,10 +16,10 @@ public class DashController : MonoBehaviour
     private int dashDirection;
     public bool IsDashing => isDashing;
 
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<PlayerMovement>();
+        rb = GetComponentInParent<Rigidbody>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
 

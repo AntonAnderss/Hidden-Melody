@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
   sirenPrefab: {fileID: 7394550692721758434, guid: 1ea168bc34531e04f930b225143065e1, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 4324143792862637006, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
   enemies: []
 --- !u!1 &9016874126558137459
 GameObject:
@@ -316,7 +316,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityUnlockEvent
   miniGame: {fileID: 6728844902134129535}
-  abilityToUnlock: 0
 --- !u!114 &6728844902134129535
 MonoBehaviour:
   m_ObjectHideFlags: 0

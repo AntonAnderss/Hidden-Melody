@@ -20,7 +20,7 @@ public class Leap : Ability
             return;
         }
 
-        LeapController leapController = player.GetComponent<LeapController>();
+        LeapController leapController = player.GetComponentInChildren<LeapController>();
 
         if (leapController == null)
         {

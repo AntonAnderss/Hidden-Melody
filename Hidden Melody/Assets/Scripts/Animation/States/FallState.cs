@@ -16,7 +16,7 @@ public class FallState : BaseState
     {
         base.Update();
 
-        if (stateMachine.PlayerMovement.grounded)
+        if (stateMachine.PlayerMovement.IsGrounded)
         {
             stateMachine.ChangeState(stateMachine.landState);
         }

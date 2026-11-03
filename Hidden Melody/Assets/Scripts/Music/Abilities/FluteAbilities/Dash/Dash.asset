@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: Assembly-CSharp::Dash
   Name: Dash
-  Unlocked: 0
+  Unlocked: 1
   Description: Quickly dash in the direction the player is facing.
   Combination: 010000000200000003000000i

@@ -22,8 +22,7 @@ public class Shield : Ability
             return;
         }
 
-        ShieldController shieldController =
-            player.GetComponent<ShieldController>();
+        ShieldController shieldController = player.GetComponentInChildren<ShieldController>();
 
         if (shieldController == null)
         {
