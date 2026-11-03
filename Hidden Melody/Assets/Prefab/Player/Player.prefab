@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashController
   dashSpeed: 25
-  dashDuration: 0.15
+  dashDuration: 0.05
   dashCooldown: 2.5
 --- !u!114 &364656668556448358
 MonoBehaviour:
