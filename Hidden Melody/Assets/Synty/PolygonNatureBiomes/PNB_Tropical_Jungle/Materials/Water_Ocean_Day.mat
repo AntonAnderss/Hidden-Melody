@@ -12,6 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  - _ENABLE_TERRAIN_SHORELINE
   - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
@@ -51,6 +53,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: e0595e1df515fa64fa99e3017d4ace24, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TerrainHeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -70,7 +76,7 @@ Material:
     - _Animation_Offset: 0
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
-    - _BUILTIN_CullMode: 0
+    - _BUILTIN_CullMode: 2
     - _BUILTIN_DstBlend: 10
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
@@ -79,14 +85,14 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 0
     - _BUILTIN_ZWriteControl: 0
-    - _Base_Opacity: 0.982
+    - _Base_Opacity: 0.926
     - _Blend: 0
     - _BlendModePreserveSpecular: 0
     - _BumpScale: 1
     - _CastShadows: 0
     - _CausticsIntensity: 2
     - _Caustics_Intensity: 0.062
-    - _Caustics_Scale: 18.46
+    - _Caustics_Scale: 14.7
     - _Caustics_Speed: 1
     - _Caustics_Use_Voronoi_Noise: 0
     - _Cull: 2
@@ -101,16 +107,18 @@ Material:
     - _Distance_power: 0.9
     - _Distant_Water_Intensity: 3
     - _Distant_Water_Power: 13.07
-    - _Distortion_Size: 4
-    - _Distortion_Speed: 1
+    - _Distortion_Size: 1.36
+    - _Distortion_Speed: 2.66
     - _Distortion_Strength: 0.45
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
+    - _ENABLE_TERRAIN_SHORELINE: 1
     - _EdgePower: 0
     - _Enable_Animation: 1
     - _Enable_Caustics: 1
     - _Enable_Distortion: 0
     - _Enable_Fresnel: 1
-    - _Enable_Fresnel_Fade: 1
+    - _Enable_Fresnel_Fade: 0
     - _Enable_Fresnel_glancing_angle_fix: 1
     - _Enable_Global_Foam: 1
     - _Enable_Normals: 1
@@ -119,9 +127,9 @@ Material:
     - _Enable_Shore_Foam: 1
     - _Enable_Shore_Wave_Foam: 1
     - _Enable_Shore_Waves: 1
-    - _Enable_Top_Scrolling_Texture: 0
+    - _Enable_Top_Scrolling_Texture: 1
     - _Enable_distant_normal_intensity_fall_off: 1
-    - _Fade_Distance: 27.7
+    - _Fade_Distance: 5.1
     - _Fade_Power: 2.5
     - _Float: 0.1
     - _Foam_Glow: 0
@@ -142,6 +150,7 @@ Material:
     - _Normal_Tiling: 0.3
     - _OcclusionStrength: 1
     - _OceanWaveFoamIntensity: 0.5
+    - _OceanWaveFrequency: 1
     - _OceanWaveHeight: 1
     - _OceanWaveSpeed: 0.5
     - _Ocean_Foam_Amount: 0.5
@@ -150,15 +159,15 @@ Material:
     - _Ocean_Wave_Foam_Amount: 0.5
     - _Ocean_Wave_Foam_Breakup_Tiling: 0.001
     - _Ocean_Wave_Foam_Intensity: 0.442
-    - _Ocean_Wave_Height: 0.26
+    - _Ocean_Wave_Height: 0.15
     - _Ocean_Wave_Speed: 1
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
-    - _Scrolling_Texture_Opacity: 1
+    - _Scrolling_Texture_Opacity: 0.342
     - _Shallow_Intensity: 1
-    - _Shallows_Opacity: 0.759
+    - _Shallows_Opacity: 1
     - _ShoreEdgeGradientIntensity: 0.254
     - _ShoreEdgeTransparency: 0.58
     - _Shore_Edge_Foam_Intensity: 1
@@ -179,11 +188,15 @@ Material:
     - _Shore_Wave_Return_Amount: 0.5
     - _Shore_Wave_Speed: 0.144
     - _Shore_Wave_Thickness: 0.369
-    - _Smoothness: 0.5
+    - _ShorelineFade: 100
+    - _ShorelineHeight: 1
+    - _Smoothness: 0.718
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
+    - _TerrainMapMultiplier: 1
     - _UVSec: 0
     - _UseVoronoiNoiseForCaustics: 0
     - _Very_Deep_Height: 33.2
@@ -197,6 +210,8 @@ Material:
     - _Water_Normal_Noise_Speed: 1
     - _Water_Normal_Pan_Speed: 1
     - _Water_Normal_Tiling: 0.04
+    - _WaveNoiseAmount: 0.2
+    - _WaveNoiseScale: 10
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
