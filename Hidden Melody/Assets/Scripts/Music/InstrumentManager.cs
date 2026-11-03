@@ -7,7 +7,7 @@ public class InstrumentManager : MonoBehaviour
     [Header("Instrument")]
     [SerializeField] public Instrument[] instruments;
     [SerializeField] int currentInstrumentID = 0;
-    Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
+    public Instrument CurrentInstrument { get { return instruments[currentInstrumentID]; } }
 
     [Header("Inputs")]
     public InputActionReference noteOne;
@@ -18,6 +18,7 @@ public class InstrumentManager : MonoBehaviour
 
     [Header("Combination")]
     [SerializeField] public bool inCombination = false;
+    bool shouldReset = false;
     [SerializeField] float combinationTime = 1.5f;
     Timer combinationTimer;
 
@@ -51,27 +52,14 @@ public class InstrumentManager : MonoBehaviour
         if (!inCombination)
             return;
 
-        if (combinationTimer.TargetTimeReached())
+        if (combinationTimer.TargetTimeReached() || shouldReset)
             ResetCombination();
     }
 
     /* Note Change*/
-    void NoteOne(InputAction.CallbackContext obj)
-    {
-        Debug.Log("NOTE ONE INPUT");
-        PlayNote(Note.One);
-        
-    }
-    void NoteTwo(InputAction.CallbackContext obj)
-    {
-        Debug.Log("NOTE TWO INPUT");
-        PlayNote(Note.Two);
-    }
-    void NoteThree(InputAction.CallbackContext obj)
-    {
-        Debug.Log("NOTE THREE INPUT");
-        PlayNote(Note.Three);
-    }
+    void NoteOne(InputAction.CallbackContext obj) { PlayNote(Note.One); }
+    void NoteTwo(InputAction.CallbackContext obj) { PlayNote(Note.Two); }
+    void NoteThree(InputAction.CallbackContext obj) { PlayNote(Note.Three); }
 
     void PlayNote(Note n)
     {
@@ -81,9 +69,9 @@ public class InstrumentManager : MonoBehaviour
         if (!inCombination)
             StartCombination();
 
-        if(inCombination)
+        if (inCombination)
             if (CurrentInstrument.TryPlayCombination(n)) //If a combination is completed
-                ResetCombination();
+                shouldReset = true;
     }
 
     /* Combination-based */
@@ -93,6 +81,7 @@ public class InstrumentManager : MonoBehaviour
         CurrentInstrument.ClearCombination();
         combinationTimer.Reset();
         inCombination = false;
+        shouldReset = false;
     }
 
     /* Switching Between Instruments */
