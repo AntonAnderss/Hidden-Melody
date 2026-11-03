@@ -19172,7 +19172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422484612994267169, guid: de83ea42413db2a41a2b1ba5045d024b, type: 3}
       propertyPath: latestCombination.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6043696673617121105, guid: de83ea42413db2a41a2b1ba5045d024b, type: 3}
       propertyPath: m_LocalScale.x
