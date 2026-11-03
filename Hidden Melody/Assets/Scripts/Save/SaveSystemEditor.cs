@@ -27,7 +27,7 @@ public class SaveSystemEditor : Editor
         GUILayout.Label("", GUILayout.Height(2.5f));
         if (GUILayout.Button("Load"))
         {
-            //
+            myScript.Load();
         }
 
     }

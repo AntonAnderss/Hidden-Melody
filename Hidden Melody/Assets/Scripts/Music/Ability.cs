@@ -10,6 +10,7 @@ public class Ability : ScriptableObject
     [Header("Info")]
     public string Name;
     public bool Unlocked;
+    public string Description;
 
     [Header("Logic")]
     public Note[] Combination;

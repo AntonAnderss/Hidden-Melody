@@ -10,8 +10,8 @@ public class InstrumentSwitcher : MonoBehaviour
     [SerializeField] private Vector2 rightPosition;
 
     [Header("Scale")]
-    [SerializeField] private float centerScale = 1f;
-    [SerializeField] private float sideScale = 0.8f;
+    [SerializeField] private float centerScale = 0.8f;
+    [SerializeField] private float sideScale = 0.5f;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 8f;

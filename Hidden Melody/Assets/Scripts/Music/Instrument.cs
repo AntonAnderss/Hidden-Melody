@@ -19,7 +19,6 @@ public class Instrument : ScriptableObject
 
     [Header("Abilities")]
     public List<Ability> abilities;
-    public List<Ability> noteAbilities;
 
     public bool TryPlayCombination(Note n)
     {

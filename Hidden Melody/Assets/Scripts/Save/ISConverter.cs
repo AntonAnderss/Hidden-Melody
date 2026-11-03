@@ -23,8 +23,8 @@ public static class ISConverter
     {
         ValidateInput(s);
 
-        Debug.LogError("StringToInt not implemented, returned default value 0");
-        return 0;
+        //Debug.LogError("StringToInt not implemented, returned default value 0");
+        return int.Parse(s);
     }
 
     private static bool ValidateInput(string input)
