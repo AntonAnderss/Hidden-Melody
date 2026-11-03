@@ -10270,6 +10270,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1539870382}
     m_Modifications:
+    - target: {fileID: 852203109648676732, guid: daad3195a405192409324b56eec44e2b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1168210563750090145, guid: daad3195a405192409324b56eec44e2b, type: 3}
       propertyPath: m_Name
       value: SM_Gen_Env_Rock_08
@@ -40839,11 +40843,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 594.51
+      value: 508.2
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.12
+      value: 6.9
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.z
