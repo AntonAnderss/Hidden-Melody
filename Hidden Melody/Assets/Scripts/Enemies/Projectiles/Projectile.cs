@@ -15,17 +15,13 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-
-    void Update()
-    {
-
+        BadNoteSound();
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            HitSound();
+
             totalDamage = damage * damageMultiplier;
 
             HealthSystem playerHealth = collision.gameObject.GetComponent<HealthSystem>();
@@ -33,10 +29,13 @@ public class Projectile : MonoBehaviour
             
             Destroy(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    private void HitSound()
+    private void BadNoteSound()
     {
-        
         AudioClip hitSound = SoundBank.Instance.GetEnemySound("BadNoteHit");
         if(hitSound == null)
         {

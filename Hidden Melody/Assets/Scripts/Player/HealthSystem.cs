@@ -17,10 +17,10 @@ using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour
 {
     [Header("Health values")]
-    [SerializeField] private bool alwaysTickingDown = true;
+    private bool tickingDown = false;
     [SerializeField] private float maxHealth = 100;
     public float currentHealth;
-    [SerializeField] private float loosePerSecond = 1f;
+    [SerializeField] private float loosePerSecond = 0f;
 
     private healthLevel currentHealthLevel;
     private PlayerRespawn checkpoints;
@@ -32,7 +32,6 @@ public class HealthSystem : MonoBehaviour
 
     [SerializeField] private Volume globalVolume;
     private Vignette vignette;
-    private FilmGrain filmgrain;
     private ColorAdjustments colorAdjustments;
     private Color colorHPHigh, colorHPMedium, colorHPLow;
 
@@ -45,9 +44,9 @@ public class HealthSystem : MonoBehaviour
         medium, 
         low
     };
-    public bool AlwaysTickingDown
+    public bool TickingDown
     {
-        set { alwaysTickingDown = value; }
+        set { tickingDown = value; }
     }
     void Start()
     {
@@ -61,7 +60,6 @@ public class HealthSystem : MonoBehaviour
 
         globalVolume.profile.TryGet(out vignette);
         vignette.intensity.value = 0;
-        globalVolume.profile.TryGet(out filmgrain);
         globalVolume.profile.TryGet(out colorAdjustments);
         colorAdjustments.saturation.value = 100;
 
@@ -74,7 +72,7 @@ public class HealthSystem : MonoBehaviour
     {
         if(isPlayerDead == false)
         {
-            if (alwaysTickingDown)
+            if (tickingDown)
             {
                 LooseHealth(loosePerSecond * Time.deltaTime);
 
@@ -140,7 +138,7 @@ public class HealthSystem : MonoBehaviour
         fillImage.color = colorHPLow;
         currentHealthLevel = healthLevel.low;
         EnemyManager.instance.SpawnSiren();
-        alwaysTickingDown = false;
+        //tickingDown = false;
     }
     void UpdateVignette()
     {
@@ -148,7 +146,6 @@ public class HealthSystem : MonoBehaviour
     }
     void UpdateColor()
     {
-        //Need to fix so its correct if max is changed
         colorAdjustments.saturation.value = -100 + (currentHealth * 5);
     }
     void KillPlayer()

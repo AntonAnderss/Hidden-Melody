@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/*
+ * Author: Clara Lönnkrans
+ * 
+*/
 public class StartMenu : MonoBehaviour
 {
     private bool isPaused = false;

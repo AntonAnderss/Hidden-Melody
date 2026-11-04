@@ -7,12 +7,13 @@ using UnityEngine;
 /*
  * Author: Clara Lönnkrans
  * 
+ * Add projectile object to projectile
 */
-public class SirenScript : MonoBehaviour
+public class SirenBossScript : MonoBehaviour
 {
     [Header("Siren")]
     [SerializeField] private float sirenTimer;
-    private bool isRisingDone;
+    private bool isAttacking;
     private float timePassed = 0;
 
     [Header("Projectiles")]
@@ -21,22 +22,26 @@ public class SirenScript : MonoBehaviour
     private float projectileTimer = 0.3f;
     private List<GameObject> projectileList;
 
-    private HealthSystem playerHealthsystem;
+    [SerializeField] GameObject player;
+    private HealthSystem healthSystem;
+
 
     void Start()
     {
-        transform.localPosition = new Vector3(0, -4, 4);
-        isRisingDone = false;
+        isAttacking = false;
+        player = GameObject.FindGameObjectWithTag("Player");
+        healthSystem = player.GetComponent<HealthSystem>();
+        transform.position = new Vector3(player.transform.position.x, -4, 4);
         StartCoroutine(MoveUp());
-        playerHealthsystem = transform.parent.GetComponent<HealthSystem>();
         projectileList = new List<GameObject>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isRisingDone)
+        transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+        if (isAttacking)
         {
+
             projectileTime += Time.deltaTime;
             if (projectileTime >= projectileTimer)
             {
@@ -48,8 +53,10 @@ public class SirenScript : MonoBehaviour
 
             if (timePassed > sirenTimer)
             {
-                playerHealthsystem.RegainAllHealth();
+                healthSystem.TickingDown = false;
+                healthSystem.RegainAllHealth();
                 StartCoroutine(MoveDown());
+                isAttacking = false;
             }
         }
     }
@@ -62,27 +69,24 @@ public class SirenScript : MonoBehaviour
                 Destroy(projectile.gameObject);
             }
         }
-        playerHealthsystem.AlwaysTickingDown = true;
         projectileList.Clear();
         Destroy(gameObject);
     }
     private IEnumerator MoveUp()
     {
-        while (transform.localPosition.y < 2)
+        while (transform.position.y < 2)
         {
-            transform.localPosition += new Vector3(0, 0.7f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, 0.8f * Time.deltaTime, 0);
             yield return null;
         }
-        isRisingDone = true;
-        BeginMinigame();
-
-        playerHealthsystem.AlwaysTickingDown = true;
+        isAttacking = true;
+        healthSystem.TickingDown = true;
     }
     private IEnumerator MoveDown()
     {
-        while (transform.localPosition.y > -4)
+        while (transform.position.y > -4)
         {
-            transform.localPosition += new Vector3(0, -0.7f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, -4f * Time.deltaTime, 0);
             yield return null;
         }
         EnemyManager.instance.SirenDead();
