@@ -40,7 +40,7 @@ public class Siren : MonoBehaviour
             playerSpotted = true;
 
             healthSystem.TickingDown = true;
-            Debug.Log("player spotted");
+            //Debug.Log("player spotted");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -49,12 +49,12 @@ public class Siren : MonoBehaviour
         {
             playerSpotted = false;
             healthSystem.TickingDown = false;
-            Debug.Log("player left");
+            //Debug.Log("player left");
         }
     }
     private void SpawnProjectiles()
     {
-        Debug.Log("projectile");
+        //Debug.Log("projectile");
         float xPos = Random.Range(-4, 4);
         Vector3 spawnPos = new Vector3(player.transform.position.x + xPos, player.transform.position.y + 4f, 0);
         GameObject spawnedProjectile = Instantiate(projectile, spawnPos, Quaternion.identity);

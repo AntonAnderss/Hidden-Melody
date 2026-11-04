@@ -17,14 +17,14 @@ public class Projectile : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         BadNoteSound();
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
 
             totalDamage = damage * damageMultiplier;
 
-            HealthSystem playerHealth = collision.gameObject.GetComponent<HealthSystem>();
+            HealthSystem playerHealth = other.gameObject.GetComponent<HealthSystem>();
             playerHealth.LooseHealth(totalDamage);
             
             Destroy(gameObject);

@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
  *Used for playing sounds
  *
  *In array, add a sound name and every sound that can be played for that name
- *Use the get note method for the category, and then the name for the sound, a random sound from that array will play
- *If you only want one sound, only have one sound in that array
+ *Use the get sound method for the category, and then the name for the sound, a random sound from that array will play
+ *If you only want one sound, only have one sound under the name in that array
 */
 public class SoundBank : MonoBehaviour
 {
