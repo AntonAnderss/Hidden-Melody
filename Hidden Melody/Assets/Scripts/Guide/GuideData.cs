@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GuideData", menuName = "Dialogue/Guide Data")]
+//[CreateAssetMenu(fileName = "GuideData", menuName = "Dialogue/Guide Data")]
 public class GuideData : ScriptableObject
 {
     public string guideName = "Guide";
