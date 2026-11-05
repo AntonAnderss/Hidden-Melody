@@ -7,13 +7,10 @@ public class AbilityMiniGameTrigger : MonoBehaviour
 
     private bool hasTriggered = false;
 
-    private void OnTriggerEnter(Collider other)
+    public void StartMinigame()
     {
-        if (other.CompareTag("Player") && !hasTriggered)
-        {
-            hasTriggered = true;
+        hasTriggered = true;
 
-            abilityUnlockEvent.StartAbilityMiniGame(abilityToUnlock);
-        }
+        abilityUnlockEvent.StartAbilityMiniGame(abilityToUnlock);
     }
 }

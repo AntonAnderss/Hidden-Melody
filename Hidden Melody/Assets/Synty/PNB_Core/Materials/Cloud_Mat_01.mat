@@ -140,10 +140,10 @@ Material:
     - _Colour2: {r: 0.681, g: 0.8245501, b: 1, a: 0}
     - _EmissionColor: {r: 0.092, g: 0.092, b: 0.092, a: 1}
     - _EmissiveColour: {r: 0.36378607, g: 0.5328233, b: 0.7075472, a: 0}
-    - _Fresnel_Color: {r: 79.80241, g: 79.80241, b: 79.80241, a: 0}
+    - _Fresnel_Color: {r: 0.9339623, g: 0.1982467, b: 0.1982467, a: 0}
     - _GustSmoothing1: {r: 1, g: 1, b: 1, a: 0}
     - _Light_Direction_Override: {r: 0, g: 0, b: 0, a: 0}
-    - _Scattering_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Scattering_Color: {r: 0.735849, g: 0.5341338, b: 0.253382, a: 0}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0}
     - _Top_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Translucency: {r: 0.5, g: 0.5, b: 0.5, a: 0}
