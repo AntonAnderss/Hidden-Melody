@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7203239234926244737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7481427824262634032}
+  - component: {fileID: 2167983168549495308}
+  - component: {fileID: 7904646448777368012}
+  - component: {fileID: 2998772470060674001}
+  m_Layer: 0
+  m_Name: NPC_JettyPirate1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7481427824262634032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203239234926244737}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.39115036, z: -0, w: 0.9203268}
+  m_LocalPosition: {x: 220.97449, y: 4.47828, z: 1.6081816}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8809114445002644738}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -46.052, z: 0}
+--- !u!136 &2167983168549495308
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203239234926244737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8634713
+  m_Direction: 1
+  m_Center: {x: -0.06, y: 0.27643287, z: 0.48}
+--- !u!114 &7904646448777368012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203239234926244737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be882fda0818c5f4f864a6f0bfbf4736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDanceController
+  instrumentManager: {fileID: 0}
+  danceDuration: 3
+--- !u!65 &2998772470060674001
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7203239234926244737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.68, y: 6.94, z: 13.4}
+  m_Center: {x: -0.26, y: 0.41, z: 0.48}
+--- !u!1001 &8813822102639802622
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7481427824262634032}
+    m_Modifications:
+    - target: {fileID: 1476744787544046, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_Name
+      value: SM_Chr_Pirate_Deckhand_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.65882134
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.432
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.060562562
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9981644
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 173.056
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95468236374942932, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4abacec29e6554f41bc3db83eba10327, type: 2}
+    - target: {fileID: 95468236374942932, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+--- !u!4 &8809114445002644738 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4712968368547324, guid: 49ac357957687384faf420f2a6659fc1, type: 3}
+  m_PrefabInstance: {fileID: 8813822102639802622}
+  m_PrefabAsset: {fileID: 0}
