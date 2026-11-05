@@ -18,7 +18,6 @@ public class Shield : Ability
 
         if (player == null)
         {
-            Debug.Log("No player");
             return;
         }
 
@@ -26,7 +25,6 @@ public class Shield : Ability
 
         if (shieldController == null)
         {
-            Debug.Log("ShieldController not found");
             return;
         }
 

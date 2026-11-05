@@ -27,7 +27,6 @@ Material:
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _BUILTIN_ALPHATEST_ON
-  - _BUILTIN_AlphaClip
   - _OVERLAY_UV_CHANNEL_UV0
   m_InvalidKeywords:
   - _EMISSION
@@ -112,7 +111,7 @@ Material:
     - _AO_Intensity: 1
     - _AlphaClip: 1
     - _AlphaToMask: 1
-    - _BUILTIN_AlphaClip: 1
+    - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
     - _BUILTIN_DstBlend: 0
@@ -126,31 +125,31 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 0
     - _Bottom_Metallic: 0
-    - _Bottom_Smoothness: 0
+    - _Bottom_Smoothness: 0.911
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _Enable_Ambient_Occlusion: 0
+    - _Enable_Ambient_Occlusion: 1
     - _Enable_Base_Texture: 0
-    - _Enable_Emission_Texture: 0
+    - _Enable_Emission_Texture: 1
     - _Enable_Normal_Texture: 1
     - _Enable_Overlay_Texture: 1
     - _Enable_Snow: 0
-    - _Enable_Triplanar_Emission: 0
-    - _Enable_Triplanar_Normals: 0
-    - _Enable_Triplanar_Texture: 0
-    - _Generate_From_Base_Normals: 0
-    - _Metallic: 0.158
+    - _Enable_Triplanar_Emission: 1
+    - _Enable_Triplanar_Normals: 1
+    - _Enable_Triplanar_Texture: 1
+    - _Generate_From_Base_Normals: 1
+    - _Metallic: 0.361
     - _Normal_Intensity: 1
     - _OVERLAY_UV_CHANNEL: 0
-    - _Overlay_Intensity: 0.468
+    - _Overlay_Intensity: 0.339
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Side_Metallic: 0
-    - _Side_Smoothness: 0
-    - _Smoothness: 0.486
+    - _Side_Smoothness: 0.931
+    - _Smoothness: 0.441
     - _Snow_Level: 0
     - _Snow_Metallic: 0.1
     - _Snow_Smoothness: 0.5
@@ -160,7 +159,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _Top_Metallic: 0
-    - _Top_Smoothness: 0
+    - _Top_Smoothness: 0.946
     - _Triplanar_Emission_Blend: 1
     - _Triplanar_Emission_Intensity: 1
     - _Triplanar_Emission_Tiling: 0.25
@@ -181,7 +180,7 @@ Material:
     - _AO_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Base_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Base_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Color_Tint: {r: 0.45882356, g: 0.5411765, b: 0.59607846, a: 0}
+    - _Color_Tint: {r: 0.26673192, g: 0.6981132, b: 0.6843105, a: 1}
     - _Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
     - _Emission_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Emission_Tiling: {r: 1, g: 1, b: 0, a: 0}
@@ -190,7 +189,7 @@ Material:
     - _Overlay_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Overlay_Tiling: {r: 2, g: 1, b: 0, a: 0}
     - _Snow_Color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
-    - _Triplanar_Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Color_Tint: {r: 0.0045046993, g: 0.025057387, b: 0.023931213, a: 1}
     - _Triplanar_Normal_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
     - _Triplanar_Normal_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
     - _Triplanar_Normal_Offset_Top: {r: 0, g: 0, b: 0, a: 0}

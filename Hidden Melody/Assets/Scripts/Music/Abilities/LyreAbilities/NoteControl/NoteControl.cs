@@ -21,7 +21,6 @@ public class NoteControl : Ability
 
         if (controller == null)
         {
-            Debug.Log("NoteControlController not found");
             return;
         }
 

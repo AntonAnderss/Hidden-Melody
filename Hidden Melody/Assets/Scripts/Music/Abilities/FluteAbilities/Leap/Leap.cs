@@ -16,7 +16,6 @@ public class Leap : Ability
 
         if (player == null)
         {
-            Debug.Log(" Player not found");
             return;
         }
 
@@ -24,7 +23,6 @@ public class Leap : Ability
 
         if (leapController == null)
         {
-            Debug.Log("PlayerMovement not found");
             return;
         }
 

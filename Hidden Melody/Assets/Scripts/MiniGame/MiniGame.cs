@@ -29,14 +29,12 @@ public class MiniGame : MonoBehaviour
 
     public void StartMiniGame(HitCombination combination)
     {
-        Debug.Log("Minigame active");
         miniGameCanvas.gameObject.SetActive(true);
 
         currentCombination = combination;
         minigameCompleted = false;
         minigameActive = true;
         ResetCombination();
-        //cameraActive.GameObject().SetActive(false);
     }
     void OnEnable()
     {
@@ -135,11 +133,6 @@ public class MiniGame : MonoBehaviour
             }
             else
             {
-                Debug.Log(
-                    "Wrong key. Pressed: " + pressedKey +
-                    " | Needed: " + zone.requiredKey
-                );
-
                 StartCoroutine(CameraShake());
             }
 
@@ -148,7 +141,7 @@ public class MiniGame : MonoBehaviour
 
 
         // Knapp trycktes men bollen var inte i någon HitZone
-        Debug.Log("Miss - not inside a HitZone");
+
         StartCoroutine(CameraShake());
     }
 
@@ -224,8 +217,6 @@ public class MiniGame : MonoBehaviour
                 return;
             }
         }
-
-        Debug.Log("Combo Complete: " + currentCombination.combinationName);
         FinishMiniGame();
 
 
@@ -238,22 +229,15 @@ public class MiniGame : MonoBehaviour
         miniGameCanvas.gameObject.SetActive(false);
         greenCorrect.weight = 0f;
         currentCombination = null;
-        //cameraActive.GameObject().SetActive(true);
-
-        Debug.Log("Minigame Complete");
     }
 
     private void ResetCombination()
     {
-
-        Debug.Log("Reset");
-
         for (int i = 0; i < currentCombination.zones.Count; i++)
         {
             currentCombination.zones[i].completed = false;
 
             images[i].gameObject.SetActive(true);
-            //Debug.Log("Image : " + i);
         }
 
         UpdateImages();
