@@ -58,9 +58,21 @@ public class InstrumentManager : MonoBehaviour
     }
 
     /* Note Change*/
-    void NoteOne(InputAction.CallbackContext obj) { PlayNote(Note.One); }
-    void NoteTwo(InputAction.CallbackContext obj) { PlayNote(Note.Two); }
-    void NoteThree(InputAction.CallbackContext obj) { PlayNote(Note.Three); }
+    void NoteOne(InputAction.CallbackContext obj) 
+    {
+        if (obj.started)
+            PlayNote(Note.One); 
+    }
+    void NoteTwo(InputAction.CallbackContext obj) 
+    {
+        if (obj.started)
+            PlayNote(Note.Two); 
+    }
+    void NoteThree(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+            PlayNote(Note.Three); 
+    }
 
     void PlayNote(Note n)
     {

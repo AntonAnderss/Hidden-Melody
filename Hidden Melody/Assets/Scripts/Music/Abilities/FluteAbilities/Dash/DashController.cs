@@ -42,9 +42,16 @@ public class DashController : MonoBehaviour
     {
         isDashing = true;
 
-        rb.linearVelocity = new Vector3(dashSpeed * dashDirection, rb.linearVelocity.y, 0);
+        float timer = 0f;
 
-        yield return new WaitForSeconds(dashDuration);
+        while (timer < dashDuration)
+        {
+            rb.linearVelocity = new Vector3(dashSpeed * dashDirection,0f,0f);
+
+            timer += Time.fixedDeltaTime;
+
+            yield return new WaitForFixedUpdate();
+        }
 
         isDashing = false;
     }

@@ -38,6 +38,7 @@ public class NpcDanceController : MonoBehaviour
             animator.SetBool("isDancing", true);
 
             // Stop talking while dancing
+            if(canTalk)
             animator.SetInteger("talkIndex", 0);
         }
 
