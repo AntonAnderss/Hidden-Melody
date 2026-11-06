@@ -52,6 +52,19 @@ public class PlayerMovement : MonoBehaviour
     }
     [SerializeField] InputActionReference crouchInput;
     void Crouch(InputAction.CallbackContext obj) { crouching = !crouching; }
+    [SerializeField] InputActionReference runInput;
+    void Run(InputAction.CallbackContext obj) 
+    {
+        if (obj.started)
+        {
+            running = true;
+        }
+
+        if (obj.canceled)
+        {
+            running = false;
+        }
+    }
 
     [Header("")]
     [SerializeField] Vector2 movementVector;
@@ -147,6 +160,8 @@ public class PlayerMovement : MonoBehaviour
         jumpInput.action.started += Jump;
         jumpInput.action.canceled += Jump;
         crouchInput.action.started += Crouch;
+        runInput.action.started += Run;
+        runInput.action.canceled += Run;
     }
     private void OnDisable()
     {
@@ -157,6 +172,8 @@ public class PlayerMovement : MonoBehaviour
         jumpInput.action.started -= Jump;
         jumpInput.action.canceled -= Jump;
         crouchInput.action.started -= Crouch;
+        runInput.action.started -= Run;
+        runInput.action.canceled -= Run;
     }
 
 
