@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class ShieldCollision : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(other.CompareTag("Projectile"))
-        {
-            Destroy(other.gameObject);
-        }
+
+            Projectile projectile = collision.collider.GetComponentInParent<Projectile>();
+            if(projectile != null )
+            {
+                projectile.Block();
+                Destroy(projectile.gameObject);
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
+        
     }
 }
