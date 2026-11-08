@@ -1,14 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevitateAbilityController : MonoBehaviour
 {
-    [SerializeField] private LevitateController objectToLevitate;
+    [SerializeField] private List<LevitateController> objectToLevitate;
 
     public void ActivateLevitate()
     {
         if (objectToLevitate == null)
             return;
 
-        objectToLevitate.Levitate();
+        for(int i = 0; objectToLevitate.Count > i; i++)
+        {
+            objectToLevitate[i].Levitate();
+        }
     }
 }
