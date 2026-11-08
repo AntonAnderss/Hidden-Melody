@@ -10,6 +10,15 @@ public class KeyPuzzle : MonoBehaviour
 
     private bool hasKey;
 
+
+    public InputActionReference interact;
+
+    void OnEnable()
+    {
+        interact.action.Enable();
+    }
+
+
     void Update()
     {
         if (!hasKey)
@@ -25,8 +34,7 @@ public class KeyPuzzle : MonoBehaviour
 
         // Get into the cubes range and Hold E to open the gate
         if (Vector3.Distance(player.position, lockCube.position) < 2f
-            && Keyboard.current != null
-            && Keyboard.current.eKey.wasPressedThisFrame)
+           && interact.action.WasPressedThisFrame())
         {
             gate.position += Vector3.up * gateLift;
             Destroy(gameObject);
