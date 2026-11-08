@@ -33,6 +33,10 @@ public class StateMachine : StateMachineManager
     {
         return idleState;
     }
+    public void ForceIdle()
+    {
+        ChangeState(idleState);
+    }
 
     public void OnGetUpFinished()
     {

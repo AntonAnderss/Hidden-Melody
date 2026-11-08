@@ -32,9 +32,9 @@ public static class CreateCombinations
         "Dash",
         new List<HitZone>
         {
-            new HitZone(0.35f,0.45f, KeyCode.J),
-            new HitZone(0.45f,0.55f, KeyCode.K),
-            new HitZone(0.55f,0.65f, KeyCode.L)
+            new HitZone(0.35f,0.45f, Note.One),
+            new HitZone(0.45f,0.55f, Note.Two),
+            new HitZone(0.55f,0.65f, Note.Three)
         }
         );
 
@@ -46,9 +46,9 @@ public static class CreateCombinations
         "Leap",
         new List<HitZone>
         {
-            new HitZone(0.05f,0.25f, KeyCode.J),
-            new HitZone(0.45f,0.65f, KeyCode.K),
-            new HitZone(0.75f,0.95f, KeyCode.L)
+            new HitZone(0.75f,0.95f, Note.Three),
+            new HitZone(0.45f,0.65f, Note.Two),
+            new HitZone(0.05f,0.25f, Note.One)
         }
         );
     }
@@ -59,9 +59,9 @@ public static class CreateCombinations
         "Shield",
         new List<HitZone>
         {
-            new HitZone(0.15f,0.30f, KeyCode.J),
-            new HitZone(0.80f,0.95f,KeyCode.K),
-            new HitZone(0.50f,0.70f,KeyCode.L)
+            new HitZone(0.80f,0.95f,Note.Two),
+            new HitZone(0.15f,0.30f, Note.One),
+            new HitZone(0.50f,0.70f,Note.Three)
         }
         );
     }
@@ -71,9 +71,9 @@ public static class CreateCombinations
         "Levitate",
         new List<HitZone>
         {
-            new HitZone(0.15f,0.30f, KeyCode.J),
-            new HitZone(0.30f,0.45f,KeyCode.K),
-            new HitZone(0.45f,0.60f,KeyCode.L)
+            new HitZone(0.45f,0.60f,Note.Three),
+            new HitZone(0.30f,0.45f,Note.Two),
+            new HitZone(0.15f,0.30f, Note.One)
         }
         );
     }
@@ -84,9 +84,9 @@ public static class CreateCombinations
         "Note Control",
         new List<HitZone>
         {
-            new HitZone(0.15f,0.30f, KeyCode.J),
-            new HitZone(0.80f,0.99f,KeyCode.K),
-            new HitZone(0.75f,0.90f,KeyCode.L)
+            new HitZone(0.15f,0.30f, Note.One),
+            new HitZone(0.80f,0.99f,Note.Two),
+            new HitZone(0.75f,0.90f,Note.Three)
         }
         );
     }
