@@ -68,7 +68,7 @@ public class EuridicesGhost : MonoBehaviour
     {
         int i = Random.Range(0, spawnableObjects.Length);
         GameObject spawnObject = spawnableObjects[i];
-        spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 1.7f), transform.position.y - 1, transform.position.z), Quaternion.identity));
+        spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2f), transform.position.y - 1, transform.position.z), Quaternion.identity));
     }
     private void OnCollisionEnter(Collision collision)
     {

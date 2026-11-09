@@ -19,10 +19,14 @@ public class SharkScript : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if(playerMovement.IsGrounded == false && isJumping == false)
+        if(other.gameObject.CompareTag("Player"))
         {
-            isJumping = true;
-            StartCoroutine(JumpUp());
+            Debug.Log("Player in shark");
+            if (playerMovement.IsGrounded == false && isJumping == false)
+            {
+                isJumping = true;
+                StartCoroutine(JumpUp());
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -34,24 +38,27 @@ public class SharkScript : MonoBehaviour
     }
     private IEnumerator JumpDown()
     {
+        transform.rotation = Quaternion.Euler(90, 0, 0);
         while (transform.position.y > startPos.y - 2)
         {
-            transform.position += new Vector3(0, -3f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, -5f * Time.deltaTime, 0);
             yield return null;
         }
         StartCoroutine(SwimUp());
     }
     private IEnumerator JumpUp()
     {
-        while(transform.position.y < startPos.y + 4)
+        transform.rotation = Quaternion.Euler(-90, 0, 0);
+        while (transform.position.y < startPos.y + 4)
         {
-            transform.position += new Vector3(0, 3f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, 5f * Time.deltaTime, 0);
             yield return null;
         }
         StartCoroutine(JumpDown());
     }
     private IEnumerator SwimUp()
     {
+        transform.rotation = Quaternion.Euler(-90, 0, 0);
         while (transform.position.y < startPos.y)
         {
             transform.position += new Vector3(0, 3f * Time.deltaTime, 0);

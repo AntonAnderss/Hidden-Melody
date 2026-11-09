@@ -13,9 +13,8 @@ public class PausMenu : MonoBehaviour
     private GameObject player;
     private float normalTimeScale;
     [SerializeField] GameObject hudCanvas;
+    [SerializeField] GameObject pausMenuObject;
     [SerializeField] GameObject pausMenuCanvas;
-    [SerializeField] GameObject pausMenu;
-    [SerializeField] GameObject menuList;
     private PlayerRespawn checkpoints;
     AudioSource audioSource;
 
@@ -38,19 +37,19 @@ public class PausMenu : MonoBehaviour
     }
     void ResetMenu()
     {
-        for( int i = 0; i < menuList.transform.childCount; i++ )
+        for( int i = 0; i < pausMenuObject.transform.childCount; i++ )
         {
-            menuList.transform.GetChild(i).gameObject.SetActive(false);
+            pausMenuObject.transform.GetChild(i).gameObject.SetActive(false);
         }
         hudCanvas.SetActive(true);
-        pausMenuCanvas.SetActive(true);
+        pausMenuObject.SetActive(true);
     }
     void PauseGame()
     {
         isPaused = true;
         normalTimeScale = Time.timeScale;
         Time.timeScale = 0;
-        pausMenu.SetActive(true);
+        pausMenuCanvas.SetActive(true);
         Cursor.visible = true;
         player.GetComponent<PlayerInput>().enabled = false;
         hudCanvas.SetActive(false);
@@ -71,10 +70,6 @@ public class PausMenu : MonoBehaviour
     public void ResumeButton()
     {
         UnPauseGame();
-    }
-    public void SettingsButton()
-    {
-        
     }
     public void ReturnToCheckpointButton()
     {

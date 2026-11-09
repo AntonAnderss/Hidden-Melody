@@ -10,10 +10,7 @@ using UnityEngine.Audio;
 public class SoundMeny : MonoBehaviour
 {
     [SerializeField] AudioMixer audioMixer;
-    void Start()
-    {
-        
-    }
+
     public void SetMasterVolume(float volume)
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);

@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -183.79071
+      value: 105.41555
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 1.7457458
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.3
+      value: 8.97301
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64,6 +64,22 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94bd4718f94cc554791cd00ed7fab4ad, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94bd4718f94cc554791cd00ed7fab4ad, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94bd4718f94cc554791cd00ed7fab4ad, type: 2}
+    - target: {fileID: -7511558181221131132, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94bd4718f94cc554791cd00ed7fab4ad, type: 2}
     - target: {fileID: 919132149155446097, guid: ee8eab14d1c5b18459838c3864b4eddf, type: 3}
       propertyPath: m_Name
       value: CheckpointHermesStatue

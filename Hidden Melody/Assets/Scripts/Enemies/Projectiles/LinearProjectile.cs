@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /*
@@ -16,9 +17,9 @@ public class LinearProjectile : Projectile
     }
     void Update()
     {
-        transform.position += direction * +(speed * Time.deltaTime);
+        transform.position += direction * (speed * Time.deltaTime);
 
-        if (transform.position.x > startPosition.x + direction.x * travelDistance)
+        if (MathF.Abs(startPosition.x - transform.position.x) > travelDistance)
         {
             Destroy(gameObject);
         }
