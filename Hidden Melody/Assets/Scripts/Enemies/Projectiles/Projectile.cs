@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Hit collider: " + collision.collider.name);
+
         // Projectile hit shield
         if (collision.collider.GetComponentInParent<ShieldCollision>() != null)
         {
