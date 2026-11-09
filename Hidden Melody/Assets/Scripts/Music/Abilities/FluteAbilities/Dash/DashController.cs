@@ -25,32 +25,35 @@ public class DashController : MonoBehaviour
 
     public void Dash()
     {
-        if(isDashing || Time.time < nextDashTime)
+        if (isDashing || Time.time < nextDashTime)
         {
             return;
         }
+
 
         nextDashTime = Time.time + dashCooldown;
 
         dashDirection = playerMovement.LastMoveDirection;
 
         StartCoroutine(DashActivate());
-
     }
 
     private IEnumerator DashActivate()
     {
         isDashing = true;
+
         float timer = 0f;
 
         while (timer < dashDuration)
         {
-            rb.linearVelocity = new Vector3(dashSpeed * playerMovement.LastMoveDirection, rb.linearVelocity.y, 0);
+            rb.linearVelocity = new Vector3(dashSpeed * dashDirection,0f,0f);
+
             timer += Time.fixedDeltaTime;
-            yield return new WaitForSeconds(dashDuration);
+
+            yield return new WaitForFixedUpdate();
         }
+
         isDashing = false;
-        
     }
 
 

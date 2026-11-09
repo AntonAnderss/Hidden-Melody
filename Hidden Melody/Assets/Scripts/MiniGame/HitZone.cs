@@ -8,13 +8,13 @@ public class HitZone
     public float maxValue;
     public bool completed;
 
-    public KeyCode requiredKey;
+    public Note requiredNote;
     // blueprint for hitzones
-    public HitZone(float min, float max, KeyCode key)
+    public HitZone(float min, float max, Note note)
     {
         minValue = min;
         maxValue = max;
         completed = false;
-        requiredKey = key;
+        requiredNote = note;
     }
 }

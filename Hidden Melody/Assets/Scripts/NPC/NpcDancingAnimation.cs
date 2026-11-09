@@ -5,11 +5,11 @@ public class NpcDanceController : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private InstrumentManager instrumentManager;
-    [SerializeField] private float danceDuration = 3f;
     [SerializeField] private float minDanceDuration = 3f;
     [SerializeField] private float maxDanceDuration = 6f;
     [SerializeField] private float minTalkTime = 2f;
     [SerializeField] private float maxTalkTime = 5f;
+    [SerializeField] private bool canTalk = true;
 
     private float talkTimer;
     private bool wasInCombination = false;
@@ -30,7 +30,7 @@ public class NpcDanceController : MonoBehaviour
             instrumentManager.inCombination &&
             !wasInCombination)
         {
-            danceTimer = Random.Range(3f, 6f);
+            danceTimer = Random.Range(minDanceDuration, maxDanceDuration);
 
             int randomDance = Random.Range(1, 7);
 
@@ -38,6 +38,7 @@ public class NpcDanceController : MonoBehaviour
             animator.SetBool("isDancing", true);
 
             // Stop talking while dancing
+            if(canTalk)
             animator.SetInteger("talkIndex", 0);
         }
 
@@ -51,12 +52,16 @@ public class NpcDanceController : MonoBehaviour
                 animator.SetBool("isDancing", false);
 
                 // talking timer after dancing
-                talkTimer = Random.Range(minTalkTime, maxTalkTime);
+                if(canTalk)
+                {
+                    talkTimer = Random.Range(minTalkTime, maxTalkTime);
+                }
+
             }
         }
 
         // Normal idle/talking 
-        if (danceTimer <= 0f)
+        if (canTalk && danceTimer <= 0f)
         {
             talkTimer -= Time.deltaTime;
 

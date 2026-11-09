@@ -23,7 +23,7 @@ public class LandState : BaseState
         if (info.normalizedTime >= 0.9f &&
             !stateMachine.Animator.IsInTransition(0))
         {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            if (stateMachine.PlayerMovement.IsWalking)
             {
                 stateMachine.ChangeState(stateMachine.walkState);
             }

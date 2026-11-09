@@ -38,13 +38,15 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ALPHATEST_ON
   - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _ALPHABLEND_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 3001
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -107,6 +109,7 @@ Material:
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _EmissionEnabled: 0
     - _Enable_Camera_Fade: 0
     - _Enable_Emission: 0
@@ -132,6 +135,7 @@ Material:
     - _Soft_Power: 0.4
     - _SpecularHighlights: 1
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _UVSec: 0
     - _Use_View_Edge_Compensation: 1

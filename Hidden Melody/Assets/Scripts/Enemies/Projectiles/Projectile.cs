@@ -11,31 +11,45 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected int damage = 2;
     [SerializeField] protected float totalDamage = 2;
     protected AudioSource audioSource;
+    private bool blocked = false;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        BadNoteSound();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
 
+    void Update()
+    {
+
+    }
+    public void Block()
+    {
+        blocked = true;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        // Projectile hit shield
+        if (collision.collider.GetComponentInParent<ShieldCollision>() != null)
+        {
+            Block();
+            Destroy(gameObject);
+            return;
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            HitSound();
             totalDamage = damage * damageMultiplier;
 
-            HealthSystem playerHealth = other.gameObject.GetComponent<HealthSystem>();
+            HealthSystem playerHealth = collision.gameObject.GetComponent<HealthSystem>();
             playerHealth.LooseHealth(totalDamage);
             
             Destroy(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
-    private void BadNoteSound()
+    private void HitSound()
     {
+        
         AudioClip hitSound = SoundBank.Instance.GetEnemySound("BadNoteHit");
         if(hitSound == null)
         {

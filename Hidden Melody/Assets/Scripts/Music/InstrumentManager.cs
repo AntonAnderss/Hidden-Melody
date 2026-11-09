@@ -58,9 +58,21 @@ public class InstrumentManager : MonoBehaviour
     }
 
     /* Note Change*/
-    void NoteOne(InputAction.CallbackContext obj) { PlayNote(Note.One); }
-    void NoteTwo(InputAction.CallbackContext obj) { PlayNote(Note.Two); }
-    void NoteThree(InputAction.CallbackContext obj) { PlayNote(Note.Three); }
+    void NoteOne(InputAction.CallbackContext obj) 
+    {
+        if (obj.started)
+            PlayNote(Note.One); 
+    }
+    void NoteTwo(InputAction.CallbackContext obj) 
+    {
+        if (obj.started)
+            PlayNote(Note.Two); 
+    }
+    void NoteThree(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+            PlayNote(Note.Three); 
+    }
 
     void PlayNote(Note n)
     {
@@ -98,9 +110,9 @@ public class InstrumentManager : MonoBehaviour
 
         while (searchingForValidID)
         {
-            searchID++;
-            if (searchID > instruments.Length - 1)
-                searchID = 0;
+            searchID--;
+            if (searchID < 0)
+                searchID = instruments.Length - 1;
 
             if (searchID == originalID || CollectedInstrument(searchID))
                 searchingForValidID = false;
@@ -159,6 +171,10 @@ public class InstrumentManager : MonoBehaviour
                 i++;
 
         return i;
+    }
+    public Instrument GetCurrentInstrument()
+    {
+        return instruments[currentInstrumentID];
     }
 
     public Instrument GetPreviousInstrument() { return instruments[GetPreviousInstrumentIndex()]; }

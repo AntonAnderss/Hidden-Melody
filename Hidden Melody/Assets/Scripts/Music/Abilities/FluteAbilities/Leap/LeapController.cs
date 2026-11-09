@@ -20,8 +20,6 @@ public class LeapController : MonoBehaviour
 
     public void ActivateLeap()
     {
-
-        Debug.Log("Activating leap ability");
         if(Time.time < nextLeapTime)
         {
             return;

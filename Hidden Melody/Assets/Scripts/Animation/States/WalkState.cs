@@ -13,25 +13,17 @@ public class WalkState : BaseState
     public override void Update()
     {
         base.Update();
+        // player leaves the ground
         if (!stateMachine.PlayerMovement.IsGrounded)
         {
             if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
             {
                 stateMachine.ChangeState(stateMachine.jumpState);
             }
-            else if (stateMachine.Rigidbody.linearVelocity.y < -0.1f)
-            {
-                stateMachine.ChangeState(stateMachine.fallState);
-            }
-
-            return;
-        }
-        if (!stateMachine.PlayerMovement.IsGrounded)
-        {
-            if (stateMachine.Rigidbody.linearVelocity.y > 0.1f)
-                stateMachine.ChangeState(stateMachine.jumpState);
             else
+            {
                 stateMachine.ChangeState(stateMachine.fallState);
+            }
 
             return;
         }
@@ -43,7 +35,7 @@ public class WalkState : BaseState
             return;
         }
         // If player stops moving
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (!stateMachine.PlayerMovement.IsWalking)
         {
             stateMachine.ChangeState(stateMachine.idleState);
         }

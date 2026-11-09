@@ -234,6 +234,14 @@ public class PlayerMovement : MonoBehaviour
             capsuleCollider.center = center;
         }
     }
+    public void ResetMovementInput()
+    {
+        walkingLeft = false;
+        walkingRight = false;
+        shouldJump = false;
+
+        movementVector = Vector2.zero;
+    }
 
     /* Ground check */
     void OnCollisionStay(Collision collision)

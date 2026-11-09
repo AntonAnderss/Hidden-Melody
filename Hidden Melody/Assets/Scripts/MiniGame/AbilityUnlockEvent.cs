@@ -6,7 +6,6 @@ public class AbilityUnlockEvent : MonoBehaviour
     private Ability currentAbility;
 
     private bool waitingForMiniGame = false;
-    //private string currentAbility;
 
     public void StartAbilityMiniGame(Ability ability)
     {
@@ -15,7 +14,6 @@ public class AbilityUnlockEvent : MonoBehaviour
         HitCombination combination = CreateCombinations.GetCombination(ability.Name);
         if(combination == null)
         {
-            Debug.Log("No combination found");
             return;
         }
 
@@ -28,12 +26,7 @@ public class AbilityUnlockEvent : MonoBehaviour
     {
         if(waitingForMiniGame && miniGame.minigameCompleted)
         {
-
-
-            //AbilityUnlockState.Unlock(currentAbility);
             currentAbility.Unlock();
-            Debug.Log(currentAbility + " Unlocked");
-
             waitingForMiniGame = false;
         }
     }

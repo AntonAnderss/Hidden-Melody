@@ -12,50 +12,82 @@ using Unity.VisualScripting;
 public class MiniGame : MonoBehaviour
 {
 
-    [SerializeField] Camera cameraShake;
+    [SerializeField] PlatformerCamera platformerCamera;
     [SerializeField] private Slider slider;
-    private bool goingUp = true;
-    [SerializeField] private InputActionReference interactKey;
+    [SerializeField] private InputActionReference noteOneInput;
+    [SerializeField] private InputActionReference noteTwoInput;
+    [SerializeField] private InputActionReference noteThreeInput;
     [SerializeField] private Volume greenCorrect;
     [SerializeField] private List<Image> images;
-    [SerializeField] private RectTransform sliderRect;
+    [SerializeField] private float hitZoneRadius = 200f;
     [SerializeField] private Canvas miniGameCanvas;
-    //[SerializeField] private HealthSystem healthSystem;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image fillImage;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private GameObject abilityControllers;
+    [SerializeField] private Rigidbody playerRb;
+    [SerializeField] private StateMachine stateMachine;
+    private Color backgroundColor;
+    private Color fillColor;
+    private bool colorsSwapped = false;
+    private bool reachedEnd = false;
+    private int currentZoneIndex = 0;
+    [SerializeField] private HealthSystem healthSystem;
 
     public bool minigameCompleted { get; private set; }
     private HitCombination currentCombination;
     private bool minigameActive = false;
 
-
+    private void Start()
+    {
+        backgroundColor = backgroundImage.color;
+        fillColor = fillImage.color;
+    }
     public void StartMiniGame(HitCombination combination)
     {
-        Debug.Log("Minigame active");
+
         miniGameCanvas.gameObject.SetActive(true);
 
         currentCombination = combination;
         minigameCompleted = false;
         minigameActive = true;
+        reachedEnd = false;
+        slider.value = 0f;
+        // Force idle animation
+        stateMachine.ForceIdle();
+        stateMachine.enabled = false;
+        //Disable player controlls
+        playerMovement.enabled = false;
+        abilityControllers.SetActive(false);
+        // Then stop the Rigidbody
+        playerRb.linearVelocity = Vector3.zero;
+        playerRb.angularVelocity = Vector3.zero;
+
         ResetCombination();
-        //cameraActive.GameObject().SetActive(false);
     }
     void OnEnable()
     {
-        interactKey.action.Enable();
+        noteOneInput.action.Enable();
+        noteTwoInput.action.Enable();
+        noteThreeInput.action.Enable();
     }
 
     void OnDisable()
     {
-        interactKey.action.Disable();
+        noteOneInput.action.Disable();
+        noteTwoInput.action.Disable();
+        noteThreeInput.action.Disable();
     }
 
     void Update()
     {
+
         if(!minigameActive)
         {
             return;
         }
-
         SliderMovement();
+
 
 
 
@@ -65,119 +97,91 @@ public class MiniGame : MonoBehaviour
 
     public void SliderMovement()
     {
+        slider.value += 0.3f * Time.deltaTime;
 
-        if(goingUp)
+        if (slider.value >= 1f && !reachedEnd)
         {
-            slider.value += 000.6f * Time.deltaTime; // Makes slider go right
-            if(slider.value>=1)
+            reachedEnd = true;
+
+            colorsSwapped = !colorsSwapped;
+
+            if (colorsSwapped)
             {
-                goingUp = false;
+                backgroundImage.color = fillColor;
+                fillImage.color = backgroundColor;
             }
+            else
+            {
+                backgroundImage.color = backgroundColor;
+                fillImage.color = fillColor;
+            }
+
+            slider.value = 0f;
         }
-        else if (!goingUp)
+
+        if (slider.value > 0.05f)
         {
-            slider.value -= 000.6f * Time.deltaTime; // Makes slider go Left
-            if (slider.value<=0)
-            {
-                goingUp = true;
-            }
+            reachedEnd = false;
         }
     }
     public void CheckHit()
     {
         if (currentCombination == null)
-        {
-            return;
-        }
-
-        KeyCode pressedKey = KeyCode.None;
-
-        if (Input.GetKeyDown(KeyCode.J))
-            pressedKey = KeyCode.J;
-        else if (Input.GetKeyDown(KeyCode.K))
-            pressedKey = KeyCode.K;
-        else if (Input.GetKeyDown(KeyCode.L))
-            pressedKey = KeyCode.L;
-
-        // Ingen av minigame-knapparna trycktes
-        if (pressedKey == KeyCode.None)
             return;
 
+        Note? pressedNote = null;
 
-        // Leta efter zonen som bollen befinner sig i
-        for (int i = 0; i < currentCombination.zones.Count; i++)
+        if (noteOneInput.action.WasPressedThisFrame())
+            pressedNote = Note.One;
+        else if (noteTwoInput.action.WasPressedThisFrame())
+            pressedNote = Note.Two;
+        else if (noteThreeInput.action.WasPressedThisFrame())
+            pressedNote = Note.Three;
+
+        if (pressedNote == null)
+            return;
+
+        HitZone zone = currentCombination.zones[currentZoneIndex];
+
+        bool insideZone =
+            slider.value >= zone.minValue &&
+            slider.value <= zone.maxValue;
+
+        if (insideZone && pressedNote.Value == zone.requiredNote)
         {
-            HitZone zone = currentCombination.zones[i];
+            zone.completed = true;
 
-            if (zone.completed)
-                continue;
+            Image correctImage = GetImageForNote(zone.requiredNote);
+            correctImage.gameObject.SetActive(false);
+            healthSystem.RegainHealth(10f);
 
-            bool insideZone =
-                slider.value >= zone.minValue &&
-                slider.value <= zone.maxValue;
+            StartCoroutine(GreenVignette());
 
-            if (!insideZone)
-                continue;
+            currentZoneIndex++;
 
-
-            // Vi har hittat zonen som bollen är i
-            if (pressedKey == zone.requiredKey)
+            if (currentZoneIndex >= currentCombination.zones.Count)
             {
-                Debug.Log("Correct: " + pressedKey);
-
-                zone.completed = true;
-
-                images[i].gameObject.SetActive(false);
-
-                StartCoroutine(GreenVignette());
-
-                CheckIfCombinationComplete();
-            }
-            else
-            {
-                Debug.Log(
-                    "Wrong key. Pressed: " + pressedKey +
-                    " | Needed: " + zone.requiredKey
-                );
-
-                StartCoroutine(CameraShake());
+                FinishMiniGame();
             }
 
             return;
         }
 
-
-        // Knapp trycktes men bollen var inte i någon HitZone
-        Debug.Log("Miss - not inside a HitZone");
-        StartCoroutine(CameraShake());
+        platformerCamera.Shake(0.15f, 3f);
+        healthSystem.LooseHealth(5f);
     }
-
-    public IEnumerator CameraShake()
+    private Image GetImageForNote(Note note)
     {
+        if (note == Note.One)
+            return images[0];
 
-        // Saves camera's original rotation so it can be restored
-        Quaternion originalRotation = cameraShake.transform.localRotation;
+        if (note == Note.Two)
+            return images[1];
 
-        // How long the shake lasts, and how strong rotation is
-        float duration = 0.15f;
-        float strength = 3f;
-        float timer = 0f;
+        if (note == Note.Three)
+            return images[2];
 
-        // Keeps shaking until duration runs out
-        while (timer < duration)
-        {
-            // Generate a random rotation
-            float zRotation = Random.Range(-strength, strength);
-
-            // Apply the random rotation 
-            cameraShake.transform.localRotation = originalRotation * Quaternion.Euler(0, 0, zRotation);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        // restore the camera to original rotation
-        cameraShake.transform.localRotation = originalRotation;
+        return null;
     }
     public IEnumerator GreenVignette()
     {
@@ -191,69 +195,59 @@ public class MiniGame : MonoBehaviour
     {
         HitCombination combination = currentCombination;
 
-        for (int i = 0; i < images.Count; i++)
+        for (int i = 0; i < combination.zones.Count; i++)
         {
             HitZone zone = combination.zones[i];
 
-            // Center of the hitarea
-            float center = (zone.minValue + zone.maxValue) / 2f; 
+            float center = (zone.minValue + zone.maxValue) / 2f;
 
-            // Makes 0-1 a position on the slider
-            float xPosition = Mathf.Lerp( 
-                sliderRect.rect.xMin,
-                sliderRect.rect.xMax,
-                center
-            );
+            float angle = -90f - center * 360f;
+            float rad = angle * Mathf.Deg2Rad;
 
-            RectTransform imageRect = images[i].rectTransform;
+            Vector2 position = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * hitZoneRadius;
 
-            // Moves the hit marker to correct position while keeping Y value the same
-            imageRect.anchoredPosition = new Vector2( 
-                xPosition,
-                imageRect.anchoredPosition.y
-            );
+            // Hämta rätt bild beroende på vilken Note zonen använder
+            Image correctImage = GetImageForNote(zone.requiredNote);
+
+            RectTransform imageRect = correctImage.rectTransform;
+
+            imageRect.anchoredPosition = position;
+
+            imageRect.localRotation =
+                Quaternion.Euler(0f, 0f, angle - 90f);
         }
-    }
-    private void CheckIfCombinationComplete()
-    {
-        // Loops through the zones, if not completed returns.
-        foreach (HitZone zone in currentCombination.zones)
-        {
-            if (!zone.completed)
-            {
-                return;
-            }
-        }
-
-        Debug.Log("Combo Complete: " + currentCombination.combinationName);
-        FinishMiniGame();
-
-
     }
 
     private void FinishMiniGame()
     {
         minigameCompleted = true;
         minigameActive = false;
+
+        //Enable player controlls
+        playerMovement.ResetMovementInput();
+        playerMovement.enabled = true;
+        abilityControllers.SetActive(true);
+
+        //Enable animation
+        stateMachine.enabled = true;
+
         miniGameCanvas.gameObject.SetActive(false);
         greenCorrect.weight = 0f;
         currentCombination = null;
-        //cameraActive.GameObject().SetActive(true);
-
-        Debug.Log("Minigame Complete");
     }
 
     private void ResetCombination()
     {
+        currentZoneIndex = 0;
 
-        Debug.Log("Reset");
-
-        for (int i = 0; i < currentCombination.zones.Count; i++)
+        foreach (HitZone zone in currentCombination.zones)
         {
-            currentCombination.zones[i].completed = false;
+            zone.completed = false;
+        }
 
-            images[i].gameObject.SetActive(true);
-            //Debug.Log("Image : " + i);
+        foreach (Image image in images)
+        {
+            image.gameObject.SetActive(true);
         }
 
         UpdateImages();

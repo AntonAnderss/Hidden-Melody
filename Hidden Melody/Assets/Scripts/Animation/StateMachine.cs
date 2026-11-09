@@ -4,17 +4,17 @@ using UnityEngine;
 public class StateMachine : StateMachineManager
 {
     public Animator Animator { get; private set; }
-    public IdleState idleState;
-    public WalkState walkState;
-    public BaseState pendingNextState;
+    [System.NonSerialized] public IdleState idleState;
+    [System.NonSerialized] public WalkState walkState;
+    [System.NonSerialized] public BaseState pendingNextState;
     public PlayerMovement PlayerMovement { get; private set; }
     public Rigidbody Rigidbody { get; private set; }
 
-    public JumpState jumpState;
-    public LandState landState;
-    public FallState fallState;
-    public CrouchState crouchState;
-    public CrouchIdleState crouchIdleState;
+    [System.NonSerialized] public JumpState jumpState;
+    [System.NonSerialized] public LandState landState;
+    [System.NonSerialized] public FallState fallState;
+    [System.NonSerialized] public CrouchState crouchState;
+    [System.NonSerialized] public CrouchIdleState crouchIdleState;
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
@@ -28,12 +28,14 @@ public class StateMachine : StateMachineManager
         crouchIdleState = new CrouchIdleState(this);
         crouchState = new CrouchState(this);
 
-        //patrollingState = new PatrollingState(this);
-        //layingDownState = new LayingDownState(this);
     }
     protected override BaseState GetInitialState()
     {
         return idleState;
+    }
+    public void ForceIdle()
+    {
+        ChangeState(idleState);
     }
 
     public void OnGetUpFinished()
