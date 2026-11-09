@@ -12,27 +12,23 @@ public class EnemyManager : MonoBehaviour
 
     private bool isSirenSpawned = false;
     [SerializeField] private GameObject sirenPrefab;
-    private SirenScript spawnedSiren;
-    [SerializeField] private GameObject player;
+    private SirenBossScript spawnedSiren;
+    private GameObject player;
     public List<Enemy> enemies;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         enemies = new List<Enemy>();
         instance = this;
-    }
-
-    void Update()
-    {
-
     }
     public void SpawnSiren()
     {
         if (!isSirenSpawned)
         {
             isSirenSpawned = true;
-            GameObject siren = Instantiate(sirenPrefab, player.transform);
-            spawnedSiren = siren.GetComponent<SirenScript>();
+            GameObject siren = Instantiate(sirenPrefab);
+            spawnedSiren = siren.GetComponent<SirenBossScript>();
         }
     }
     public void SirenDead()
