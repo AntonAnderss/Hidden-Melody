@@ -106,6 +106,7 @@ MonoBehaviour:
   jumpInput: {fileID: -6163111718097429695, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   shouldJump: 0
   crouchInput: {fileID: -689793609899052600, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
+  runInput: {fileID: -4086035522934074032, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   movementVector: {x: 0, y: 0}
   zLevel: 0
   movementSpeed: 0.5
@@ -152,12 +153,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4324143792862637006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a763760e368d89a41a208e5b1217b940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
-  alwaysTickingDown: 1
   maxHealth: 100
   currentHealth: 0
   loosePerSecond: 1
@@ -490,9 +490,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield
       objectReference: {fileID: 0}
+    - target: {fileID: 1280372571878320175, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1280869509965371021, guid: bfa0cad9e10c0914f960e39109e555d6, type: 3}
       propertyPath: m_VersionIndex
-      value: 79
+      value: 85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

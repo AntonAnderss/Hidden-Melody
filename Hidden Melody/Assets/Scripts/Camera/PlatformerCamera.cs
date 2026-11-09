@@ -19,6 +19,8 @@ public class PlatformerCamera : MonoBehaviour
     private float fallOffset;
     private float fallOffsetSpeed;
     private float speedZoom;
+    private float shakeTimer = 0f;
+    private float shakeStrength = 0f;
 
     private Vector2 position;
     private Vector2 positionSpeed;
@@ -149,11 +151,35 @@ public class PlatformerCamera : MonoBehaviour
 
         ApplyTransform(targetPosition.z);
     }
+    public void Shake(float duration = 0.15f, float strength = 3f)
+    {
+        shakeTimer = duration;
+        shakeStrength = strength;
+    }
 
     private void ApplyTransform(float planeZ)
     {
-        float distance = viewHeight * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-        transform.SetPositionAndRotation(new Vector3(position.x, position.y, planeZ - distance), Quaternion.identity);
+        float distance = 
+            viewHeight * 0.5f /
+            Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+
+        float zRotation = 0f;
+
+        if (shakeTimer > 0f)
+        {
+            zRotation = Random.Range(-shakeStrength, shakeStrength);
+
+            shakeTimer -= Time.deltaTime;
+
+            if (shakeTimer <= 0f)
+            {
+                shakeTimer = 0f;
+                shakeStrength = 0f;
+            }
+        }
+
+        transform.SetPositionAndRotation(new Vector3(position.x, position.y, planeZ - distance),
+            Quaternion.Euler(0f, 0f, zRotation));
     }
 
     private Vector2 HalfExtents(float height)

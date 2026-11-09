@@ -19,13 +19,13 @@ public class CrouchState : BaseState
         base.Update();
 
         // Stops moving while crouching
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (!stateMachine.PlayerMovement.IsWalking)
         {
             stateMachine.ChangeState(stateMachine.crouchIdleState);
         }
         if (!stateMachine.PlayerMovement.IsCrouching)
         {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            if (stateMachine.PlayerMovement.IsWalking)
             {
                 stateMachine.ChangeState(stateMachine.walkState);
             }

@@ -1,74 +1,111 @@
 using System.Collections.Generic;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CombinationBookUI : MonoBehaviour
 {
     [SerializeField] private GameObject CombinationBook;
-    [SerializeField] private List<Ability> abilities;
+    [SerializeField] private InputActionReference bookInput;
+    [SerializeField] private InstrumentManager instrumentManager;
+    [SerializeField] private Image[] combinationImages;
+    [SerializeField] private TMP_Text[] nameText;
+    [SerializeField] private TMP_Text[] combinationText;
+    [SerializeField] private TMP_Text[] infoText;
+    [SerializeField] private GameObject[] abilitySlots;
 
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text combinationText;
-    [SerializeField] private TMP_Text infoText;
-
+    private int lastInstrumentIndex = -1;
     private List<Ability> unlockedAbilities = new List<Ability>();
 
     private int currentPage = 0;
-
+    private void Start()
+    {
+        CombinationBook.SetActive(false);
+    }
     private void OnEnable()
     {
         RefreshBook();
+        bookInput.action.Enable();
+        bookInput.action.performed += ToggleBookInput;
+    }
+    private void OnDisable()
+    {
+        bookInput.action.performed -= ToggleBookInput;
+        bookInput.action.Disable();
+    }
+    private void ToggleBookInput(InputAction.CallbackContext context)
+    {
+        ToggleBook();
     }
 
     private void RefreshBook()
     {
         unlockedAbilities.Clear();
 
-        foreach (Ability ability in abilities)
+        lastInstrumentIndex = instrumentManager.CurrentInstrumentIndex;
+
+        Instrument currentInstrument = instrumentManager.GetCurrentInstrument();
+
+        foreach (Ability ability in currentInstrument.abilities)
         {
             if (ability.Unlocked)
             {
                 unlockedAbilities.Add(ability);
             }
         }
-
-        if (unlockedAbilities.Count == 0)
-        {
-            nameText.text = "No abilities unlocked";
-            combinationText.text = "";
-            infoText.text = "";
-            return;
-        }
-
         currentPage = 0;
-
         ShowPage();
     }
+    private void Update()
+    {
+        if (!CombinationBook.activeSelf)
+            return;
 
+        int currentInstrumentIndex = instrumentManager.CurrentInstrumentIndex;
+
+        if (currentInstrumentIndex != lastInstrumentIndex)
+        {
+            lastInstrumentIndex = currentInstrumentIndex;
+            RefreshBook();
+        }
+    }
     private void ShowPage()
     {
-        Ability ability = unlockedAbilities[currentPage];
+        for (int i = 0; i < 3; i++)
+        {
+            int abilityIndex = currentPage * 3 + i;
 
-        nameText.text = ability.Name;
-        infoText.text = ability.Description;
+            if (abilityIndex >= unlockedAbilities.Count)
+            {
+                abilitySlots[i].SetActive(false);
+                continue;
+            }
 
-        combinationText.text = "";
+            abilitySlots[i].SetActive(true);
+
+            Ability ability = unlockedAbilities[abilityIndex];
+
+            nameText[i].text = ability.Name;
+            combinationText[i].text = GetCombinationText(ability);
+            infoText[i].text = ability.Description;
+        }
+    }
+    private string GetCombinationText(Ability ability)
+    {
+        string result = "";
 
         foreach (Note note in ability.Combination)
         {
-            if(note.ToString()== "One")
-            {
-                combinationText.text += "J" + " ";
-            }
-            if (note.ToString() == "Two")
-            {
-                combinationText.text += "K" + " ";
-            }
-            if (note.ToString() == "Three")
-            {
-                combinationText.text += "L" + " ";
-            }
+            if (note == Note.One)
+                result += "J";
+            else if (note == Note.Two)
+                result += "K";
+            else if (note == Note.Three)
+                result += "L";
         }
+
+        return result;
     }
 
     public void NextPage()
@@ -76,9 +113,11 @@ public class CombinationBookUI : MonoBehaviour
         if (unlockedAbilities.Count == 0)
             return;
 
+        int pageCount = Mathf.CeilToInt(unlockedAbilities.Count / 3f);
+
         currentPage++;
 
-        if (currentPage >= unlockedAbilities.Count)
+        if (currentPage >= pageCount)
         {
             currentPage = 0;
         }
@@ -91,11 +130,13 @@ public class CombinationBookUI : MonoBehaviour
         if (unlockedAbilities.Count == 0)
             return;
 
+        int pageCount = Mathf.CeilToInt(unlockedAbilities.Count / 3f);
+
         currentPage--;
 
         if (currentPage < 0)
         {
-            currentPage = unlockedAbilities.Count - 1;
+            currentPage = pageCount - 1;
         }
 
         ShowPage();

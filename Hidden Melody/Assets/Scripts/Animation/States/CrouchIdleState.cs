@@ -26,7 +26,7 @@ public class CrouchIdleState : BaseState
         }
 
         // Starts to move while crouched
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (stateMachine.PlayerMovement.IsWalking)
         {
             stateMachine.ChangeState(stateMachine.crouchState);
         }

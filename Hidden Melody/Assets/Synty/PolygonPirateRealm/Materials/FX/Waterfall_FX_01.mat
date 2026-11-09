@@ -95,6 +95,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _Emission: 1
     - _Float0: 0.09
     - _Float1: 3
@@ -117,6 +118,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _TilingBottom: 0.4117647
     - _TilingBottom1: 0.4117647

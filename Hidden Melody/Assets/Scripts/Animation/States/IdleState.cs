@@ -27,7 +27,7 @@ public class IdleState : BaseState
             {
                 stateMachine.ChangeState(stateMachine.jumpState);
             }
-            else if (stateMachine.Rigidbody.linearVelocity.y < -0.1f)
+            else
             {
                 stateMachine.ChangeState(stateMachine.fallState);
             }
@@ -40,15 +40,8 @@ public class IdleState : BaseState
             stateMachine.ChangeState(stateMachine.crouchIdleState);
             return;
         }
-        // Player falls from an edge
-        if (!stateMachine.PlayerMovement.IsGrounded &&
-            stateMachine.Rigidbody.linearVelocity.y <= 0f)
-        {
-            stateMachine.ChangeState(stateMachine.fallState);
-            return;
-        }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (stateMachine.PlayerMovement.IsWalking)
         {
             stateMachine.ChangeState(stateMachine.walkState);
         }

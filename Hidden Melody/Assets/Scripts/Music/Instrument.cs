@@ -9,7 +9,7 @@ public class Instrument : ScriptableObject
 {
     [Header("Instrument Info")]
     public string instrumentName;
-    public Texture2D icon;
+    public Sprite icon;
     public bool Collected = false;
 
     [Header("Combination")]
