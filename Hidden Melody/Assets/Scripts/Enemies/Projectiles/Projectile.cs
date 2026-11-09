@@ -19,9 +19,14 @@ public class Projectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.GetComponentInParent<ShieldCollision>() != null)
         {
-
+            Debug.Log("Shield");
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player");
             totalDamage = damage * damageMultiplier;
 
             HealthSystem playerHealth = other.gameObject.GetComponent<HealthSystem>();

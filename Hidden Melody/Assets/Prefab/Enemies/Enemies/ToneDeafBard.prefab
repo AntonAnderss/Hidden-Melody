@@ -131,7 +131,7 @@ MonoBehaviour:
   hp: 20
   damage: 1
   projectilePrefab1: {fileID: 8284907346030010620, guid: c39bd611ac463ce4291ae8a6f6a2015c, type: 3}
-  projectilePrefab2: {fileID: 1547906426964489315, guid: b0e7d7ce988028147908138c18a61dec, type: 3}
+  projectilePrefab2: {fileID: 1547906426964489315, guid: 64343024e9193f94c956cbf048820f65, type: 3}
   currentProjectile: {fileID: 0}
 --- !u!1001 &1857416982911208403
 PrefabInstance:

@@ -17,6 +17,7 @@ public class EuridicesGhost : MonoBehaviour
     private HealthSystem healtSystem;
     private int damage = 7;
     private List<GameObject> spawnedObjects;
+    private Vector3 startPos;
     public bool IsAttacking
     {
         set { isAttacking = value; }
@@ -30,6 +31,7 @@ public class EuridicesGhost : MonoBehaviour
         spawnedObjects = new List<GameObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         healtSystem = player.GetComponent<HealthSystem>();
+        startPos = transform.position;
     }
 
     void Update()
@@ -79,7 +81,7 @@ public class EuridicesGhost : MonoBehaviour
     }
     public IEnumerator RiseFromBelow()
     {
-        while (transform.position.y < 1.3f)
+        while (transform.position.y < 1.3f + startPos.y)
         {
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
             yield return null;
@@ -93,7 +95,7 @@ public class EuridicesGhost : MonoBehaviour
         {
             Destroy(spawn);
         }
-        while (transform.position.y > -4)
+        while (transform.position.y > -4 + startPos.y)
         {
             transform.position += new Vector3(0, -4f * Time.deltaTime, 0);
             yield return null;

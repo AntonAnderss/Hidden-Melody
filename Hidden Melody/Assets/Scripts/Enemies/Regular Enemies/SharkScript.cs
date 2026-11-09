@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class SharkScript : MonoBehaviour
 {
-    private float speed = 2.5f;
+    [SerializeField] float speed = 2.5f;
     private GameObject player;
     private HealthSystem healthSystem;
     private PlayerMovement playerMovement;
     private float damage = 10;
     private Vector3 startPos;
+    [SerializeField] float jumpHeight = 4;
     private bool isJumping = false;
     void Start()
     {
@@ -49,7 +50,7 @@ public class SharkScript : MonoBehaviour
     private IEnumerator JumpUp()
     {
         transform.rotation = Quaternion.Euler(-90, 0, 0);
-        while (transform.position.y < startPos.y + 4)
+        while (transform.position.y < startPos.y + jumpHeight)
         {
             transform.position += new Vector3(0, 5f * Time.deltaTime, 0);
             yield return null;
