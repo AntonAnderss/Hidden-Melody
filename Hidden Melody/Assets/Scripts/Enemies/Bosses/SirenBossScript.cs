@@ -38,7 +38,7 @@ public class SirenBossScript : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, transform.position.z);
         if (isAttacking)
         {
 
@@ -74,7 +74,7 @@ public class SirenBossScript : MonoBehaviour
     }
     private IEnumerator MoveUp()
     {
-        while (transform.position.y < 2)
+        while (transform.position.y < player.transform.position.y + 2)
         {
             transform.position += new Vector3(0, 0.8f * Time.deltaTime, 0);
             yield return null;
@@ -84,7 +84,7 @@ public class SirenBossScript : MonoBehaviour
     }
     private IEnumerator MoveDown()
     {
-        while (transform.position.y > -4)
+        while (transform.position.y > player.transform.position.y - 4)
         {
             transform.position += new Vector3(0, -4f * Time.deltaTime, 0);
             yield return null;

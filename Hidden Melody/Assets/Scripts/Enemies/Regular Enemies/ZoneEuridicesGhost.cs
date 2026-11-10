@@ -21,10 +21,15 @@ public class ZoneEuridicesGhost : MonoBehaviour
                 euridiceSpawned = Instantiate(euridicePrefab, spawnPos, Quaternion.identity);
                 euridiceScript = euridiceSpawned.GetComponent<EuridicesGhost>();
                 euridiceScript.Direction = direction;
+                euridiceScript.StartCoroutine(euridiceScript.RiseFromBelow());
                 //Debug.Log("Direction of player " + direction);
             }
-            euridiceScript.StopCoroutine(euridiceScript.Sink());
-            euridiceScript.StartCoroutine(euridiceScript.RiseFromBelow());
+            else
+            {
+                euridiceScript.StopCoroutine(euridiceScript.Sink());
+                euridiceScript.StartCoroutine(euridiceScript.RiseFromBelow());
+            }
+
         }
         euridiceScript.IsAttacking = true;
     }

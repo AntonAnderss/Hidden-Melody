@@ -103,10 +103,11 @@ public class WildBoar : Enemy
         //rigidbody.linearVelocity = Vector3.zero;
         //rigidbody.linearVelocity = new Vector3(-currentDirection * speed * 2, rigidbody.linearVelocity.y + 3, 0);
         //currentRushTime = 0;
+
     }
     void HitPlayer()
     {
-        rigidbody.linearVelocity = new Vector3(-currentDirection * speed * 1.5f, rigidbody.linearVelocity.y + 3, 0);
+        rigidbody.linearVelocity = new Vector3(-currentDirection * speed * 0.5f, rigidbody.linearVelocity.y + 2, 0);
         playerRigidbody.linearVelocity = new Vector3(currentDirection * speed * 2, rigidbody.linearVelocity.y + 3, 0);
         healthSystem.LooseHealth(damage);
         ResetTimers();

@@ -26,12 +26,14 @@ public class EuridicesGhost : MonoBehaviour
     {
         set { direction = value; }
     }
-    void Start()
+    void Awake()
     {
         spawnedObjects = new List<GameObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         healtSystem = player.GetComponent<HealthSystem>();
         startPos = transform.position;
+        Debug.Log("pos :" + startPos.y);
+        Debug.Log("playerpos :" + player.transform.position.y);
     }
 
     void Update()
@@ -59,8 +61,8 @@ public class EuridicesGhost : MonoBehaviour
     }
     void CheckIsLooking()
     {
-        Debug.Log("Direction of euridice " + direction);
-        Debug.Log("Direction of player " + player.transform.right.x);
+        //Debug.Log("Direction of euridice " + direction);
+        //Debug.Log("Direction of player " + player.transform.right.x);
         if (player.transform.right.x != direction)
         {
             healtSystem.LooseHealth(1);
@@ -70,7 +72,7 @@ public class EuridicesGhost : MonoBehaviour
     {
         int i = Random.Range(0, spawnableObjects.Length);
         GameObject spawnObject = spawnableObjects[i];
-        spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2f), transform.position.y - 1, transform.position.z), Quaternion.identity));
+        spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2f), player.transform.position.y - 1, transform.position.z), Quaternion.identity));
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -81,11 +83,13 @@ public class EuridicesGhost : MonoBehaviour
     }
     public IEnumerator RiseFromBelow()
     {
-        while (transform.position.y < 1.3f + startPos.y)
+        Debug.Log("Goalpos :" + (1.6f + startPos.y));
+        while (transform.position.y < 3.3f + startPos.y)
         {
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
             yield return null;
         }
+        Debug.Log("newpos :" + transform.position.y);
         //Scary scream
     }
     public IEnumerator Sink()

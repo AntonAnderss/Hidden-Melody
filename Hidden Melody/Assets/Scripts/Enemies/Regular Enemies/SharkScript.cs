@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SharkScript : MonoBehaviour
 {
-    [SerializeField] float speed = 2.5f;
+    [SerializeField] float speed = 4f;
     private GameObject player;
     private HealthSystem healthSystem;
     private PlayerMovement playerMovement;
@@ -42,7 +42,7 @@ public class SharkScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(90, 0, 0);
         while (transform.position.y > startPos.y - 2)
         {
-            transform.position += new Vector3(0, -5f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
             yield return null;
         }
         StartCoroutine(SwimUp());
@@ -52,7 +52,7 @@ public class SharkScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(-90, 0, 0);
         while (transform.position.y < startPos.y + jumpHeight)
         {
-            transform.position += new Vector3(0, 5f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, speed * Time.deltaTime, 0);
             yield return null;
         }
         StartCoroutine(JumpDown());
@@ -62,7 +62,7 @@ public class SharkScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(-90, 0, 0);
         while (transform.position.y < startPos.y)
         {
-            transform.position += new Vector3(0, 3f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, speed * Time.deltaTime, 0);
             yield return null;
         }
         isJumping = false;
