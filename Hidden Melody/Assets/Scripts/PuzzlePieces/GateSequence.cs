@@ -11,6 +11,7 @@ public class GateSequence : MonoBehaviour
     private Vector3 openPosition;
     private int nextButton = 1;
     private bool opened;
+    private Light[] lightOrder;
 
     void Start()
     {

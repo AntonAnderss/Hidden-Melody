@@ -52,7 +52,7 @@ public class SharkScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(-90, 0, 0);
         while (transform.position.y < startPos.y + jumpHeight)
         {
-            transform.position += new Vector3(0, 5f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, 13f * Time.deltaTime, 0);
             yield return null;
         }
         StartCoroutine(JumpDown());

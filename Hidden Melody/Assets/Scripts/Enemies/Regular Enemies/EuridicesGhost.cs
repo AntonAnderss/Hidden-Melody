@@ -81,9 +81,10 @@ public class EuridicesGhost : MonoBehaviour
     }
     public IEnumerator RiseFromBelow()
     {
-        while (transform.position.y < 1.3f + startPos.y)
+        while (transform.position.y < 4.3f + startPos.y)
         {
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
+            Debug.Log("Position : " + transform.position);
             yield return null;
         }
         //Scary scream
