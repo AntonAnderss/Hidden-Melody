@@ -6,7 +6,7 @@ public class Siren : MonoBehaviour
     [Header("Projectiles")]
     [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileTime = 2;
-    private float projectileTimer = 0.5f;
+    private float projectileTimer = 1f;
     private List<GameObject> projectileList;
 
     private HealthSystem healthSystem;

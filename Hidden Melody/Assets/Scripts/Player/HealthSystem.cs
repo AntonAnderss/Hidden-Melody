@@ -151,12 +151,14 @@ public class HealthSystem : MonoBehaviour
     void KillPlayer()
     {
         isPlayerDead = true;
+        tickingDown = false;
         lostLifeCanvas.OnLostLife();
         EnemyManager.instance.SirenDead();
     }
     public void RecoverPlayer()
     {
         isPlayerDead = false;
+        tickingDown = false;
         checkpoints.Respawn();
         RegainAllHealth();
     }
