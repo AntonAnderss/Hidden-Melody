@@ -17,7 +17,7 @@ public class ZoneEuridicesGhost : MonoBehaviour
             direction = (int)GameObject.FindGameObjectWithTag("Player").transform.right.x;
             if (euridiceSpawned == null)
             {
-                Vector3 spawnPos = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x - 2 * direction, GameObject.FindGameObjectWithTag("Player").transform.position.y - 2, 0);
+                Vector3 spawnPos = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x * direction, GameObject.FindGameObjectWithTag("Player").transform.position.y - 2, 0);
                 euridiceSpawned = Instantiate(euridicePrefab, spawnPos, Quaternion.identity);
                 euridiceScript = euridiceSpawned.GetComponent<EuridicesGhost>();
                 euridiceScript.Direction = direction;
