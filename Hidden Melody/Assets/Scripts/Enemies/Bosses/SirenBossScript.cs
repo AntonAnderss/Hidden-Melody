@@ -38,10 +38,9 @@ public class SirenBossScript : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, transform.position.z);
         if (isAttacking)
         {
-
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, transform.position.z);
             projectileTime += Time.deltaTime;
             if (projectileTime >= projectileTimer)
             {
@@ -76,7 +75,7 @@ public class SirenBossScript : MonoBehaviour
     {
         while (transform.position.y < player.transform.position.y + 2)
         {
-            transform.position += new Vector3(0, 0.8f * Time.deltaTime, 0);
+            transform.position += new Vector3(player.transform.position.x, 0.8f * Time.deltaTime, 0);
             yield return null;
         }
         isAttacking = true;
