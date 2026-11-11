@@ -1,6 +1,7 @@
 /* Author: Anton Andersson */
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class InstrumentManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class InstrumentManager : MonoBehaviour
     public InputActionReference noteThree;
     public InputActionReference previousInstrument;
     public InputActionReference nextInstrument;
+    private AudioSource audioSource;
 
     [Header("Combination")]
     [SerializeField] public bool inCombination = false;
@@ -25,7 +27,9 @@ public class InstrumentManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         combinationTimer = new Timer(combinationTime);
+        ResetCombination();
     }
 
     private void OnEnable()
@@ -84,7 +88,22 @@ public class InstrumentManager : MonoBehaviour
 
         if (inCombination)
             if (CurrentInstrument.TryPlayCombination(n)) //If a combination is completed
-                shouldReset = true;
+                CombinationPlayed();
+    }
+    void CombinationPlayed()
+    {
+        shouldReset = true;
+        //noteSound();
+    }
+    private void noteSound()
+    {
+        AudioClip hitSound = SoundBank.Instance.GetNoteSound("note");
+        if (hitSound == null)
+        {
+            Debug.Log("No Sound");
+            return;
+        }
+        audioSource.PlayOneShot(hitSound);
     }
 
     /* Combination-based */
