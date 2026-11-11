@@ -8,6 +8,7 @@ TagManager:
   - Checkpoint
   - Projectile
   - Shield
+  - Note
   layers:
   - Default
   - TransparentFX

@@ -35,12 +35,12 @@ public class GateButton : MonoBehaviour
     {
         Rigidbody body = other.attachedRigidbody;
 
-        if (body != null && (body == box || body == player))
+        if (body != null && (body == box || body == player || body.CompareTag("Note")))
             pressingColliders.Add(other);
     }
 
     void OnTriggerExit(Collider other)
     {
-        pressingColliders.Remove(other);
+        //pressingColliders.Remove(other);
     }
 }

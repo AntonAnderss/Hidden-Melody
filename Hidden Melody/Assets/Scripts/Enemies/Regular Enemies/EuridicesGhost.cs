@@ -15,7 +15,7 @@ public class EuridicesGhost : MonoBehaviour
     private bool isAttacking = false;
     private GameObject player;
     private HealthSystem healtSystem;
-    private int damage = 7;
+    private int damage = 0;
     private List<GameObject> spawnedObjects;
     private Vector3 startPos;
     public bool IsAttacking
@@ -65,7 +65,7 @@ public class EuridicesGhost : MonoBehaviour
         //Debug.Log("Direction of player " + player.transform.right.x);
         if (player.transform.right.x != direction)
         {
-            healtSystem.LooseHealth(1);
+            healtSystem.LooseHealth(0.3f);
         }
     }
     void SpawnObject()

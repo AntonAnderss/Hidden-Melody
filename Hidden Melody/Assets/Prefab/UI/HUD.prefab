@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077b79a8445656b4eb41a43172a70ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombinationBookUI
-  CombinationBook: {fileID: 4367635656982677066}
+  CombinationBook: {fileID: 93641447549261378}
   bookInput: {fileID: 8985249028007853733, guid: 6e150c96200f49b43a21ccef23d2e641, type: 3}
   instrumentManager: {fileID: 0}
   combinationImages:
@@ -446,6 +446,10 @@ MonoBehaviour:
   - {fileID: 7725816925060813949}
   - {fileID: 3508742306720655659}
   - {fileID: 2750621365769732220}
+  abilitySlots:
+  - {fileID: 4367635656982677066}
+  - {fileID: 930509141776883131}
+  - {fileID: 5991633445767284143}
 --- !u!1 &2215089119605116348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1256,7 @@ GameObject:
   - component: {fileID: 6552048566614870800}
   - component: {fileID: 2750621365769732220}
   m_Layer: 5
-  m_Name: CombinationInfoRight
+  m_Name: CombinationInfoLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,7 +1632,7 @@ GameObject:
   - component: {fileID: 5387632352014782992}
   - component: {fileID: 7313531451309927394}
   m_Layer: 5
-  m_Name: CombinationSheetLeft
+  m_Name: CombinationSheetRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1783,7 +1787,7 @@ GameObject:
   - component: {fileID: 6016119349071426094}
   - component: {fileID: 389487651230251041}
   m_Layer: 5
-  m_Name: CombinationOrderRight
+  m_Name: CombinationOrderLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2878,7 +2882,7 @@ GameObject:
   - component: {fileID: 6708005495165852421}
   - component: {fileID: 2921346693962242736}
   m_Layer: 5
-  m_Name: CombinationSheetRight
+  m_Name: CombinationSheetLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3121,7 +3125,7 @@ GameObject:
   - component: {fileID: 4295711406037084889}
   - component: {fileID: 2544688200397111093}
   m_Layer: 5
-  m_Name: CombinationNameLeft
+  m_Name: CombinationNameRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3258,7 +3262,7 @@ GameObject:
   - component: {fileID: 76297469847133052}
   - component: {fileID: 8198119281869638281}
   m_Layer: 5
-  m_Name: CombinationOrderLeft
+  m_Name: CombinationOrderRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3679,7 +3683,7 @@ GameObject:
   - component: {fileID: 4817247777660983886}
   - component: {fileID: 6253801342313444920}
   m_Layer: 5
-  m_Name: CombinationNameRight
+  m_Name: CombinationNameLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3816,7 +3820,7 @@ GameObject:
   - component: {fileID: 4783473514637034581}
   - component: {fileID: 7725816925060813949}
   m_Layer: 5
-  m_Name: CombinationInfoLeft
+  m_Name: CombinationInfoRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

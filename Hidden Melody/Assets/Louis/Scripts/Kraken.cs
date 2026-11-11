@@ -7,6 +7,7 @@ public class Kraken : Enemy
     [SerializeField] private GameObject rockPrefab;
     [SerializeField] private GameObject barrelPrefab;
     [SerializeField] private Transform throwPoint;
+    [SerializeField] private HealthSystem healthSystem;
     [SerializeField] private float flightTime = 1.2f;
     [SerializeField] private float restTime = 2f;
 

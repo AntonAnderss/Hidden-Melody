@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -11,10 +12,12 @@ public class GateSequence : MonoBehaviour
     private Vector3 openPosition;
     private int nextButton = 1;
     private bool opened;
-    private Light[] lightOrder;
+    [SerializeField] private GameObject[] lights;
+    [SerializeField] private int lightsOrder;
 
     void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         openPosition = rb.position + Vector3.up * openHeight;
     }
@@ -40,13 +43,22 @@ public class GateSequence : MonoBehaviour
         {
             nextButton = 1;
             Debug.Log("Wrong order! Start again from button 1.");
+            for(int i = 0; i<lights.Count(); i++)
+            {
+                lights[i].SetActive(false);
+            }
+            lightsOrder = 0;
             return;
         }
 
         Debug.Log("Correct button: " + number);
         nextButton++;
-
+        lights[lightsOrder].SetActive(true);
+        lightsOrder++;
+        
         if (nextButton > 3)
-            opened = true;
+        {
+            opened = true;      
+        }
     }
 }

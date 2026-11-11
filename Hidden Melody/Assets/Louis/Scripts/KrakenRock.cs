@@ -1,8 +1,10 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class KrakenRock : Projectile
 {
     public Vector3 velocity;
+    [SerializeField] public PlayerMovement playerMovement;
 
     void Start()
     {
@@ -13,5 +15,6 @@ public class KrakenRock : Projectile
     {
         velocity += Physics.gravity * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
+
     }
 }
