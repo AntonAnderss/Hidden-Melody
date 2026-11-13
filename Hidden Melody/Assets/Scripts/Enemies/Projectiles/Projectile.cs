@@ -41,6 +41,9 @@ public class Projectile : MonoBehaviour
     }
     private void BadNoteSound()
     {
+        if (SoundBank.Instance == null)
+            return;
+
         AudioClip hitSound = SoundBank.Instance.GetEnemySound("BadNoteHit");
         if(hitSound == null)
         {
