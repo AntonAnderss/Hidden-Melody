@@ -20,9 +20,9 @@ public class HealthSystem : MonoBehaviour
     private bool tickingDown = false;
     [SerializeField] private float maxHealth = 100;
     public float currentHealth;
-    [SerializeField] private float loosePerSecond = 0f;
+    [SerializeField] private float loosePerSecond = 1f;
 
-    private healthLevel currentHealthLevel;
+    private healthLevel currentHealthLevel; //used for healthbar color
     private PlayerRespawn checkpoints;
     bool isPlayerDead;
 

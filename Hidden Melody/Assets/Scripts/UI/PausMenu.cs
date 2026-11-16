@@ -26,6 +26,7 @@ public class PausMenu : MonoBehaviour
     }
     public void OnPause(InputValue input)
     {
+        Debug.Log("Esc");
         if(isPaused)
         {
             UnPauseGame();

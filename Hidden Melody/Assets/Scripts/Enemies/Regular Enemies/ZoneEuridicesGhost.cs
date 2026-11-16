@@ -13,7 +13,7 @@ public class ZoneEuridicesGhost : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hath crossed the threshold into the aura");
+            //Debug.Log("Player hath crossed the threshold into the aura");
             direction = (int)GameObject.FindGameObjectWithTag("Player").transform.right.x;
             if (euridiceSpawned == null)
             {
@@ -37,7 +37,7 @@ public class ZoneEuridicesGhost : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hath crossed the threshold out of the aura");
+            //Debug.Log("Player hath crossed the threshold out of the aura");
             if (euridiceSpawned != null)
             {
                 euridiceScript.IsAttacking = false;

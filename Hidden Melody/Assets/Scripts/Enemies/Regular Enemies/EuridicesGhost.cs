@@ -74,17 +74,17 @@ public class EuridicesGhost : MonoBehaviour
         GameObject spawnObject = spawnableObjects[i];
         spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2f), player.transform.position.y - 1, transform.position.z), Quaternion.identity));
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isAttacking)
-        {
-            healtSystem.LooseHealth(damage);
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (isAttacking)
+    //    {
+    //        healtSystem.LooseHealth(damage);
+    //    }
+    //}
     public IEnumerator RiseFromBelow()
     {
-        Debug.Log("Goalpos :" + (1.6f + startPos.y));
-        while (transform.position.y < 3.3f + startPos.y)
+        //Debug.Log("Goalpos :" + (1.6f + startPos.y));
+        while (transform.position.y < 2.5f + startPos.y)
         {
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
             yield return null;

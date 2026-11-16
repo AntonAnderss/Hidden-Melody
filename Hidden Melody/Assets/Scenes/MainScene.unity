@@ -72371,6 +72371,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1825002124703514365, guid: c57dfe8fbf6363b4ead42bc52b57a21c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 7073303085890031040, guid: c57dfe8fbf6363b4ead42bc52b57a21c, type: 3}
       propertyPath: m_Name
       value: Siren
@@ -88697,6 +88701,10 @@ PrefabInstance:
       objectReference: {fileID: 1996561744}
     - target: {fileID: -6874789881140228997, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -6874789881140228997, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
+      propertyPath: m_DefaultControlScheme
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 364656668556448358, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}

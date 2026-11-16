@@ -8,6 +8,7 @@ using UnityEngine;
 public class WildBoar : Enemy
 {
     private GameObject player;
+    [SerializeField] GameObject dropObjectOnDeath;
     private Rigidbody playerRigidbody;
     private HealthSystem healthSystem;
     private int currentDirection;
@@ -39,10 +40,10 @@ public class WildBoar : Enemy
         if(playerSpotted)
         {
             currentCooldownTime += Time.deltaTime;
-            Debug.Log(cooldownTimer);
+            //Debug.Log(cooldownTimer);
             if(currentCooldownTime > cooldownTimer)
             {
-                Debug.Log("Rush");
+                //Debug.Log("Rush");
                 RushPlayer();
             }
         }
@@ -100,9 +101,8 @@ public class WildBoar : Enemy
     void HitSomething()
     {
         //Play animation
-        //rigidbody.linearVelocity = Vector3.zero;
-        //rigidbody.linearVelocity = new Vector3(-currentDirection * speed * 2, rigidbody.linearVelocity.y + 3, 0);
-        //currentRushTime = 0;
+        rigidbody.linearVelocity = new Vector3(-currentDirection * speed * 0.5f, rigidbody.linearVelocity.y + 2, 0);
+        ResetTimers();
 
     }
     void HitPlayer()
@@ -120,5 +120,7 @@ public class WildBoar : Enemy
     void Killed()
     {
         //Play animation
+        if (dropObjectOnDeath != null)
+            dropObjectOnDeath.SetActive(true);
     }
 }

@@ -61,7 +61,7 @@ public class KeyPuzzle : MonoBehaviour
             gateTarget = gate.position + Vector3.up * gateLift;
             isOpening = true;
             gateAudio.Play();
-            gateParticles.Play();
+            //gateParticles.Play();
         }
 
 
