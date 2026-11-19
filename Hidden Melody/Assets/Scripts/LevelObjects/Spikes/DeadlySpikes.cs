@@ -2,12 +2,19 @@ using UnityEngine;
 
 public class DeadlySpikes : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        PlayerRespawn player =
-            other.GetComponentInParent<PlayerRespawn>();
+        HealthSystem health = other.GetComponentInParent<HealthSystem>();
 
-        if (player != null)
-            player.Respawn();
+        if (health != null)
+            health.TickingDown = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        HealthSystem health = other.GetComponentInParent<HealthSystem>();
+
+        if (health != null)
+            health.TickingDown = false;
     }
 }

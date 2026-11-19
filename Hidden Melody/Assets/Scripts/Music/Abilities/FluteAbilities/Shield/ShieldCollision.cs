@@ -8,6 +8,7 @@ public class ShieldCollision : MonoBehaviour
             Projectile projectile = collision.collider.GetComponentInParent<Projectile>();
             if(projectile != null )
             {
+               // projectile.Block();
                 Destroy(projectile.gameObject);
             }
             else
