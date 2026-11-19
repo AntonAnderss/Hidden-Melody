@@ -19,7 +19,7 @@ public class LinearProjectile : Projectile
     {
         transform.position += direction * (speed * Time.deltaTime);
 
-        if (MathF.Abs(startPosition.x - transform.position.x) > travelDistance)
+        if (Vector3.Distance(startPosition, transform.position) > travelDistance)
         {
             Destroy(gameObject);
         }

@@ -60,7 +60,6 @@ public class PausMenu : MonoBehaviour
 
     void UnPauseGame()
     {
-        Debug.Log("Unpause");
         isPaused = false;
         Time.timeScale = normalTimeScale;
         Cursor.visible = false;
