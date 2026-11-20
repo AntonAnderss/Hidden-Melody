@@ -122,16 +122,35 @@ public class HealthSystem : MonoBehaviour
         if(currentHealth > maxHealth) 
         { currentHealth = maxHealth; }
     }
-    void MediumHealth()
+    void KillPlayer()
     {
-        fillImage.color = colorHPMedium;
-        currentHealthLevel = healthLevel.medium;
+        isPlayerDead = true;
+        tickingDown = false;
+        lostLifeCanvas.OnLostLife();
+        EnemyManager.instance.SirenDead();
+    }
+    public void GoBackToCheckpoint()
+    {
+        checkpoints.Respawn();
+        LooseHealth(5);
+    }
+    public void RecoverPlayer()
+    {
+        isPlayerDead = false;
+        tickingDown = false;
+        checkpoints.Respawn();
+        RegainAllHealth();
     }
     void HighHealth()
     {
         fillImage.color = colorHPHigh;
         currentHealthLevel = healthLevel.high;
         vignette.intensity.value = 0;
+    }
+    void MediumHealth()
+    {
+        fillImage.color = colorHPMedium;
+        currentHealthLevel = healthLevel.medium;
     }
     void LowHealth()
     {
@@ -148,18 +167,5 @@ public class HealthSystem : MonoBehaviour
     {
         colorAdjustments.saturation.value = -100 + (currentHealth * 5);
     }
-    void KillPlayer()
-    {
-        isPlayerDead = true;
-        tickingDown = false;
-        lostLifeCanvas.OnLostLife();
-        EnemyManager.instance.SirenDead();
-    }
-    public void RecoverPlayer()
-    {
-        isPlayerDead = false;
-        tickingDown = false;
-        checkpoints.Respawn();
-        RegainAllHealth();
-    }
+    
 }

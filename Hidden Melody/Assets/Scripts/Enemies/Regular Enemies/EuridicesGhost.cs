@@ -10,13 +10,13 @@ public class EuridicesGhost : MonoBehaviour
     private float spawningTimer = 0;
     private float spawningTime = 2;
     private float speed = 3f;
-    [SerializeField] GameObject[] spawnableObjects;
+    public EuridicesSpawns[] spawnableObjects;
     private float direction;
     private bool isAttacking = false;
     private GameObject player;
     private HealthSystem healtSystem;
     private int damage = 0;
-    private List<GameObject> spawnedObjects;
+    private List<GameObject> spawnedObjectsList;
     private Vector3 startPos;
     public bool IsAttacking
     {
@@ -28,12 +28,12 @@ public class EuridicesGhost : MonoBehaviour
     }
     void Awake()
     {
-        spawnedObjects = new List<GameObject>();
+        spawnedObjectsList = new List<GameObject>();
         player = GameObject.FindGameObjectWithTag("Player");
         healtSystem = player.GetComponent<HealthSystem>();
         startPos = transform.position;
-        Debug.Log("pos :" + startPos.y);
-        Debug.Log("playerpos :" + player.transform.position.y);
+        //Debug.Log("pos :" + startPos.y);
+        //Debug.Log("playerpos :" + player.transform.position.y);
     }
 
     void Update()
@@ -71,8 +71,8 @@ public class EuridicesGhost : MonoBehaviour
     void SpawnObject()
     {
         int i = Random.Range(0, spawnableObjects.Length);
-        GameObject spawnObject = spawnableObjects[i];
-        spawnedObjects.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2f), player.transform.position.y - 1, transform.position.z), Quaternion.identity));
+        GameObject spawnObject = spawnableObjects[i].prefabObject;
+        spawnedObjectsList.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2.3f), player.transform.position.y + spawnableObjects[i].yPosition, 0), Quaternion.identity));
     }
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -89,13 +89,13 @@ public class EuridicesGhost : MonoBehaviour
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
             yield return null;
         }
-        Debug.Log("newpos :" + transform.position.y);
+        //Debug.Log("newpos :" + transform.position.y);
         //Scary scream
     }
     public IEnumerator Sink()
     {
         //Scary scream
-        foreach(GameObject spawn in spawnedObjects)
+        foreach(GameObject spawn in spawnedObjectsList)
         {
             Destroy(spawn);
         }
