@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class KeyPuzzle : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     public Transform lockCube;
     public Transform gate;
     public float gateLift = 4f;
@@ -29,14 +29,21 @@ public class KeyPuzzle : MonoBehaviour
 
     void Update()
     {
-        if (player == null)
+        if (player == null || !player.gameObject.activeInHierarchy)
         {
-            GameObject found = GameObject.FindWithTag("Player");
+            player = null;
 
-            if (found == null)
+            foreach (GameObject candidate in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (candidate.TryGetComponent<PlayerMovement>(out _))
+                {
+                    player = candidate.transform;
+                    break;
+                }
+            }
+
+            if (player == null)
                 return;
-
-            player = found.transform;
         }
 
 
