@@ -24,6 +24,17 @@ public class GateSequence : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if (player == null)
+        {
+            GameObject found = GameObject.FindWithTag("Player");
+
+            if (found == null)
+                return;
+
+            player = found.GetComponent<Rigidbody>();
+        }
+
         if (opened)
         {
             rb.MovePosition(Vector3.MoveTowards(
@@ -43,22 +54,13 @@ public class GateSequence : MonoBehaviour
         {
             nextButton = 1;
             Debug.Log("Wrong order! Start again from button 1.");
-            for(int i = 0; i<lights.Count(); i++)
-            {
-                lights[i].SetActive(false);
-            }
-            lightsOrder = 0;
             return;
         }
 
         Debug.Log("Correct button: " + number);
         nextButton++;
-        lights[lightsOrder].SetActive(true);
-        lightsOrder++;
-        
+
         if (nextButton > 3)
-        {
-            opened = true;      
-        }
+            opened = true;
     }
 }

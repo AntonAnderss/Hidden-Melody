@@ -22,6 +22,16 @@ public class TimedGateButton : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            GameObject found = GameObject.FindWithTag("Player");
+
+            if (found == null)
+                return;
+
+            player = found.transform;
+        }
+
         if (player == null || gate == null) return;
 
         if (!isOpen &&

@@ -29,6 +29,17 @@ public class KeyPuzzle : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            GameObject found = GameObject.FindWithTag("Player");
+
+            if (found == null)
+                return;
+
+            player = found.transform;
+        }
+
+
         if (!hasKey)
         {
 
