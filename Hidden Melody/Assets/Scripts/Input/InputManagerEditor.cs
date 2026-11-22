@@ -23,5 +23,11 @@ public class InputManagerEditor : Editor
             myScript.SetMapToMinigame();
         }
 
+        GUILayout.Label("", GUILayout.Height(2.5f));
+        if (GUILayout.Button("Dialogue"))
+        {
+            myScript.SetMapToDialogue();
+        }
+
     }
 }

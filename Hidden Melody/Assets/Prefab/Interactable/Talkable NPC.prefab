@@ -52,7 +52,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5113652244339731410}
         m_TargetAssemblyTypeName: DialogueNPC, Assembly-CSharp
-        m_MethodName: Talk
+        m_MethodName: StartDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

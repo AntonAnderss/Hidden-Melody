@@ -395,6 +395,35 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "8088791c-8d22-43b0-8fd8-3d75f81da128",
+            "actions": [
+                {
+                    "name": "Talk",
+                    "type": "Button",
+                    "id": "f870cd6e-c770-457e-b39d-677b14ba0478",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4d82bb86-f190-4969-93c5-339704bab3d5",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Talk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

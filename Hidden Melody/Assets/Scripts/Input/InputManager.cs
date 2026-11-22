@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
     [Header("Action Maps")]
     [SerializeField] string gameplayName = "Gameplay";
     [SerializeField] string minigameName = "Minigame";
+    [SerializeField] string dialogueName = "Dialogue";
 
     [Header("References")]
     [SerializeField] PlayerInput Input;
@@ -17,6 +18,10 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         Input = GetComponent<PlayerInput>();
+
+        SetMapToDialogue();
+        SetMapToMinigame();
+        SetMapToGameplay();
     }
 
     void ChangeMap(string mapName)
@@ -28,4 +33,5 @@ public class InputManager : MonoBehaviour
 
     public void SetMapToGameplay() { ChangeMap(gameplayName); }
     public void SetMapToMinigame() { ChangeMap(minigameName); }
+    public void SetMapToDialogue() { ChangeMap(dialogueName ); }
 }
