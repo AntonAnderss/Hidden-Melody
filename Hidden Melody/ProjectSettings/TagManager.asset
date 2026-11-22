@@ -9,7 +9,7 @@ TagManager:
   - Projectile
   - Shield
   - DialogueBox
-  - DialogueText
+  - WallPiece
   layers:
   - Default
   - TransparentFX
