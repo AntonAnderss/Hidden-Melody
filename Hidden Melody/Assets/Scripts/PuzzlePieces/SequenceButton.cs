@@ -20,12 +20,11 @@ public class SequenceButton : MonoBehaviour
     void CheckLanding(Collision collision)
     {
         if (pressedThisLanding || gate == null ||
-            gate.player == null || collision.rigidbody != gate.player)
+            !collision.gameObject.CompareTag("Player"))
             return;
 
         foreach (ContactPoint contact in collision.contacts)
         {
-            // On the button, a downward normal means the player is on top.
             if (contact.normal.y < -0.5f)
             {
                 pressedThisLanding = true;
@@ -37,7 +36,7 @@ public class SequenceButton : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (gate != null && collision.rigidbody == gate.player)
+        if (collision.gameObject.CompareTag("Player"))
             pressedThisLanding = false;
     }
 }
