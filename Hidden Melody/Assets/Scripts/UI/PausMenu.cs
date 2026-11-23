@@ -26,6 +26,7 @@ public class PausMenu : MonoBehaviour
     }
     public void OnPause(InputValue input)
     {
+        Debug.Log("Esc");
         if(isPaused)
         {
             UnPauseGame();
@@ -56,10 +57,8 @@ public class PausMenu : MonoBehaviour
         PlaySound("OpenMenu");
 
     }
-
     void UnPauseGame()
     {
-        Debug.Log("Unpause");
         isPaused = false;
         Time.timeScale = normalTimeScale;
         Cursor.visible = false;

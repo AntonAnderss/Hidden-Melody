@@ -13,14 +13,15 @@ public class ZoneEuridicesGhost : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hath crossed the threshold into the aura");
+            //Debug.Log("Player hath crossed the threshold into the aura");
             direction = (int)GameObject.FindGameObjectWithTag("Player").transform.right.x;
             if (euridiceSpawned == null)
             {
-                Vector3 spawnPos = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x * direction, GameObject.FindGameObjectWithTag("Player").transform.position.y - 2, 0);
+                Vector3 spawnPos = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x - (2 * direction), transform.position.y - 2, 0);
                 euridiceSpawned = Instantiate(euridicePrefab, spawnPos, Quaternion.identity);
                 euridiceScript = euridiceSpawned.GetComponent<EuridicesGhost>();
                 euridiceScript.Direction = direction;
+                euridiceScript.SetDirection();
                 euridiceScript.StartCoroutine(euridiceScript.RiseFromBelow());
                 //Debug.Log("Direction of player " + direction);
             }
@@ -37,7 +38,7 @@ public class ZoneEuridicesGhost : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hath crossed the threshold out of the aura");
+            //Debug.Log("Player hath crossed the threshold out of the aura");
             if (euridiceSpawned != null)
             {
                 euridiceScript.IsAttacking = false;

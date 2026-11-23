@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+/*Author: Clara Lönnkrans
+*/
 public class SharkScript : MonoBehaviour
 {
     [SerializeField] float speed = 4f;
@@ -22,7 +24,7 @@ public class SharkScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player in shark");
+            //Debug.Log("Player in shark");
             if (playerMovement.IsGrounded == false && isJumping == false)
             {
                 isJumping = true;

@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class GateSequence : MonoBehaviour
 {
-    public Rigidbody player;
     public float openHeight = 5f;
     public float speed = 3f;
 
@@ -11,7 +10,9 @@ public class GateSequence : MonoBehaviour
     private Vector3 openPosition;
     private int nextButton = 1;
     private bool opened;
-    private Light[] lightOrder;
+
+    [SerializeField] private GameObject[] lights;
+    [SerializeField] private int lightsOrder;
 
     void Start()
     {
@@ -21,14 +22,14 @@ public class GateSequence : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (opened)
-        {
-            rb.MovePosition(Vector3.MoveTowards(
-                rb.position,
-                openPosition,
-                speed * Time.fixedDeltaTime
-            ));
-        }
+        if (!opened)
+            return;
+
+        rb.MovePosition(Vector3.MoveTowards(
+            rb.position,
+            openPosition,
+            speed * Time.fixedDeltaTime
+        ));
     }
 
     public void PressButton(int number)

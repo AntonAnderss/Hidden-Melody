@@ -25,5 +25,10 @@ public class Enemy : MonoBehaviour
     {
         hp -= hurt;
     }
+    public void KillEnemy()
+    {
+        //Play death animation
+        Destroy(gameObject);
+    }
 
 }

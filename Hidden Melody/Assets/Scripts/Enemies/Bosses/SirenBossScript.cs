@@ -101,6 +101,6 @@ public class SirenBossScript : MonoBehaviour
     }
     private void BeginMinigame()
     {
-        Debug.Log("Minigame starts");
+        
     }
 }

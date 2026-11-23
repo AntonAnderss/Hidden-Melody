@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5034630473753998250}
   m_Layer: 0
   m_Name: MovingNoteSkillObject
-  m_TagString: Shield
+  m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,5 +138,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.07261914, y: 0.06743994, z: 0.01}
-  m_Center: {x: 0.0043769367, y: -0.026027067, z: 4.656613e-10}
+  m_Size: {x: 0.07261914, y: 0.06743994, z: 0.05}
+  m_Center: {x: 0.0043769367, y: -0.026027067, z: 0}

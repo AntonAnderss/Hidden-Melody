@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class TimedGateButton : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     public Transform gate;
     public float openHeight = 4f;
     public float interactDistance = 3f;
@@ -22,7 +22,22 @@ public class TimedGateButton : MonoBehaviour
 
     void Update()
     {
-        if (player == null || gate == null) return;
+        if (player == null || !player.gameObject.activeInHierarchy)
+        {
+            player = null;
+
+            foreach (GameObject candidate in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (candidate.TryGetComponent<PlayerMovement>(out _))
+                {
+                    player = candidate.transform;
+                    break;
+                }
+            }
+        }
+
+        if (player == null || gate == null)
+            return;
 
         if (!isOpen &&
             Vector3.Distance(player.position, transform.position) <= interactDistance &&

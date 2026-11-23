@@ -26,7 +26,12 @@ public class Instrument : ScriptableObject
         return CompletedCombination();
     }
 
-    void AddNoteToCombination(Note n) { Combination[CombinationIndex++] = n; }
+    void AddNoteToCombination(Note n) 
+    {
+        if (CombinationIndex >= Combination.Length)
+            return;
+        Combination[CombinationIndex++] = n; 
+    }
     bool CompletedCombination()
     {
         if (CombinationIndex == Combination.Length)

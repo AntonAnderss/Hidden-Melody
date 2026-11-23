@@ -4,7 +4,6 @@ using UnityEngine;
 public class GateButton : MonoBehaviour
 {
     public Rigidbody box;
-    public Rigidbody player;
     public Rigidbody gate;
 
     public float openHeight = 20f;
@@ -35,12 +34,15 @@ public class GateButton : MonoBehaviour
     {
         Rigidbody body = other.attachedRigidbody;
 
-        if (body != null && (body == box || body == player))
-            pressingColliders.Add(other);
+    if (body != null &&
+        (body == box || body.CompareTag("Player") || body.CompareTag("Note")))
+    {
+        pressingColliders.Add(other);
+    }
     }
 
     void OnTriggerExit(Collider other)
     {
-        pressingColliders.Remove(other);
+        //pressingColliders.Remove(other);
     }
 }
