@@ -12,14 +12,14 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float totalDamage = 2;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<ShieldCollision>() != null)
+        if (other.gameObject.CompareTag("Shield"))
         {
-            //Debug.Log("Shield");
+            //Debug.Log("Shield: " + other.gameObject.CompareTag("Shield"));
             Destroy(gameObject);
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            //Debug.Log("Player");
+            //Debug.Log("Player : " + other.gameObject.CompareTag("Player"));
             totalDamage = damage * damageMultiplier;
 
             HealthSystem playerHealth = other.gameObject.GetComponent<HealthSystem>();

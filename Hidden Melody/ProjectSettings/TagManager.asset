@@ -10,6 +10,7 @@ TagManager:
   - Shield
   - DialogueBox
   - WallPiece
+  - DialogueText
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - CameraIgnore
   - 
   - 
   - 
