@@ -82843,6 +82843,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformerCamera
   target: {fileID: 4202903021769315376}
+  occluderLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  occluderRadius: 0.5
+  occludeWithTriggers: 0
+  occluderAlpha: 0.3
+  occluderFadeTime: 0.2
 --- !u!1001 &1997931457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88960,11 +88967,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 630.67
+      value: 606.8
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3210458704769859125, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: m_LocalPosition.z
