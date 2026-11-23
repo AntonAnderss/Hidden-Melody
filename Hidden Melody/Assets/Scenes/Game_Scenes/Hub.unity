@@ -1166,6 +1166,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7294676662874685177, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7562823935010374344, guid: 3a76cd0189443ce4cb4ca4785415c956, type: 3}
       propertyPath: runInput
       value: 
