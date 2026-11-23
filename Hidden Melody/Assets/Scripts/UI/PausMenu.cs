@@ -57,7 +57,6 @@ public class PausMenu : MonoBehaviour
         PlaySound("OpenMenu");
 
     }
-
     void UnPauseGame()
     {
         isPaused = false;

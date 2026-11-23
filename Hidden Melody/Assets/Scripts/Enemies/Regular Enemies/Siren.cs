@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*Author: Clara Lönnkrans
+*/
 public class Siren : MonoBehaviour
 {
     [Header("Projectiles")]

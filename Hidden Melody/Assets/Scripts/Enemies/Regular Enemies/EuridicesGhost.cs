@@ -5,12 +5,16 @@ using NUnit.Framework;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/*Author: Clara Lönnkrans
+*/
 public class EuridicesGhost : MonoBehaviour
 {
     private float spawningTimer = 0;
     private float spawningTime = 2;
     private float speed = 3f;
+
     public EuridicesSpawns[] spawnableObjects;
+
     private float direction;
     private bool isAttacking = false;
     private GameObject player;
@@ -32,6 +36,8 @@ public class EuridicesGhost : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         healtSystem = player.GetComponent<HealthSystem>();
         startPos = transform.position;
+        
+
         //Debug.Log("pos :" + startPos.y);
         //Debug.Log("playerpos :" + player.transform.position.y);
     }
@@ -40,14 +46,7 @@ public class EuridicesGhost : MonoBehaviour
     {
         if (isAttacking)
         {
-            if(direction > 0)
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
-            }
+
             transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
             CheckIsLooking();
 
@@ -72,25 +71,30 @@ public class EuridicesGhost : MonoBehaviour
     {
         int i = Random.Range(0, spawnableObjects.Length);
         GameObject spawnObject = spawnableObjects[i].prefabObject;
-        spawnedObjectsList.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 2.3f), player.transform.position.y + spawnableObjects[i].yPosition, 0), Quaternion.identity));
+        spawnedObjectsList.Add(Instantiate(spawnObject, new Vector3(player.transform.position.x + (direction * 3.5f), transform.position.y + spawnableObjects[i].yPosition, 0), Quaternion.identity));
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (isAttacking)
-    //    {
-    //        healtSystem.LooseHealth(damage);
-    //    }
-    //}
+
     public IEnumerator RiseFromBelow()
     {
         //Debug.Log("Goalpos :" + (1.6f + startPos.y));
-        while (transform.position.y < 2.5f + startPos.y)
+        while (transform.position.y < 3.3f + startPos.y)
         {
             transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
             yield return null;
         }
         //Debug.Log("newpos :" + transform.position.y);
         //Scary scream
+    }
+    public void SetDirection()
+    {
+        if (direction > 0)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
+        }
     }
     public IEnumerator Sink()
     {

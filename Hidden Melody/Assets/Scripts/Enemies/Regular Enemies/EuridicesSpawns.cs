@@ -1,6 +1,8 @@
 using UnityEngine;
-
-public class EuridicesSpawns : MonoBehaviour
+[System.Serializable]
+/*Author: Clara Lönnkrans
+*/
+public class EuridicesSpawns
 {
     public GameObject prefabObject;
     public float yPosition;

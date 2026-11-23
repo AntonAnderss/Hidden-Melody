@@ -1,5 +1,7 @@
 using UnityEngine;
 
+ /*Author: Clara Lönnkrans
+*/
 public class SpikesV2 : MonoBehaviour
 {
     [SerializeField] bool killOnImpact = false;
