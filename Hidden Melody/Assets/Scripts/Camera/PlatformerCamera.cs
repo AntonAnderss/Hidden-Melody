@@ -1,9 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Camera))]
 public class PlatformerCamera : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] private LayerMask occluderLayers = ~0;
+    [SerializeField] private float occluderRadius = 0.5f;
+    [SerializeField] private bool occludeWithTriggers = false;
+    [SerializeField, Range(0f, 1f)] private float occluderAlpha = 0.3f;
+    [SerializeField] private float occluderFadeTime = 0.2f;
 
     private Camera cam;
     private Rigidbody body;
@@ -26,6 +33,33 @@ public class PlatformerCamera : MonoBehaviour
     private Vector2 positionSpeed;
     private float viewHeight;
     private float viewHeightSpeed;
+
+    private readonly RaycastHit[] occluderHits = new RaycastHit[32];
+    private readonly HashSet<Renderer> occluding = new HashSet<Renderer>();
+    private readonly List<Renderer> released = new List<Renderer>();
+    private readonly Dictionary<Renderer, FadedRenderer> faded = new Dictionary<Renderer, FadedRenderer>();
+    private readonly Dictionary<Collider, Renderer[]> colliderRenderers = new Dictionary<Collider, Renderer[]>();
+
+    private static readonly int SurfaceId = Shader.PropertyToID("_Surface");
+    private static readonly int BlendId = Shader.PropertyToID("_Blend");
+    private static readonly int SrcBlendId = Shader.PropertyToID("_SrcBlend");
+    private static readonly int DstBlendId = Shader.PropertyToID("_DstBlend");
+    private static readonly int SrcBlendAlphaId = Shader.PropertyToID("_SrcBlendAlpha");
+    private static readonly int DstBlendAlphaId = Shader.PropertyToID("_DstBlendAlpha");
+    private static readonly int ZWriteId = Shader.PropertyToID("_ZWrite");
+    private static readonly int AlphaClipId = Shader.PropertyToID("_AlphaClip");
+    private static readonly int AlphaToMaskId = Shader.PropertyToID("_AlphaToMask");
+    private static readonly int AlphaTransparencyId = Shader.PropertyToID("_Alpha_Transparency");
+    private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+    private static readonly int ColorId = Shader.PropertyToID("_Color");
+
+    private class FadedRenderer
+    {
+        public Material[] originals;
+        public Material[] instances;
+        public float[] baseAlphas;
+        public float alpha = 1f;
+    }
 
     private void Start()
     {
@@ -71,6 +105,174 @@ public class PlatformerCamera : MonoBehaviour
         position = Clamp(position, (Vector2)targetPosition - reach, (Vector2)targetPosition + reach);
 
         ApplyTransform(targetPosition.z);
+        UpdateOccluders();
+    }
+
+    private void OnDisable()
+    {
+        foreach (KeyValuePair<Renderer, FadedRenderer> entry in faded)
+            Restore(entry.Key, entry.Value);
+        faded.Clear();
+    }
+
+    private void UpdateOccluders()
+    {
+        occluding.Clear();
+
+        Vector3 origin = target.position;
+        Vector3 toCamera = transform.position - origin;
+        float distance = toCamera.magnitude;
+
+        if (distance > 0.01f)
+        {
+            QueryTriggerInteraction triggers = occludeWithTriggers ? QueryTriggerInteraction.Collide : QueryTriggerInteraction.Ignore;
+            int count = Physics.SphereCastNonAlloc(origin, occluderRadius, toCamera / distance, occluderHits, distance, occluderLayers, triggers);
+
+            for (int i = 0; i < count; i++)
+            {
+                RaycastHit hit = occluderHits[i];
+                if (hit.distance <= 0f || hit.collider.transform.IsChildOf(target))
+                    continue;
+
+                foreach (Renderer occluder in RenderersOf(hit.collider))
+                    occluding.Add(occluder);
+            }
+        }
+
+        foreach (Renderer occluder in occluding)
+        {
+            if (!faded.ContainsKey(occluder))
+                faded.Add(occluder, MakeTransparent(occluder));
+        }
+
+        float step = occluderFadeTime > 0f ? Time.deltaTime / occluderFadeTime : 1f;
+
+        released.Clear();
+        foreach (KeyValuePair<Renderer, FadedRenderer> entry in faded)
+        {
+            Renderer occluder = entry.Key;
+            FadedRenderer fade = entry.Value;
+
+            if (occluder == null)
+            {
+                released.Add(occluder);
+                continue;
+            }
+
+            float goal = occluding.Contains(occluder) ? occluderAlpha : 1f;
+            fade.alpha = Mathf.MoveTowards(fade.alpha, goal, step * (1f - occluderAlpha));
+            SetAlpha(fade);
+
+            if (fade.alpha >= 1f)
+                released.Add(occluder);
+        }
+
+        foreach (Renderer occluder in released)
+        {
+            Restore(occluder, faded[occluder]);
+            faded.Remove(occluder);
+        }
+    }
+
+    private static FadedRenderer MakeTransparent(Renderer occluder)
+    {
+        Material[] originals = occluder.sharedMaterials;
+        Material[] instances = new Material[originals.Length];
+        float[] baseAlphas = new float[originals.Length];
+
+        for (int i = 0; i < originals.Length; i++)
+        {
+            if (originals[i] == null)
+                continue;
+
+            Material material = new Material(originals[i]);
+            material.name = originals[i].name + " (Faded)";
+            material.SetFloat(SurfaceId, 1f);
+            material.SetFloat(BlendId, 0f);
+            material.SetFloat(SrcBlendId, (float)BlendMode.SrcAlpha);
+            material.SetFloat(DstBlendId, (float)BlendMode.OneMinusSrcAlpha);
+            material.SetFloat(SrcBlendAlphaId, (float)BlendMode.One);
+            material.SetFloat(DstBlendAlphaId, (float)BlendMode.OneMinusSrcAlpha);
+            material.SetFloat(ZWriteId, 0f);
+            material.SetFloat(AlphaClipId, 0f);
+            material.SetFloat(AlphaToMaskId, 0f);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.DisableKeyword("_ALPHATEST_ON");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.SetOverrideTag("RenderType", "Transparent");
+            material.renderQueue = (int)RenderQueue.Transparent;
+
+            instances[i] = material;
+            baseAlphas[i] = BaseAlpha(material);
+        }
+
+        occluder.sharedMaterials = instances;
+        return new FadedRenderer { originals = originals, instances = instances, baseAlphas = baseAlphas };
+    }
+
+    private static float BaseAlpha(Material material)
+    {
+        if (material.HasProperty(AlphaTransparencyId))
+            return material.GetFloat(AlphaTransparencyId);
+        if (material.HasProperty(BaseColorId))
+            return material.GetColor(BaseColorId).a;
+        if (material.HasProperty(ColorId))
+            return material.GetColor(ColorId).a;
+        return 1f;
+    }
+
+    private static void SetAlpha(FadedRenderer fade)
+    {
+        for (int i = 0; i < fade.instances.Length; i++)
+        {
+            Material material = fade.instances[i];
+            if (material == null)
+                continue;
+
+            float alpha = fade.baseAlphas[i] * fade.alpha;
+
+            if (material.HasProperty(AlphaTransparencyId))
+            {
+                material.SetFloat(AlphaTransparencyId, alpha);
+            }
+            else if (material.HasProperty(BaseColorId))
+            {
+                Color color = material.GetColor(BaseColorId);
+                color.a = alpha;
+                material.SetColor(BaseColorId, color);
+            }
+            else if (material.HasProperty(ColorId))
+            {
+                Color color = material.GetColor(ColorId);
+                color.a = alpha;
+                material.SetColor(ColorId, color);
+            }
+        }
+    }
+
+    private static void Restore(Renderer occluder, FadedRenderer fade)
+    {
+        if (occluder != null)
+            occluder.sharedMaterials = fade.originals;
+
+        foreach (Material material in fade.instances)
+        {
+            if (material != null)
+                Destroy(material);
+        }
+    }
+
+    private Renderer[] RenderersOf(Collider collider)
+    {
+        if (colliderRenderers.TryGetValue(collider, out Renderer[] renderers) && renderers != null)
+            return renderers;
+
+        renderers = collider.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0 && collider.transform.parent != null)
+            renderers = collider.transform.parent.GetComponentsInChildren<Renderer>();
+
+        colliderRenderers[collider] = renderers;
+        return renderers;
     }
 
     private void Follow(Vector3 targetPosition)
