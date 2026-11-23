@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc53d204711c0f4280fe506728c6308, type: 3}
+  m_Name: NoteSwap
+  m_EditorClassIdentifier: Assembly-CSharp::NoteSwap
+  Name: Note Swap
+  Unlocked: 1
+  Description: Swaps position with Note
+  Combination: 020000000100000003000000i

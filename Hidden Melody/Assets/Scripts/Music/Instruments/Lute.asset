@@ -15,7 +15,8 @@ MonoBehaviour:
   instrumentName: Lute
   icon: {fileID: 0}
   Collected: 1
-  Combination: 010000000200000003000000i
+  Combination: 000000000000000000000000i
   CombinationIndex: 0
   abilities:
   - {fileID: 11400000, guid: 889bc43876afe174bb7b439da489f72c, type: 2}
+  - {fileID: 11400000, guid: 9cfe2d688a53b9343bb519016f8d810b, type: 2}

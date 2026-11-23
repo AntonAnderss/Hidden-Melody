@@ -14,8 +14,12 @@ public class NoteControlController : MonoBehaviour
 
     private GameObject currentNote;
     private Rigidbody noteRb;
+    private Coroutine controlCoroutine;
 
     private bool controllingNote = false;
+
+    public bool IsControllingNote => controllingNote;
+    public GameObject CurrentNote => currentNote;
     private Vector2 moveInput;
     private void Start()
     {
@@ -62,41 +66,85 @@ public class NoteControlController : MonoBehaviour
         if (controllingNote)
             return;
 
-        StartCoroutine(ControlNote());
+        controlCoroutine = StartCoroutine(ControlNote());
     }
 
     private IEnumerator ControlNote()
     {
         controllingNote = true;
+
         float direction = playerMovement.LastMoveDirection;
+
         Vector3 spawnOffset = new Vector3(1.5f * direction, 0f, 0f);
-        // Create the note at the player's position
-        currentNote = Instantiate(notePrefab,transform.position + spawnOffset,Quaternion.identity);
+
+        currentNote = Instantiate(notePrefab,playerMovement.transform.position + spawnOffset, Quaternion.identity);
 
         noteRb = currentNote.GetComponent<Rigidbody>();
 
-        // Stop controlling the player
+        Collider[] playerColliders = playerMovement.GetComponentsInChildren<Collider>();
+
+        Collider[] noteColliders = currentNote.GetComponentsInChildren<Collider>();
+
+        foreach (Collider playerCollider in playerColliders)
+        {
+            foreach (Collider noteCollider in noteColliders)
+            {
+                Physics.IgnoreCollision(playerCollider,noteCollider,true);
+            }
+        }
         playerMovement.enabled = false;
+
         stateMachine.ChangeState(stateMachine.idleState);
         stateMachine.LockedInIdle = true;
-
 
         platformerCamera.SetTarget(currentNote.transform);
 
         yield return new WaitForSeconds(controlDuration);
 
-        platformerCamera.SetTarget(transform);
+        controlCoroutine = null;
 
-        // Remove the note
-        Destroy(currentNote);
+        StopNoteControl(true);
+    }
+    public void StopNoteControl(bool destroyNote)
+    {
+        if (!controllingNote)
+            return;
+
+        controllingNote = false;
+
+        if (controlCoroutine != null)
+        {
+            StopCoroutine(controlCoroutine);
+            controlCoroutine = null;
+        }
+
+        platformerCamera.SetTarget(playerMovement.transform);
+
+        if (noteRb != null)
+        {
+            noteRb.useGravity = true;
+            noteRb.linearVelocity = Vector3.zero;
+        }
+
+        
+        if (destroyNote && currentNote != null)
+        {
+            Destroy(currentNote);
+        }
+
+        playerMovement.ResetMovementInput();
+        playerMovement.enabled = true;
+
+
+        if (stateMachine != null)
+        {
+            stateMachine.LockedInIdle = false;
+            stateMachine.enabled = true;
+        }
 
         currentNote = null;
         noteRb = null;
 
-        // Give control back to the player
-        playerMovement.enabled = true;
-        stateMachine.LockedInIdle = false;
-
-        controllingNote = false;
+        Debug.Log("NoteControl stopped");
     }
 }
